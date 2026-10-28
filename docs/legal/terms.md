@@ -8,7 +8,7 @@
 
 ## Italiano
 
-Ultimo aggiornamento: 24 ottobre 2026
+Ultimo aggiornamento: 28 ottobre 2026
 
 ### 1. Le parti e il servizio
 Questi termini regolano l'uso di HostelFlow (hostelflow.it), fornito da [PROVIDER NAME], imprenditore individuale ([COMPANY ID], registro delle imprese individuali della Repubblica Ceca), [ADDRESS],
@@ -17,29 +17,27 @@ Repubblica Ceca («HostelFlow»), alla struttura ricettiva che crea un account (
 HostelFlow offre: check-in degli ospiti con lettura automatica dei documenti tramite intelligenza
 artificiale, comunicazione degli alloggiati ad Alloggiati Web (Polizia di Stato), dashboard con note e
 linee guida per il personale, gestione del team. Alcune funzioni possono essere offerte in anteprima
-(«beta»): sono fornite così come sono e possono cambiare o essere ritirate.
+(«beta»): sono fornite così come sono e possono cambiare o essere ritirate. Il codice di HostelFlow è
+pubblicato come software libero (licenza GNU AGPL) su github.com/itsbobik-pixel/hostelflow-open.
 
 ### 2. Account e team
 Il Cliente è responsabile degli account che crea o a cui invita persone, dei ruoli assegnati (titolare,
 staff, volontario) e della riservatezza di password e credenziali. Deve avvisare subito HostelFlow in caso
 di accesso non autorizzato.
 
-### 3. Prova gratuita, prezzo e pagamento
-- 14 giorni di prova gratuita, senza carta (o il periodo più lungo concordato, ad es. per i beta tester).
-  **Fino al 31 dicembre 2026 il servizio è gratuito per tutti**: nessun addebito prima del 1° gennaio 2027.
-- Poi abbonamento mensile al prezzo indicato nell'app, pagato tramite Stripe. Ogni mese si paga a consuntivo,
-  in base agli ospiti inviati alle autorità in quel mese (attualmente: 0 o 1 ospite gratis; fino a 200 ospiti 9 €;
-  fino a 400 19 €; fino a 800 29 €; fino a 1000 39 €; oltre, 0,04 € per ogni ospite in più); Dashboard, Pulizie e
-  Turni per il team 10 € al mese in più, pagati in anticipo. Gli ospiti di più strutture dello stesso gestore
-  nello stesso abbonamento si sommano. Prezzi IVA esclusa. L'abbonamento è venduto da Stripe tramite Link
-  come rivenditore (merchant of record): Stripe calcola e riscuote l'IVA dovuta nel Paese del Cliente ed emette
-  ricevute e fatture.
-- Il Cliente può disdire in qualsiasi momento dall'app; l'abbonamento resta attivo fino alla fine del mese in
-  corso, che viene addebitato per gli ospiti inviati fino ad allora. Non sono previsti rimborsi per periodi
-  parziali, salvo obblighi di legge.
-- Se un pagamento non va a buon fine, HostelFlow può sospendere l'invio alla Questura fino alla
-  regolarizzazione, avvisando il Cliente; i dati restano disponibili.
-- Eventuali variazioni di prezzo sono comunicate con almeno 30 giorni di anticipo.
+### 3. Gratuità e scansioni dei documenti
+- HostelFlow è **gratuito**: nessun abbonamento e nessun pagamento a HostelFlow.
+- La lettura automatica dei documenti usa Claude di Anthropic e ha un costo. Un certo numero di scansioni è
+  incluso e pagato da HostelFlow (attualmente 200 per struttura; 500 per le strutture registrate prima del
+  28 ottobre 2026), salvo accordi diversi. HostelFlow può cambiare questo numero avvisando con almeno 30 giorni
+  di anticipo.
+- Il Cliente può collegare il proprio account Claude (Impostazioni → Scansione al check-in). Le scansioni e
+  l'assistente Flowy di quella struttura usano allora il credito del Cliente presso Anthropic, senza limiti da
+  parte di HostelFlow. Pagamenti, credito e condizioni di quell'account sono un rapporto diretto tra il Cliente
+  e Anthropic. La chiave API è conservata cifrata, usata solo per questo e cancellata quando il Cliente la
+  scollega.
+- Finite le scansioni incluse e senza un account Claude proprio, i dati degli ospiti si possono sempre
+  inserire a mano: l'invio ad Alloggiati Web resta disponibile.
 
 ### 4. Responsabilità per la comunicazione alla Questura
 L'obbligo di comunicare gli alloggiati (art. 109 T.U.L.P.S.) **resta della struttura**. HostelFlow è uno
@@ -60,8 +58,8 @@ senza interruzioni (manutenzione, guasti di fornitori come l'hosting o il portal
 Assistenza via support@hostelflow.it in italiano, inglese e ceco, nei giorni lavorativi.
 
 ### 7. Limitazione di responsabilità
-Nei limiti consentiti dalla legge, la responsabilità complessiva di HostelFlow verso il Cliente è limitata
-a quanto il Cliente ha pagato nei 12 mesi precedenti l'evento. HostelFlow non risponde di danni indiretti
+Il servizio è gratuito. Nei limiti consentiti dalla legge, la responsabilità complessiva di HostelFlow verso il
+Cliente è limitata a 100 €. HostelFlow non risponde di danni indiretti
 (es. mancato guadagno). Restano salvi i casi di dolo o colpa grave.
 
 ### 8. Dati e privacy
@@ -73,7 +71,7 @@ l'Informativa sulla privacy.
 Il contratto dura finché l'account è attivo. Il Cliente può chiudere l'account in qualsiasi momento;
 HostelFlow può chiuderlo con 30 giorni di preavviso, o subito in caso di violazione grave di questi
 termini. Alla chiusura i dati del Cliente vengono cancellati entro 30 giorni, salvo quelli che la legge
-obbliga a conservare (es. fatturazione).
+obbliga a conservare.
 
 HostelFlow può cedere questo contratto, insieme al servizio, a un altro fornitore (ad es. in caso di vendita
 dell'attività), avvisando il Cliente almeno 30 giorni prima. Il nuovo fornitore assume gli stessi obblighi,
@@ -107,8 +105,10 @@ tribunale di [CITY], salvo diverse norme inderogabili.
    accesso per ruolo, cancellazione delle foto subito dopo l'invio (comunque entro 48 ore) e degli ospiti non inviati dopo 3
    giorni, rimozione dei dati personali dopo l'invio.
 7. **Sub-responsabili.** Il Cliente autorizza i sub-responsabili elencati nell'Informativa (Cloudflare,
-   Anthropic, Stripe, Resend e, se usato, Channex). HostelFlow comunica in anticipo eventuali nuovi
-   sub-responsabili; il Cliente può opporsi e, in tal caso, recedere.
+   Anthropic, Resend e, se usato, Channex). HostelFlow comunica in anticipo eventuali nuovi
+   sub-responsabili; il Cliente può opporsi e, in tal caso, recedere. Se il Cliente collega il proprio account
+   Claude, le foto dei documenti sono inviate ad Anthropic con quell'account, secondo l'accordo tra il Cliente e
+   Anthropic.
 8. **Assistenza al Cliente.** HostelFlow aiuta il Cliente a rispondere alle richieste degli interessati e
    negli adempimenti degli artt. 32–36 GDPR, nei limiti di quanto è nelle sue possibilità.
 9. **Violazioni.** HostelFlow notifica al Cliente ogni violazione dei dati personali senza ingiustificato
@@ -122,7 +122,7 @@ tribunale di [CITY], salvo diverse norme inderogabili.
 
 ## English
 
-Last updated: 24 October 2026
+Last updated: 28 October 2026
 
 ### 1. Parties and service
 These terms govern the use of HostelFlow (hostelflow.it), provided by [PROVIDER NAME], sole trader (Company ID / [COMPANY ID], Czech Trade Licensing Register), [ADDRESS],
@@ -130,28 +130,25 @@ Czech Republic ("HostelFlow"), to the accommodation provider that creates an acc
 
 HostelFlow offers guest check-in with AI document reading, reporting of guests to Alloggiati Web (Italian
 State Police), a dashboard with notes and guidelines for staff, and team management. Some features may be
-offered as previews ("beta"): they are provided as is and may change or be withdrawn.
+offered as previews ("beta"): they are provided as is and may change or be withdrawn. HostelFlow's code is
+published as free software (GNU AGPL licence) at github.com/itsbobik-pixel/hostelflow-open.
 
 ### 2. Accounts and team
 The Customer is responsible for the accounts it creates or invites people to, the roles it assigns (owner,
 staff, volunteer) and the secrecy of passwords and credentials, and tells HostelFlow at once about any
 unauthorised access.
 
-### 3. Free trial, price and payment
-- 14-day free trial, no card needed (or the longer period agreed, e.g. for beta testers).
-  **Until 31 December 2026 the service is free for everyone**: nothing is charged before 1 January 2027.
-- Then a monthly subscription at the price shown in the app, paid through Stripe. Each month is paid afterwards,
-  by the guests sent to the authorities in it (currently: 0 or 1 guest free; up to 200 guests €9; up to 400 €19;
-  up to 800 €29; up to 1000 €39; above that €0.04 for each further guest); the Dashboard, Housekeeping and Shifts
-  for the team €10 a month more, paid in advance. The guests of several properties of the same manager on one
-  subscription count together. Prices exclude VAT. The subscription is sold by Stripe through Link as the
-  reseller (merchant of record): Stripe works out and collects the VAT due in the Customer's country and issues
-  the receipts and invoices.
-- The Customer can cancel at any time in the app; the subscription runs to the end of the current month, which
-  is charged for the guests sent until then. No refunds for partial periods, unless the law requires them.
-- If a payment fails, HostelFlow may pause sending to the Questura until it is settled, after notice; the
-  data stays available.
-- Price changes are announced at least 30 days in advance.
+### 3. Free of charge; document scans
+- HostelFlow is **free**: no subscription and nothing to pay HostelFlow.
+- Automatic document reading uses Anthropic's Claude and has a cost. A number of scans is included and paid by
+  HostelFlow (currently 200 per property; 500 for properties that signed up before 28 October 2026), unless
+  agreed otherwise. HostelFlow may change this number with at least 30 days' notice.
+- The Customer may connect its own Claude account (Settings → Check-in scan). That property's scans and the
+  Flowy assistant then use the Customer's own credit at Anthropic, with no limit from HostelFlow. Payments,
+  credit and the terms of that account are directly between the Customer and Anthropic. The API key is stored
+  encrypted, used only for this and deleted when the Customer disconnects it.
+- Once the included scans are used and without its own Claude account, the Customer can always type in guests'
+  details by hand: sending to Alloggiati Web stays available.
 
 ### 4. Responsibility for police reporting
 The duty to report lodged guests (Art. 109 T.U.L.P.S.) **remains the accommodation provider's**. HostelFlow
@@ -171,8 +168,8 @@ HostelFlow works to keep the service available and secure but does not guarantee
 English and Czech, on working days.
 
 ### 7. Limitation of liability
-To the extent the law allows, HostelFlow's total liability to the Customer is limited to what the Customer
-paid in the 12 months before the event. HostelFlow is not liable for indirect damages (e.g. lost profit).
+The service is free. To the extent the law allows, HostelFlow's total liability to the Customer is limited
+to €100. HostelFlow is not liable for indirect damages (e.g. lost profit).
 Wilful misconduct and gross negligence are excepted.
 
 ### 8. Data and privacy
@@ -182,7 +179,7 @@ Agreement** in the annex applies (Art. 28 GDPR). Everything else is covered by t
 ### 9. Term and termination
 The contract lasts while the account is active. The Customer may close the account at any time;
 HostelFlow may close it with 30 days' notice, or at once for a serious breach of these terms. On closure
-the Customer's data is deleted within 30 days, except what the law requires to keep (e.g. invoices).
+the Customer's data is deleted within 30 days, except what the law requires to keep.
 
 HostelFlow may transfer this contract, together with the service, to another provider (e.g. if the business
 is sold), telling the Customer at least 30 days in advance. The new provider takes on the same obligations,
@@ -214,8 +211,9 @@ otherwise.
    role-based access, deletion of photos as soon as the guest is sent (in any case within 48 hours) and of unsent guests after 3 days,
    removal of personal data after sending.
 7. **Sub-processors.** The Customer authorises the sub-processors listed in the Privacy Policy (Cloudflare,
-   Anthropic, Stripe, Resend and, if used, Channex). HostelFlow announces new sub-processors in advance; the
-   Customer may object and, in that case, terminate.
+   Anthropic, Resend and, if used, Channex). HostelFlow announces new sub-processors in advance; the
+   Customer may object and, in that case, terminate. If the Customer connects its own Claude account, document
+   photos go to Anthropic under that account, on the terms between the Customer and Anthropic.
 8. **Assistance.** HostelFlow helps the Customer answer data subjects' requests and with Arts. 32–36 GDPR,
    as far as it reasonably can.
 9. **Breaches.** HostelFlow notifies the Customer of any personal data breach without undue delay and in

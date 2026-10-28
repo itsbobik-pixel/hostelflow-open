@@ -1278,7 +1278,6 @@ const ES = {
   "Connected to {name}.": "Conectado a {name}.",
   "Connected.": "Conectado.",
   "Take nights from Cloudbeds": "Tomar las noches de Cloudbeds",
-  "Use your own Claude account for scans and Flowy. You pay Anthropic directly and there is no scan limit.": "Usa tu propia cuenta de Claude para los escaneos y Flowy. Pagas directamente a Anthropic y no hay límite de escaneos.",
   "To scan documents, connect your Claude account.": "Para escanear documentos, conecta tu cuenta de Claude.",
   "Sign up at platform.claude.com.": "Regístrate en platform.claude.com.",
   "Billing: add a card, buy credit and turn on auto-reload, so it never runs out.": "Billing: añade una tarjeta, compra crédito y activa la recarga automática para que no se acabe nunca.",
@@ -1297,6 +1296,8 @@ const ES = {
   "Check-in scan": "Escaneo en el check-in",
   "Reading documents with your Claude account": "Lectura de documentos con tu cuenta de Claude",
   "See the steps with pictures": "Ver los pasos con imágenes",
+  "This month: {n} scans, about {cost} on your Claude account.": "Este mes: {n} escaneos, unos {cost} en tu cuenta de Claude.",
+  "A scan costs about {cost}.": "Un escaneo cuesta unos {cost}.",
   "Disconnect Cloudbeds?": "¿Desconectar Cloudbeds?",
   "Nights from Cloudbeds. Change them if needed.": "Noches de Cloudbeds. Cámbialas si hace falta.",
   "Cloudbeds could not be reached — try again in a moment": "No se pudo contactar con Cloudbeds: inténtalo de nuevo en un momento",
@@ -1348,5 +1349,5 @@ const ES = {
   "Next in {n} days": "Próxima en {n} días",
   "Next: tomorrow": "Próxima: mañana",
   "Last done": "Última vez",
-  "Document scans in the free trial: {n} of {limit}": "Escaneos en la prueba gratuita: {n} de {limit}"
+  "Free document scans used: {n} of {limit}": "Escaneos gratuitos usados: {n} de {limit}"
 };

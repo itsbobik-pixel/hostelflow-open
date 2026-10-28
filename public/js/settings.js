@@ -490,15 +490,18 @@ function clLink(words) {
   a.textContent = t(words);
   return a;
 }
+// Dollars from micro-dollars: a scan is a fraction of a cent, so three decimals below a cent.
+const clMoney = micro => `$${(micro / 1e6).toFixed(micro < 10000 ? 3 : 2)}`;
 async function loadClaude() {
   const pid = state.ownerPropertyId;
   const box = $('cl-body');
   const s = await api('GET', `/api/properties/${pid}/claude`);
   box.replaceChildren();
+  const per = s.cost && s.cost.perScanMicro;
   if (!s.connected) {
-    box.append(text('p', s.serverKey
-      ? 'Use your own Claude account for scans and Flowy. You pay Anthropic directly and there is no scan limit.'
-      : 'To scan documents, connect your Claude account.', 'muted'));
+    // Only where scans can't run without it (a server with no key of its own):
+    // otherwise just the field (Bob, 28. 10.).
+    if (!s.serverKey) box.append(text('p', 'To scan documents, connect your Claude account.', 'muted'));
     // Where the key is made: the "i" next to the label, as for Cloudbeds.
     const steps = document.createElement('ol');
     steps.append(document.createElement('li'));
@@ -543,6 +546,10 @@ async function loadClaude() {
   }
   box.append(text('p', s.hint ? t('Connected. Key ending in {hint}.', { hint: s.hint }) : t('Connected.'), 'muted'));
   if (s.lastError) box.append(text('p', tx(s.lastError), 'err'));
+  if (s.cost) {
+    box.append(text('p', t('This month: {n} scans, about {cost} on your Claude account.', { n: s.cost.monthScans, cost: clMoney(s.cost.monthMicro) }), 'cl-usage'));
+    if (per) box.append(text('p', t('A scan costs about {cost}.', { cost: clMoney(per) }), 'muted'));
+  }
   const more = document.createElement('p');
   more.className = 'muted';
   more.append(clLink('Credit and auto-reload: platform.claude.com'));
@@ -742,7 +749,7 @@ async function loadSettings() {
     const month = new Date().toISOString().slice(0, 7);
     const cur = u.months.find(r => r.month === month);
     $('se-usage').textContent = u.trial
-      ? t('Document scans in the free trial: {n} of {limit}', { n: u.used, limit: u.limit })
+      ? t('Free document scans used: {n} of {limit}', { n: u.used, limit: u.limit })
       : t(u.limit ? 'Documents scanned this month: {n} of {limit}' : 'Documents scanned this month: {n}', { n: cur ? cur.scans : 0, limit: u.limit });
   }).catch(() => {});
 }

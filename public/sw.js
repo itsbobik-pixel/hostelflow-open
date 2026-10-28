@@ -2,7 +2,7 @@
 // without a connection. Guest data (/api) is never cached — it always comes
 // fresh from the server, and nothing personal stays on the phone.
 
-const CACHE = 'hostelflow-v328';
+const CACHE = 'hostelflow-v331';
 const SHELL = [
   '/', '/app', '/app.css', '/i18n-es.js', '/i18n-fr.js', '/i18n.js',
   '/js/theme.js', '/js/core.js', '/js/dashboard.js', '/js/housekeeping.js', '/js/checkin.js',

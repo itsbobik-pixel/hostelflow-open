@@ -1381,3 +1381,6 @@ body{background-image:radial-gradient(color-mix(in srgb,#9d85f2 16%,transparent)
 /* Phones zoom into any field with text under 16px when it's tapped (the reply
    under a note was 13px): on touch screens every field gets 16px. */
 @media (hover:none) and (pointer:coarse){input,textarea,select{font-size:16px!important}}
+
+/* Settings → Check-in scan: how many scans (and what they cost on the own account). */
+#cl-body .cl-usage { font-weight: 600; margin: 10px 0 2px; }

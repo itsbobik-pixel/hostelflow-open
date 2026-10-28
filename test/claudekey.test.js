@@ -50,7 +50,7 @@ async function setup() {
 
 test('connect: only a key that looks right and that Claude takes is saved, sealed', async () => {
   const { call, pid } = await setup();
-  assert.deepEqual((await call('GET', `/api/properties/${pid}/claude`)).data, { connected: false, hint: null, lastError: null, serverKey: true });
+  assert.deepEqual((await call('GET', `/api/properties/${pid}/claude`)).data, { connected: false, hint: null, lastError: null, serverKey: true, cost: { monthScans: 0, monthMicro: 0, perScanMicro: null } });
   assert.equal((await call('PUT', `/api/properties/${pid}/claude`, { apiKey: 'hello' })).status, 400);
   const bad = await call('PUT', `/api/properties/${pid}/claude`, { apiKey: 'sk-ant-api03-turned-down-0123456789' });
   assert.equal(bad.status, 400);
@@ -83,6 +83,10 @@ test('scan: on its own key, with no limit and no extra comparison reading', asyn
   assert.equal(g.data.ocr.error, undefined);
   assert.deepEqual(keys.map(k => k[0]), [GOOD]); // one reading, on their key
   assert.equal((await call('GET', `/api/properties/${pid}/usage`)).data.limit, null);
+  // What it cost them this month, and a scan on average (only this one was costed).
+  const { cost } = (await call('GET', `/api/properties/${pid}/claude`)).data;
+  assert.equal(cost.monthScans, 2);
+  assert.equal(typeof cost.monthMicro, 'number');
 });
 
 test('scan: credit used up — staff are told, the owner sees why, no alert for us; the next good scan clears it', async () => {

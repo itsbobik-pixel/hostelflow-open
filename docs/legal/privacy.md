@@ -8,7 +8,7 @@
 
 ## Italiano
 
-Ultimo aggiornamento: 14 ottobre 2026
+Ultimo aggiornamento: 28 ottobre 2026
 
 ### 1. Chi siamo
 HostelFlow (hostelflow.it) è un software online per strutture ricettive: check-in degli ospiti con lettura
@@ -61,9 +61,9 @@ La ricevuta ufficiale delle comunicazioni resta sul portale della polizia usato 
 Nome, e-mail, password (conservata solo come hash PBKDF2, mai in chiaro), ruolo nella struttura, note e
 attività nell'app (es. chi ha spuntato un compito, turni); preferenze dell'account (schede mostrate,
 immagine dell'intestazione caricata); messaggi inviati al supporto; credenziali dei portali della struttura
-(polizia, Ross1000: cifrate con AES-GCM, mai mostrate di nuovo); dati di fatturazione gestiti da Stripe. Base giuridica: esecuzione del
-contratto (art. 6.1.b) e obblighi fiscali (art. 6.1.c). Conservazione: fino alla chiusura dell'account;
-i dati di fatturazione per il tempo previsto dalla legge fiscale.
+(polizia, Ross1000: cifrate con AES-GCM, mai mostrate di nuovo); la chiave API di Claude, se la struttura
+collega il proprio account (cifrata, mai mostrata di nuovo). Base giuridica: esecuzione del contratto
+(art. 6.1.b). Conservazione: fino alla chiusura dell'account.
 
 ### 5. A chi vengono comunicati i dati (sub-responsabili e destinatari)
 | Chi | Per cosa | Dati |
@@ -72,8 +72,7 @@ i dati di fatturazione per il tempo previsto dalla legge fiscale.
 | **Regione – Ross1000** (solo se la struttura lo usa) | statistiche ISTAT obbligatorie (destinatario per legge) | dati statistici degli ospiti, senza nomi né documenti |
 | **Policie ČR – Ubyport** (solo strutture in Repubblica Ceca) | comunicazione obbligatoria degli stranieri alloggiati (destinatario per legge) | dati degli ospiti stranieri |
 | **Cloudflare, Inc.** | hosting dell'app e del database (server in Europa occidentale) | tutti i dati dell'app |
-| **Anthropic, PBC** | lettura automatica della foto del documento e assistente Flowy (intelligenza artificiale, via API) | foto del documento; domande fatte a Flowy |
-| **Stripe Payments Europe Ltd.** | pagamento dell'abbonamento | dati di fatturazione e di pagamento |
+| **Anthropic, PBC** | lettura automatica della foto del documento e assistente Flowy (intelligenza artificiale, via API; con l'account Claude della struttura, se collegato) | foto del documento; domande fatte a Flowy |
 | **Resend** | invio di e-mail di servizio (reimpostazione password, inviti) | e-mail e nome dell'utente |
 | **Channex** (solo se la struttura usa il channel manager) | collegamento con Booking.com, Hostelworld, Airbnb… | dati delle prenotazioni |
 
@@ -110,7 +109,7 @@ importanti saranno comunicate agli utenti via e-mail.
 
 ## English
 
-Last updated: 14 October 2026
+Last updated: 28 October 2026
 
 ### 1. Who we are
 HostelFlow (hostelflow.it) is online software for accommodation providers: guest check-in with automatic
@@ -154,9 +153,9 @@ The official receipt of each report stays in the provider's police portal accoun
 ### 4. Users' data
 Name, e-mail, password (stored only as a PBKDF2 hash, never in plain text), role, notes and activity in the
 app (e.g. ticked tasks, shifts); account preferences (tabs shown, uploaded header picture); messages sent to
-support; the provider's portal credentials (police, Ross1000: AES-GCM encrypted, never shown again); billing
-data handled by Stripe. Legal basis: performance of the contract (Art. 6(1)(b)) and tax obligations (Art. 6(1)(c)).
-Kept until the account is closed; billing data as long as tax law requires.
+support; the provider's portal credentials (police, Ross1000: AES-GCM encrypted, never shown again); the Claude
+API key, if the property connects its own account (encrypted, never shown again). Legal basis: performance of
+the contract (Art. 6(1)(b)). Kept until the account is closed.
 
 ### 5. Recipients and sub-processors
 | Who | What for | Data |
@@ -165,8 +164,7 @@ Kept until the account is closed; billing data as long as tax law requires.
 | **Region – Ross1000** (only if the provider uses it) | mandatory ISTAT statistics (recipient by law) | guests' statistical data, no names or documents |
 | **Czech Police – Ubyport** (only providers in Czechia) | mandatory reporting of foreign guests (recipient by law) | foreign guests' data |
 | **Cloudflare, Inc.** | hosting of the app and database (servers in Western Europe) | all app data |
-| **Anthropic, PBC** | automatic reading of document photos and the Flowy assistant (AI, via API) | document photos; questions asked to Flowy |
-| **Stripe Payments Europe Ltd.** | subscription payments | billing and payment data |
+| **Anthropic, PBC** | automatic reading of document photos and the Flowy assistant (AI, via API; with the property's own Claude account, if connected) | document photos; questions asked to Flowy |
 | **Resend** | service e-mails (password reset, invitations) | user's e-mail and name |
 | **Channex** (only if the channel manager is used) | connection to Booking.com, Hostelworld, Airbnb… | reservation data |
 

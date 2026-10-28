@@ -54,9 +54,28 @@ async function status(env, propertyId) {
   };
 }
 
+// What scans cost on a Claude account, in micro-dollars (Settings → Check-in
+// scan): this month's scans and their cost, and a scan's average over the last
+// 30 days — this property's own when it scanned enough, else everyone's (only
+// totals, nothing about anyone's guests).
+const ENOUGH = 5;
+async function scanCost(db, propertyId, now = Date.now()) {
+  const month = new Date(now).toISOString().slice(0, 7);
+  const since = new Date(now - 30 * 86400000).toISOString().slice(0, 10);
+  const m = await db.prepare('SELECT scans, cost_micro FROM usage_monthly WHERE property_id = ? AND month = ?').bind(propertyId, month).first();
+  const own = await db.prepare('SELECT SUM(scans) AS s, SUM(cost_micro) AS c FROM usage_daily WHERE property_id = ? AND day >= ?').bind(propertyId, since).first();
+  const all = own.s >= ENOUGH ? own
+    : await db.prepare('SELECT SUM(scans) AS s, SUM(cost_micro) AS c FROM usage_daily WHERE day >= ?').bind(since).first();
+  return {
+    monthScans: (m && m.scans) || 0,
+    monthMicro: (m && m.cost_micro) || 0,
+    perScanMicro: all.s ? Math.round(all.c / all.s) : null,
+  };
+}
+
 export async function claudeStatus(env, request, propertyId) {
   await ownerContext(env, request, propertyId);
-  return json(await status(env, propertyId));
+  return json({ ...(await status(env, propertyId)), cost: await scanCost(env.DB, propertyId) });
 }
 
 // Body: { apiKey }. A key Anthropic turns down is never saved.
