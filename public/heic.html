@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>HEIC → JPEG</title>
+<!--
+  Converts iPhone photos (HEIC) to JPEG for the check-in. It lives on its own
+  page, loaded invisibly by the app, because the converter (heic2any, MIT)
+  needs `new Function` and a blob: worker — which the app's strict security
+  policy forbids. Only this page gets the looser policy (see src/worker.js).
+-->
+<script src="/vendor/heic2any.min.js"></script>
+<script src="/heic-frame.js"></script>
+</head>
+<body></body>
+</html>

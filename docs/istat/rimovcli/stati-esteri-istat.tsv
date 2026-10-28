@@ -1,0 +1,93 @@
+PAESI ESTERI DI
+RESIDENZA*
+	CODICI
+Austria	038
+Belgio 	017
+Croazia	092
+Danimarca	008
+Finlandia 	032
+Francia 	001
+Germania 	004
+Grecia 	009
+Irlanda 	007
+Islanda	024
+Lussemburgo 	018
+Norvegia 	028
+Paesi Bassi 	003
+Polonia 	060
+Portogallo 	010
+Regno Unito 	006
+Repubblica Ceca 	061
+Russia 	075
+Slovacchia 	063
+Slovenia 	091
+Spagna 	011
+Svezia 	030
+Svizzera (incluso Liechtenstein) 	036
+Turchia 	052
+Ungheria 	064
+Bulgaria 	068
+Romania 	066
+Estonia 	053
+Cipro 	600
+Lituania 	055
+Lettonia 	054
+Malta 	046
+Ucraina 	072
+Altri Paesi Europei (1) 	100
+Canada 	404
+Stati Uniti d'America 	400
+Altri Paesi o territori Nord – Americani (2) 	410
+Messico 	412
+Venezuela 	484
+Brasile 	508
+Argentina 	528
+Altri Paesi Centro – Sud America (3) 	530
+Cina (incluso Hong Kong) 	720
+Giappone 	732
+Corea del Sud 	728
+India 	664
+Israele 	624
+Altri Paesi Asia Occidentale (4) 	750
+Altri Paesi dell'Asia (5) 	760
+Egitto 	220
+Altri Paesi Africa Mediterranea (6) 	230
+Sud Africa 	388
+Altri Paesi dell'Africa (7) 	300
+Australia 	800
+Nuova Zelanda 	804
+Altri Paesi o territori Oceania (8) 	810
+Non specificato 	777
+TOTALE PAESI ESTERI 	888
+*La Classificazione Eurostat (Standard Code List) può essere scaricata da “RAMON, Eurostat's metadata server”, al seguente link:
+http://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=LST_NOM_DTL&StrNom=CL_G
+EO&StrLanguageCode=EN&IntPcKey=&StrLayoutCode=HIERARCHIC&CFID=3197144&CFTOKEN=5f1cbd
+9775d1a368-1DB7CE9E-AB6F-798CA7710BCBF24350A7&
+jsessionid=1f51e057c3e729530bf75c7144f4a743c524TR                                                                                                                                 1. Altri Paesi Europei: Albania, Andorra, Bielorussia, Bosnia-Erzegovina, Faeroe Islands (DK), Gibilterra (UK), Guernsey, Isle of Man,
+Jersey, Kosovo, Macedonia, Moldova, Monaco, Montenegro, San Marino, Serbia, Stato della città del Vaticano, Svalbard e Jan
+Mayen, Bonaire, Saint Eustatius and Saba (NL).
+2. Altri Paesi o territori Nord – Americani: Bermuda (UK), Greenland (DK), Saint Pierre and Miquelon (FR)
+3. Altri Paesi Centro – Sud America: Anguilla (UK), Antigua e Barbuda, Aruba (NL), Bahamas, Barbados, Belize, Bolivia, British Virgin
+Islands (UK), Cayman Islands (UK), Cile, Clipperton (FR), Colombia, Costa Rica, Cuba, Curacao (NL), Domenica, Flakland
+Islands (UK), Repubblica Dominicana, Ecuador, El Salvador, Giamaica, Grenada, Guatemala, Guyana, Haiti, Honduras,
+Monserrat (UK), Nicaragua, Panama, Paraguay, Perù, Puerto Rico (US), Saint Barthelemy (FR), Saint Kitts e Nevis, Saint Lucia,
+Saint Martin (FR), Saint Vincent e Grenadine, Sint Marteen (NL), Suriname, Trinidad e Tobago, Turks and Cacois Islands (UK),
+Uruguay, US Virgin Islands (US).
+4. Altri Paesi Asia Occidentale [già Altri Paesi del Medio Oriente]: Arabia Saudita, Armenia, Azerbaigian, Bahrein, Emirati Arabi Uniti,
+Georgia, Giordania, Iran, Iraq, Kuwait, Libano, Oman, Qatar, Siria, Territori dell'Autonomia Palestinese, Yemen
+5. Altri Paesi dell'Asia: Afghanistan, Bangladesh, Bhutan, Birmania, British Indian Ocean Territory (UK), Brunei Darussalam, Cambogia,
+Corea del Nord, Filippine, Indonesia, Kazakistan, Kirghizistan, Laos, Malaysia, Maldive, Mongolia, Nepal, Pakistan, Singapore,
+SriLanka, Tagikistan, Taiwan, Thailandia, Timor Est, Turkmenistan, Uzbekistan, Vietnam
+6. Altri Paesi Africa Mediterranea [già Paesi dell'Africa Mediterranea]: Libia, Tunisia, Algeria, Marocco
+7. Altri Paesi dell’Africa: Angola, Benin, Botswana, Burkina Faso, Burundi, Camerun, Capo Verde, Ciad, Comore, Congo, Costa
+d'Avorio, Eritrea, Etiopia, Gabon, Gambia, Ghana, Gibuti, Guinea, Guinea Bissau, Guinea Equatoriale, Kenya, Lesotho, Liberia,
+Madagascar, Malawi, Mali, Mauritania, Mauritius, Mozambico, Namibia, Niger, Nigeria, Repubblica Centrafricana, Repubblica
+Democratica del Congo, Ruanda, Sant’Elena (UK), São Tomé e Príncipe, Senegal, Seychelles, Sierra Leone, Somalia, Sudan,
+Sudan del Sud, Swaziland, Tanzania, Togo, Uganda, Western Sahara, Zambia, Zimbabwe.
+8. Altri Paesi o territori Oceania: American Samoa (US), Christmas Islands (AU), Cocos (Keeling) Islands (AU), Cook Islands (NZ), Figi,
+French Polinesia (FR), Guam (US), Heard Island and McDonald Islands (AU), Kiribati, Isole Marshall, Stati Federati Micronesia,
+New Caledonia (FR), Nauru, Niue (NZ), Norfolk Island (AU), Northern Marianas (US), Palau, Papua Nuova Pitcairn Islands (UK),
+Isole Salomone, Samoa, Tokelau (NZ), Tonga, Tuvalu, United States Minor Outlying Islands (US), Vanuatu Wallis and Futuna
+(FR).
+Territori appartenenti alla Spagna: Ceuta, Melilla, Isole Canarie
+Territori appartenenti alla Francia: Guadeloupe, Martinique, Mayotte, Guyana, Réunion.                                                                                                                                         

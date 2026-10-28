@@ -1,0 +1,102 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rm="http://www.regione.liguria.it/turismo/rimovcli" targetNamespace="http://www.regione.liguria.it/turismo/rimovcli">
+	<xs:element name="c59">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="mensile" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Elemento predisposto a contenere i dati del modello C/59_M che l’utente può fornire con qualunque invio giornaliero; ogni nuovo invio relativo ad uno stesso mese sovrascriverà i dati mensili dell’invio precedente e i dati validi del C/59_M saranno quelli corrispondenti all’ultimo invio fatto nel mese in questione</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="numcameredisp" type="xs:nonNegativeInteger">
+							<xs:annotation>
+								<xs:documentation>numero camere effettivamente disponibili nel mese </xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="numlettidisp" type="xs:nonNegativeInteger">
+							<xs:annotation>
+								<xs:documentation>numero letti effettivamente disponibili nel mese</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="softwaregestionale" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>eventuale software gestionale in uso</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="giornaliero">
+					<xs:annotation>
+						<xs:documentation>Elemento predisposto a contenere i dati del modello C/59_G.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="rigac59" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Elemento contenente i dati corrispondenti alle righe del Mod. C/59_G </xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="nazione" use="required">
+										<xs:annotation>
+											<xs:documentation>Stringa che deve assumere valore "i" se la riga  che si sta trattando si riferisce ad una provincia italiana, "e" se la riga  che si sta trattando si riferisce ad ad uno stato estero</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="i"/>
+												<xs:enumeration value="e"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="residenza" use="required">
+										<xs:annotation>
+											<xs:documentation>Contiene  o il codice ISTAT della provincia di residenza (se nazione = “i”) o il codice del paese estero di residenza (se nazione = “e”). I codici dei paesi esteri devono essere quelli presenti nell’allegato alla circolare ISTAT n.5 del 27 febbraio 2012 (codifica regioni italiane e paesi esteri di residenza_new.pdf);</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:pattern value="[0-9]{3}"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="arrivati" type="xs:nonNegativeInteger" use="required">
+										<xs:annotation>
+											<xs:documentation>numero delle persone arrivate che hanno la residenza indicata nell’attributo “residenza”</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="partiti" type="xs:nonNegativeInteger" use="required">
+										<xs:annotation>
+											<xs:documentation>numero delle persone partite che hanno la residenza indicata nell’attributo “residenza”</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="presenti" type="xs:nonNegativeInteger" use="required">
+										<xs:annotation>
+											<xs:documentation>numero delle persone presenti nella notte (esclusi i diurni), che hanno la residenza indicata nell’attributo “residenza”</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="diurni" type="xs:nonNegativeInteger" use="optional">
+										<xs:annotation>
+											<xs:documentation>numero delle persone che arrivano e partono nello stesso giorno con residenza quella indicata nell’attributo “residenza” della rigac59</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="numcamereoccupate" type="xs:nonNegativeInteger" use="optional">
+							<xs:annotation>
+								<xs:documentation>N. di camere (unità abitative) occupate; attributo obbligatorio solo per Alberghi, Locande, Residenze d'epoca, RTA, Alberghi diffusi.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="idstruttura" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>Codice identificativo della struttura nel sistema regionale di classificazione</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="data" type="xs:date" use="required">
+				<xs:annotation>
+					<xs:documentation>Data del giorno di rilevazione del movimento clienti</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

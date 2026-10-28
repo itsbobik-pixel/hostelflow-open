@@ -1,0 +1,1383 @@
+/* Brand: orange #ff7a1a with near-black ink. Text on orange is dark (white
+   on this orange is too faint to read); links use a darker orange. */
+/* Colours. Themes: Default (black and white, as in Costello's app),
+   Flow (the orange brand), One (green), Vibe (purple);
+   each light or dark: dark follows the system unless Settings forces a mode. */
+:root{--bg:#f6f5f2;--surface:#fff;--text:#1c1c1c;--muted:#6b6b6b;--border:#e3e1dc;--accent:#ff7a1a;--on-accent:#151515;--link:#b34700;--danger:#c7372f;--ok:#12805c;--warn:#a15c00;--warn-bg:#fff4e0;--danger-bg:#fdecea;--help-bg:#fff3e8;--bed-ok:#cfe8b0;--bed-ok-ink:#27500a;--bed-due:#fcd89a;--bed-due-ink:#633806;--bed-dirty:#f7c1c1;--bed-dirty-ink:#791f1f;--bed-plain:#e6e1d8;--bed-plain-ink:#3c3a36;--bed-use:#fbeb9c;--bed-use-ink:#5c4700;--bar-bg:var(--surface);--bar-ink:var(--text);--bar-muted:var(--muted);--tabs-bg:var(--surface);--tabs-border:var(--border);--tab-ink:var(--text);--tab-on:var(--accent);--tab-on-ink:var(--on-accent);--logo-accent:var(--accent);--logo-tile:var(--accent);--logo-ink:var(--on-accent);--pop:var(--accent);--on-pop:var(--on-accent);--done:var(--accent);--on-done:var(--on-accent)}
+@media (prefers-color-scheme:dark){:root:not([data-mode=light]){--bg:#141414;--surface:#1f1f1f;--text:#eee;--muted:#a0a0a0;--border:#333;--accent:#ff8c3a;--on-accent:#151515;--link:#ffa066;--danger:#ff6b61;--ok:#4cc38a;--warn:#f0b35a;--warn-bg:#3a2c14;--danger-bg:#3d1c1a;--help-bg:#33230f;--bed-ok:#2f4a1a;--bed-ok-ink:#cfe8b0;--bed-due:#5a3d0c;--bed-due-ink:#fcd89a;--bed-dirty:#5c2222;--bed-dirty-ink:#f7c1c1;--bed-use:#4a4214;--bed-use-ink:#f6e79a;--bed-plain:#3a3835;--bed-plain-ink:#e6e1d8}}
+:root[data-mode=dark]{--bg:#141414;--surface:#1f1f1f;--text:#eee;--muted:#a0a0a0;--border:#333;--accent:#ff8c3a;--on-accent:#151515;--link:#ffa066;--danger:#ff6b61;--ok:#4cc38a;--warn:#f0b35a;--warn-bg:#3a2c14;--danger-bg:#3d1c1a;--help-bg:#33230f;--bed-ok:#2f4a1a;--bed-ok-ink:#cfe8b0;--bed-due:#5a3d0c;--bed-due-ink:#fcd89a;--bed-dirty:#5c2222;--bed-dirty-ink:#f7c1c1;--bed-use:#4a4214;--bed-use-ink:#f6e79a;--bed-plain:#3a3835;--bed-plain-ink:#e6e1d8}
+:root[data-theme=default]{--bg:#f7f6f3;--surface:#fff;--text:#181816;--muted:#86847d;--border:#e5e3de;--accent:#181816;--on-accent:#fff;--link:#3d3c38;--help-bg:#f0efeb;--logo-accent:#8a8881;--pop:#3a6fd4;--on-pop:#fff;--done:#17c4aa;--on-done:#fff}
+@media (prefers-color-scheme:dark){:root[data-theme=default]:not([data-mode=light]){--bg:#111110;--surface:#1c1c1a;--text:#e8e6e0;--muted:#8d8b83;--border:#2e2d2a;--accent:#ecebe6;--on-accent:#181816;--link:#d6d4cd;--help-bg:#26251f;--logo-accent:#8d8b83;--pop:#5b8ae6;--on-pop:#fff;--done:#17c4aa;--on-done:#0b1f1b}}
+:root[data-theme=default][data-mode=dark]{--bg:#111110;--surface:#1c1c1a;--text:#e8e6e0;--muted:#8d8b83;--border:#2e2d2a;--accent:#ecebe6;--on-accent:#181816;--link:#d6d4cd;--help-bg:#26251f;--logo-accent:#8d8b83;--pop:#5b8ae6;--on-pop:#fff;--done:#17c4aa;--on-done:#0b1f1b}
+:root{color-scheme:light}
+:root[data-mode=dark]{color-scheme:dark}
+@media (prefers-color-scheme:dark){:root:not([data-mode=light]){color-scheme:dark}}
+*{box-sizing:border-box}
+/* Keep room for the scrollbar on every tab, so switching between a short
+   and a long tab does not shift the page sideways. */
+html{scrollbar-gutter:stable}
+/* A faint dot pattern, so the page isn't flat. */
+body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background-color:var(--bg);background-image:radial-gradient(color-mix(in srgb,var(--text) 9%,transparent) 1px,transparent 1.3px);background-size:22px 22px;color:var(--text);font-size:15px;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:640px;margin:0 auto;padding:24px 16px calc(96px + env(safe-area-inset-bottom))}
+h1{margin:0;font-size:22px}
+h1.logo{display:flex;align-items:center;gap:8px;font-size:24px;font-weight:600;letter-spacing:-.01em}
+.logo-mark{flex:none}
+.logo-mark rect{fill:var(--logo-tile)}
+.logo-mark path{fill:none;stroke:var(--logo-ink);stroke-width:52;stroke-linecap:round;stroke-linejoin:round}
+h1.logo b{color:var(--logo-accent);font-weight:600}
+h2{margin:0 0 12px;font-size:17px}
+.sub{color:var(--muted);margin:4px 0 24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px}
+label{display:block;font-size:12px;color:var(--muted);margin:12px 0 4px}
+input,select{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font:inherit;font-size:16px}
+input:focus,select:focus{outline:2px solid var(--accent);outline-offset:-1px}
+input.bad{border-color:var(--danger)}
+label.consent{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.45;color:var(--text);margin:16px 0 4px;cursor:pointer}
+label.consent input{width:20px;height:20px;flex:none;margin:0;accent-color:var(--accent)}
+label.consent a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+button{padding:10px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font:inherit;cursor:pointer}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:600;width:100%;margin-top:16px}
+button.link{border:none;background:none;color:var(--link);padding:0;font-size:14px}
+button.small{padding:5px 10px;font-size:13px}
+button.danger{color:var(--danger)}
+button:disabled{opacity:.6;cursor:default}
+.err{color:var(--danger);font-size:13px;margin-top:10px;min-height:1em}
+.field-head{position:relative}
+.help-toggle{display:inline-flex;width:20px;height:20px;margin-left:5px;padding:0;border:none;border-radius:50%;background:none;color:var(--muted);vertical-align:-5px;transition:transform .15s}
+.help-toggle svg{display:block;width:100%;height:100%}
+.help-toggle .ring{fill:none;stroke:currentColor;stroke-width:1.2;opacity:.5;transition:stroke .15s,opacity .15s}
+.help-toggle .dot,.help-toggle .stem{fill:currentColor;transition:fill .15s}
+.help-toggle:hover{color:var(--text)}
+.help-toggle.on{transform:scale(1.1)}
+.help-toggle.on .ring{stroke:var(--help-line,var(--accent));stroke-width:1.6;opacity:1}
+.help-toggle.on .dot{fill:var(--help-line,var(--accent))}
+.help-toggle.on .stem{fill:var(--text)}
+.help-bubble{position:absolute;left:0;right:0;top:100%;margin-top:10px;z-index:20;padding:12px 14px;border-radius:14px;background:var(--help-bg);border:1.5px solid var(--help-line,var(--accent));color:var(--text);font-size:13px;line-height:1.5;box-shadow:0 10px 28px rgba(0,0,0,.18);transform-origin:var(--tail,12px) top;animation:bubble .16s ease-out}
+.help-bubble::before{content:'';position:absolute;top:-7.5px;left:calc(var(--tail,12px) - 6px);width:12px;height:12px;background:var(--help-bg);border-left:1.5px solid var(--help-line,var(--accent));border-top:1.5px solid var(--help-line,var(--accent));border-top-left-radius:3px;transform:rotate(45deg)}
+.help-bubble strong{display:block;margin-bottom:4px;color:var(--help-line,var(--link));font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+.help-bubble p{margin:0}
+@keyframes bubble{from{opacity:0;transform:scale(.92) translateY(-4px)}to{opacity:1;transform:none}}
+.ok{color:var(--ok);font-size:13px;margin-top:10px}
+/* Settings: sections that fold open. */
+details.sect{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:12px}
+details.sect>summary{list-style:none;display:flex;align-items:center;gap:14px;padding:14px 18px;cursor:pointer;border-radius:12px}
+details.sect>summary::-webkit-details-marker{display:none}
+details.sect>summary:hover{background:var(--bg)}
+details.sect[open]>summary{border-bottom:1px solid var(--border);border-radius:12px 12px 0 0}
+.sect-ico{width:38px;height:38px;flex:none;border-radius:10px;background:var(--bg);color:var(--text);display:flex;align-items:center;justify-content:center}
+.sect-ico svg{width:20px;height:20px}
+details.sect[open] .sect-ico{background:var(--accent);color:var(--on-accent)}
+.sect-title{display:block;font-weight:700}
+.sect-sub{display:block;font-size:13px;color:var(--muted);margin-top:1px}
+.sect-chev{font-size:22px;color:var(--muted);transition:transform .2s;line-height:1}
+details.sect[open] .sect-chev{transform:rotate(90deg)}
+.sect-body{padding:16px 18px 20px}
+.sect-body>:first-child,.sect-body>div>:first-child,.sect-body>form>:first-child{margin-top:0}
+/* Pop-up window (new note…). */
+.modal-back{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:16px;animation:fade .15s ease-out}
+.modal{position:relative;width:100%;max-width:460px;background:var(--surface);border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,.3);max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);overflow-y:auto;animation:pop .18s ease-out}
+/* Your own note: a tap opens its edit (dashboard.js). */
+.note.editable{cursor:pointer}
+.note.editable:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--border))}
+.modal-head{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--border)}
+.modal-head h2{margin:0;flex:1}
+.modal-head button{border:none;background:none;font-size:22px;line-height:1;padding:2px 6px;color:var(--muted)}
+.modal-body{padding:16px 18px 18px}
+.modal-foot{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
+.modal-foot button.primary{width:auto;margin:0;padding:10px 22px}
+@keyframes fade{from{opacity:0}}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.97)}}
+.add-btn{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;padding:0;border-radius:8px;background:var(--pop);border-color:var(--pop);color:var(--on-pop);font-size:20px;line-height:1;font-weight:600}
+.row{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--border)}
+.row:first-of-type{border-top:none}
+.row .grow,.grow{flex:1;min-width:0}
+.muted{color:var(--muted);font-size:13px}
+.pill{font-size:11px;padding:2px 8px;border-radius:20px;background:var(--bg);border:1px solid var(--border);color:var(--muted);white-space:nowrap}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+[hidden]{display:none!important}
+
+header.bar{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+header.bar .grow .muted{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:480px){header.bar{flex-wrap:wrap}nav.tabs{width:100%;overflow-x:auto;scrollbar-width:none}nav.tabs::-webkit-scrollbar{display:none}header.bar nav.tabs button{flex:1 0 auto;padding:7px 4px;font-size:12.5px}header.bar nav.tabs{gap:2px}.wrap.app header.bar{position:relative}}
+nav.tabs{display:flex;gap:4px;background:var(--tabs-bg);border:1px solid var(--tabs-border);border-radius:10px;padding:3px}
+nav.tabs button{border:none;padding:7px 12px;font-size:14px;font-weight:600;border-radius:7px;background:none;color:var(--tab-ink);white-space:nowrap}
+nav.tabs button.on{background:var(--tab-on);color:var(--tab-on-ink)}
+
+.banner{border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:14px}
+.banner.warn{background:var(--warn-bg);color:var(--warn)}
+.banner.danger{background:var(--danger-bg);color:var(--danger)}
+.banner.info{background:var(--surface);border:1px solid var(--border);color:var(--muted)}
+/* The demo (src/demo.js): the button under the sign-in, the line on top of the app. */
+button.demo-try{width:100%;margin:4px 0 14px;padding:12px;font-weight:600;border-style:dashed}
+/* Right under the header, the full width, as one piece with it. */
+.demo-bar{margin:-20px 0 16px;border-radius:0;border-width:0 0 1px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;justify-content:center;padding:9px 14px}
+.demo-bar .link{font-weight:600}
+
+.add{display:flex;gap:10px;margin-bottom:16px}
+.add label.big{flex:1;margin:0;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:var(--on-accent);border-radius:12px;padding:16px;font-size:17px;font-weight:600;cursor:pointer}
+.add button{border-radius:12px;font-size:14px}
+.section{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:20px 0 8px}
+
+.guest{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:10px;overflow:hidden}
+.guest .head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:start;padding:12px 14px;cursor:pointer}
+.guest .head input[type=checkbox]{grid-column:1;width:22px;height:22px;margin:0 12px 0 0;accent-color:var(--accent)}
+.guest .head .grow{grid-column:2;align-self:center}
+/* While a document is read: the spinner sits where the checkbox will be, centred, same room. */
+.guest .head .spinner{grid-column:1;align-self:center;box-sizing:border-box;width:20px;height:20px;border-width:2.5px;margin:0 13px 0 1px}
+.guest .head .state{grid-column:3;grid-row:1;margin-left:10px}
+.guest .name{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.guest .meta{color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* The state: a small tinted pill with a dot, top right. */
+.guest .state{display:inline-flex;align-items:center;gap:5px;padding:3px 9px 3px 8px;border-radius:999px;font-size:11.5px;font-weight:600;white-space:nowrap;background:color-mix(in srgb,currentColor 12%,transparent)}
+.guest .state::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}
+.state.ready{color:var(--ok)} .state.fix{color:var(--warn)} .state.error{color:var(--danger)} .state.sent,.state.busy{color:var(--muted)}
+.guest .body{border-top:1px solid var(--border);padding:4px 14px 14px}
+.guest .photo{display:block;width:100%;max-height:320px;object-fit:contain;background:var(--bg);border-radius:8px;margin-top:10px;cursor:zoom-in}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+.grid .full{grid-column:1/-1}
+.notes{margin-top:10px;font-size:13px;border-radius:8px;padding:8px 10px}
+.notes.danger{background:var(--danger-bg);color:var(--danger)}
+.notes.warn{background:var(--warn-bg);color:var(--warn)}
+.notes.info{background:var(--help-bg);color:var(--text)}
+.notes.mate-nights{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.notes.mate-nights span{flex:1;min-width:180px}
+.notes ul{margin:0;padding-left:18px}
+.guest .foot{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+.spinner{width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;flex:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.sendbar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--border);padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+.sendbar .in{max-width:640px;margin:0 auto;display:flex;gap:10px;align-items:center}
+.sendbar button.primary{margin:0;width:auto;flex:1;padding:14px;font-size:16px;font-weight:600}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(90px + env(safe-area-inset-bottom));background:var(--text);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;max-width:calc(100% - 32px);z-index:10}
+/* Signed in: full width. The top bar is the same on every tab, so the logo never moves. */
+.wrap.app{max-width:none;padding:0 0 calc(96px + env(safe-area-inset-bottom))}
+/* "Town", the default top bar: our drawing of an old town at dusk under string
+   lights (public/header-pc.svg, scripts/make-header.mjs) on phones and computers
+   alike (Bob, 20. 10.), the simpler header.svg under it in case it doesn't load;
+   logo and tabs sit on it in white. */
+.wrap.app header.bar{
+  --bar-ink:#fff;--bar-muted:rgba(255,255,255,.75);--tabs-bg:rgba(12,16,40,.38);--tabs-border:rgba(255,255,255,.2);
+  --tab-ink:rgba(255,255,255,.9);--tab-on:#fff;--tab-on-ink:#181816;--logo-tile:#fff;--logo-ink:#181816;--logo-accent:#ffd27a;
+  background:#1b2347 linear-gradient(rgba(10,12,30,.28),rgba(10,12,30,.05)) center/cover no-repeat;
+  background-image:linear-gradient(90deg,rgba(8,12,28,.35),rgba(8,12,28,0) 40%),url(/header-pc.svg),url(/header.svg);
+  background-size:cover,auto 100%,cover;background-position:0 0,center bottom,center;
+  color:var(--bar-ink);padding:18px 24px 22px;margin:0 0 20px}
+.wrap.app header.bar h1.logo{color:var(--bar-ink);text-shadow:0 1px 8px rgba(0,0,0,.25)}
+/* Blur behind the tabs on wider screens only: on phones it would become the
+   reference box of the gear (absolutely placed next to the logo). */
+@media (min-width:481px){.wrap.app header.bar nav.tabs{backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}}
+/* Phones (tabs wrap under the logo, so the header is narrow and tall): the same
+   town drawn for that shape (header-phone.svg), bigger houses and bulbs, so it
+   isn't a thin strip hidden behind the tabs. Wider, the header is one short row
+   and the computer drawing fits it. */
+@media (max-width:480px){.wrap.app header.bar{background-image:linear-gradient(90deg,rgba(8,12,28,.35),rgba(8,12,28,0) 40%),url(/header-phone.svg),url(/header.svg);background-size:cover}}
+/* Logo left, tabs in the middle. Wide screens: the same picture, only the layout changes. */
+@media (min-width:700px){.wrap.app header.bar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;min-height:118px}}
+.wrap.app header.bar .muted{color:var(--bar-muted)}
+.wrap.app .tab{padding:0 24px}
+@media (max-width:640px){.wrap.app header.bar{padding:12px 16px;margin-bottom:16px}.wrap.app .tab{padding:0 16px}}
+
+/* Dashboard: one column on phones; notes | needs attention | routine on wide screens. */
+.board{display:grid;gap:16px;grid-template-columns:minmax(0,1fr);grid-template-areas:"hand" "att" "notes" "routine"}
+.board:has(#bd-handover-card[hidden]){grid-template-areas:"att" "notes" "routine"}
+@media (min-width:960px){
+  .board{grid-template-columns:260px minmax(0,1fr) 270px;grid-template-areas:"notes hand routine" "notes att routine";grid-template-rows:auto 1fr;align-items:start}
+  .board:has(#bd-handover-card[hidden]){grid-template-areas:"notes att routine";grid-template-rows:auto}
+}
+.handover{display:flex;align-items:flex-start;gap:10px;margin:0 0 8px;padding:10px 10px 10px 12px;border:1px solid color-mix(in srgb,#9b87f5 35%,var(--border));border-radius:10px;background:color-mix(in srgb,#9b87f5 7%,var(--surface));color:var(--text);transition:opacity .2s,transform .2s}
+.handover:last-child{margin-bottom:0}
+.handover.gone{opacity:0;transform:translateX(12px)}
+.handover .ho-main{flex:1;min-width:0;cursor:pointer}
+.handover .meta{display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:12px;color:var(--muted)}
+.handover .body{white-space:pre-wrap;font-size:14.5px;line-height:1.45}
+.ho-tick{flex:none;align-self:center;width:34px;height:34px;padding:0;border-radius:50%;border:1.5px solid color-mix(in srgb,#7c66e0 55%,var(--border));background:var(--surface);color:#7c66e0;font-size:16px;font-weight:700;line-height:1}
+.ho-tick:hover{background:#7c66e0;border-color:#7c66e0;color:#fff}
+.hand-badge{background:#7c66e0!important}
+.nt-hand{border-color:#7c66e0}
+.nt-hand .nt-attn-ico{border-color:#7c66e0;color:#7c66e0}
+.nt-hand:hover,.nt-hand.on{background:color-mix(in srgb,#7c66e0 10%,transparent)}
+.nt-hand.on .nt-attn-ico{background:#7c66e0;color:#fff}
+@media (min-width:1280px){.guest.open .body:has(>.photo) .grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:1280px){.board{grid-template-columns:280px minmax(0,1fr) 300px;gap:20px}}
+
+/* Wide screens: the other tabs spread out too. */
+@media (min-width:960px){
+  /* Check-in in the middle of the screen, not stuck to the left. */
+  #tab-checkin{max-width:1040px;margin:0 auto}
+  #tab-checkin #ci-empty,#tab-checkin .banner{text-align:center}
+  /* The Add button and every guest, closed or open, across the whole width, one under another. */
+  #ci-list>.section{margin:4px 0 0}
+  /* An open guest: the document photo on the left, the form on the right. */
+  .guest.open .body:has(>.photo){display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:24px;align-items:start}
+  .guest.open .body:has(>.photo)>*{grid-column:2}
+  .guest.open .body>.photo{grid-column:1;grid-row:1/span 30;max-height:560px;margin-top:14px;position:sticky;top:16px}
+  .guest.open .grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .guest.open .body:has(>.photo) .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sendbar .in{max-width:1040px;padding:0 8px;justify-content:center}
+  .sendbar button.primary{flex:0 1 420px}
+  #tab-settings{max-width:820px;margin:0 auto}
+  /* Shifts and Housekeeping in the middle too. */
+  #tab-shifts{max-width:1100px;margin:0 auto}
+  #tab-housekeeping{max-width:1240px;margin:0 auto}
+}
+
+/* ----- Menu as in Costello: separate buttons low in the header, the open one black ----- */
+.wrap.app header.bar nav.tabs{background:none;border:none;padding:0;gap:8px;backdrop-filter:none;-webkit-backdrop-filter:none}
+.wrap.app header.bar nav.tabs button{background:rgba(255,255,255,.92);color:#181816;border:1px solid rgba(0,0,0,.06);border-radius:9px;padding:8px 18px;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.18);transition:background .15s,color .15s,transform .12s}
+.wrap.app header.bar nav.tabs button:hover{background:#fff}
+.wrap.app header.bar nav.tabs button.on{background:#181816;color:#fff;border-color:#181816}
+@media (min-width:700px){
+  .wrap.app header.bar{grid-template-columns:1fr;grid-template-rows:auto auto;row-gap:22px;min-height:150px;padding-bottom:16px}
+  .wrap.app header.bar nav.tabs{justify-self:center;align-self:end}
+  .wrap.app header.bar nav.tabs button{min-width:112px}
+  .wrap.app header.bar nav.tabs button.tab-plus{min-width:0;width:38px;padding:0!important}
+}
+@media (max-width:480px){
+  .wrap.app header.bar nav.tabs{gap:4px}
+  .wrap.app header.bar nav.tabs button{padding:7px 5px;font-size:12px;border-radius:8px}
+}
+/* Greeting and a line of the day, under the header. */
+.hello{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:-4px 0 16px}
+.hello b{font-size:20px;letter-spacing:-.01em}
+.hello span{color:var(--muted);font-size:13px}
+.hello i{margin-left:auto;color:var(--muted);font-size:13px}
+@media (max-width:699px){.hello i{margin-left:0;flex-basis:100%}}
+
+/* Everything done: a little party (as in Costello). */
+.all-done .big{animation:party 1.6s ease-in-out infinite}
+@keyframes party{0%,100%{transform:none}25%{transform:translateY(-6px) rotate(-8deg)}50%{transform:rotate(6deg)}75%{transform:translateY(-3px) rotate(-3deg)}}
+.confetti{position:absolute;top:30%;width:8px;height:8px;border-radius:2px;pointer-events:none;animation:confetti 1s ease-out forwards}
+/* A tab waiting for its first data: hidden for that moment (core.js showTab). */
+.tab-wait{opacity:0}
+/* ----- Small animations (none when the phone asks for less motion) ----- */
+@media (prefers-reduced-motion:no-preference){
+  .tab-enter{animation:tabIn .22s ease both}
+  .slide-l{animation:slideL .22s ease both}
+  .slide-r{animation:slideR .22s ease both}
+  .pop-in{animation:popIn .32s cubic-bezier(.34,1.4,.64,1) both}
+  .bounce{animation:bounce .32s ease}
+  .flash{animation:flash .9s ease}
+  .task .check{transition:transform .15s,background .15s,border-color .15s}
+  .task.done .check,.task.completing .check{animation:tick .28s cubic-bezier(.34,1.6,.64,1)}
+  button:not(:disabled):active{transform:scale(.97)}
+  .board .card,.att-item,.note{transition:transform .18s ease,box-shadow .18s ease}
+  @media (hover:hover){
+    .board .card:hover{box-shadow:0 6px 22px rgba(0,0,0,.09)}
+    .att-item:hover,.note:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+  }
+  .toast{animation:toastIn .25s cubic-bezier(.34,1.4,.64,1)}
+  .guest .state.busy{animation:pulse 1.1s ease-in-out infinite}
+}
+@keyframes tabIn{from{opacity:0;transform:translateY(6px)}}
+@keyframes slideL{from{opacity:0;transform:translateX(14px)}}
+@keyframes slideR{from{opacity:0;transform:translateX(-14px)}}
+@keyframes popIn{from{opacity:0;transform:scale(.94) translateY(8px)}}
+@keyframes bounce{40%{transform:scale(1.35)}}
+@keyframes tick{0%{transform:scale(.6)}60%{transform:scale(1.15)}100%{transform:none}}
+@keyframes flash{0%{background:color-mix(in srgb,var(--done) 30%,transparent)}100%{background:transparent}}
+@keyframes toastIn{from{opacity:0;transform:translate(-50%,16px)}}
+@keyframes pulse{50%{opacity:.5}}
+@keyframes confetti{from{opacity:1;transform:translate(0,0) rotate(0)}to{opacity:0;transform:translate(var(--dx),110px) rotate(540deg)}}
+.board .card{margin:0;padding:0;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.board h2{display:flex;align-items:center;gap:8px;min-height:44px;margin:0;padding:6px 10px 6px 16px;background:var(--bg);border-bottom:1px solid var(--border);font-size:12.5px;font-weight:500;text-transform:uppercase;letter-spacing:.08em}
+.board .card>div{padding:12px 16px 16px}
+.board h2 button.small{text-transform:none;letter-spacing:0}
+.board h2 .grow{flex:1}
+.att-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:12px 14px;border:none;border-radius:10px;margin-bottom:8px;font-size:14px;font-weight:600}
+.att-item.danger{background:var(--danger-bg);color:var(--danger)}
+.att-item.warn{background:var(--warn-bg);color:var(--warn)}
+.att-item.go{background:var(--help-bg);color:var(--link)}
+.att-item .grow{flex:1}
+.task{display:flex;align-items:flex-start;gap:10px;padding:9px 2px;border-top:1px solid var(--border);cursor:pointer;font-size:14px;line-height:1.4;transition:opacity .35s,transform .35s}
+.task:first-of-type{border-top:none}
+.task .check{width:20px;height:20px;flex:none;border:2px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--on-accent);transition:background .15s,border-color .15s}
+.task.done .check,.task.completing .check{background:var(--done);border-color:var(--done);color:var(--on-done)}
+#bd-routine.now .task:not(.done) .check{border-color:var(--pop)}
+.task.done .txt{color:var(--muted);text-decoration:line-through}
+.task .by{font-size:11px;color:var(--muted);white-space:nowrap;margin-left:auto;padding-left:8px;padding-top:2px}
+.task.completing{opacity:0;transform:translateX(24px);max-height:0!important;padding-top:0;padding-bottom:0;border-top-color:transparent;overflow:hidden;transition:opacity .2s,transform .25s,max-height .3s ease,padding .3s ease}
+.all-done{text-align:center;padding:24px 8px;color:var(--muted);font-size:14px}
+.all-done .big{font-size:28px;display:block;margin-bottom:6px}
+.rt-nav{display:flex;align-items:center}
+.rt-nav button{border:none;background:none;padding:2px 10px;font-size:22px;line-height:1;color:var(--muted)}
+.rt-label{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:4px 0 6px}
+.rt-label.now{color:var(--pop);font-weight:700}
+.note-new textarea,.routine-edit{display:block;width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font:inherit;font-size:15px;resize:vertical}
+.routine-edit{font-family:ui-monospace,Consolas,monospace;font-size:14px;line-height:1.5}
+.note-new textarea:focus,.routine-edit:focus{outline:2px solid var(--accent);outline-offset:-1px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 10px}
+.chip{padding:4px 10px;border-radius:20px;font-size:12px;border:1px solid var(--border);background:var(--surface);color:var(--muted)}
+.chip.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:600}
+/* Same weight on and off, so picking one doesn't shift the others. */
+.chip.cat{font-weight:600;border:1.5px solid var(--c);color:var(--c);background:transparent}
+.chip.cat.on{background:var(--c);color:#fff}
+.badge{color:#fff;padding:2px 10px;border-radius:12px;font-size:11.5px;font-weight:700;white-space:nowrap}
+.note-new button.primary{margin-top:0;padding:10px}
+.note{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:9px 11px;margin-top:8px}
+#bd-routine .task{font-size:12.5px;padding:7px 2px}
+#bd-routine .task .check{width:16px;height:16px;font-size:11px;border-radius:5px}
+#bd-routine .rt-label{font-size:11px}
+#bd-notes .note:first-child{margin-top:0}
+.note .meta{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:var(--muted)}
+.note .meta .tags{display:flex;align-items:center;gap:5px 6px;flex-wrap:wrap;flex:1;min-width:0}
+.note .meta .cats{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+
+.note .body{margin:6px 0;font-size:13px;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere}
+.note .acts{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted)}
+.note .meta .when{white-space:nowrap;flex:none;line-height:22px}
+.note .acts button{border:none;background:none;padding:0;font-size:12px;color:var(--muted)}
+@media (pointer:coarse){.note .acts{gap:4px}.note .acts button{padding:10px 8px;margin:-6px 0;font-size:13px}}
+.note .acts button.liked{color:var(--link);font-weight:700}
+/* Housekeeping map: everything sits on a grid of --u sized cells. */
+/* The floor the rooms stand on. */
+#hk-map-wrap{overflow-x:auto;margin-top:14px;padding:14px;background:var(--bg);border-radius:14px}
+.hk-map{position:relative;margin:0 auto}
+.hk-map.editing{outline:2px dashed var(--border);outline-offset:6px;border-radius:4px}
+.hk-room{position:absolute;background:var(--surface);border:2px solid color-mix(in srgb,var(--text) 30%,transparent);border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.07)}
+.hk-room.other{border-style:dashed;background:repeating-linear-gradient(45deg,transparent 0 7px,color-mix(in srgb,var(--text) 5%,transparent) 7px 14px)}
+.hk-rname{position:absolute;left:8px;top:5px;font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100% - 16px);pointer-events:none}
+.hk-bed{position:relative;flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05;cursor:pointer;background:var(--bed-plain);color:var(--bed-plain-ink);transition:filter .12s}
+.hk-bed:hover{filter:brightness(.96)}
+/* A pillow at the head of each bed. */
+.hk-bed::before{content:'';position:absolute;border-radius:3px;background:rgba(255,255,255,.6);box-shadow:0 0 0 1px rgba(0,0,0,.06)}
+.hk-bed b,.hk-bed small{position:relative}
+.hk-bed b{font-size:13px}
+.hk-bed small{font-size:9px;opacity:.8}
+.hk-bed+.hk-bed{border-left:1.5px solid rgba(0,0,0,.18)}
+.hk-bed.st-ok,.hk-pill.st-ok{background:var(--bed-ok);color:var(--bed-ok-ink)}
+.hk-bed.st-due,.hk-pill.st-due{background:var(--bed-due);color:var(--bed-due-ink)}
+.hk-bed.st-dirty,.hk-pill.st-dirty{background:var(--bed-dirty);color:var(--bed-dirty-ink)}
+.hk-bed.st-none,.hk-pill.st-none{background:var(--bed-plain);color:var(--bed-plain-ink)}
+.hk-pill{border:none;font-weight:600}
+.hk-bed.sel{box-shadow:inset 0 0 0 3px var(--accent)}
+.editing .hk-room{touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+.hk-room.sel{outline:2.5px solid var(--accent);outline-offset:1px}
+.hk-room.sel{z-index:1}
+.hk-rsum{position:absolute;left:8px;right:8px;bottom:6px;display:flex;flex-wrap:wrap;gap:3px;align-items:center;pointer-events:none;overflow:hidden;max-height:calc(100% - 26px)}
+.hk-rsum i{width:9px;height:9px;border-radius:3px;flex:none}
+.hk-rsum span{font-size:11px;color:var(--muted);margin-left:3px}
+.hk-map:not(.editing) .hk-room.room{cursor:pointer}
+.hk-map:not(.editing) .hk-room.room:hover{border-color:var(--accent)}
+.hk-grip{position:absolute;right:-11px;bottom:-11px;width:22px;height:22px;border-radius:50%;background:var(--accent);border:3px solid var(--surface);touch-action:none;cursor:nwse-resize;z-index:4}
+.hk-legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:12px;font-size:12px;color:var(--muted)}
+.hk-legend span{display:inline-flex;align-items:center;gap:5px}
+.hk-legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.hk-acts{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-top:12px}
+.hk-acts button.primary{margin:0;width:auto;flex:1}
+#hk-tools .chips{margin:12px 0 0}
+/* The selected bed / map item slides up from the bottom, next to the thumb. */
+#hk-panel{position:fixed;left:0;right:0;bottom:0;margin:0 auto;max-width:640px;border-radius:16px 16px 0 0;box-shadow:0 -8px 30px rgba(0,0,0,.18);max-height:65vh;overflow:auto;z-index:15;padding-bottom:calc(20px + env(safe-area-inset-bottom));animation:sheet .18s ease-out}
+@keyframes sheet{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.hk-close{position:absolute;top:10px;right:10px;border:none;background:none;font-size:22px;line-height:1;padding:4px 8px;color:var(--muted)}
+#hk-panel .top{padding-right:36px}
+#hk-panel.empty{display:none}
+.hk-keys{display:none;margin:10px 0 0;font-size:12px}
+.hk-keys kbd{font:inherit;font-size:11px;padding:1px 5px;border:1px solid var(--border);border-bottom-width:2px;border-radius:4px;background:var(--bg)}
+/* On a computer: wider map, and the panel sits next to it instead of sliding up. */
+@media (min-width:960px){
+  .hk-layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start}
+  .hk-layout>.card{margin:0}
+  #hk-panel,#hk-panel.empty{display:block;position:sticky;top:16px;left:auto;right:auto;bottom:auto;max-width:none;max-height:calc(100vh - 32px);border-radius:12px;box-shadow:none;padding-bottom:20px;animation:none}
+  #hk-panel.empty .hk-close{display:none}
+  #hk-panel{grid-column:2;grid-row:1/span 2}
+  #hk-list-card,#hk-map-card{grid-column:1}
+  .hk-keys{display:block}
+}
+.hk-layout.editing #hk-map-card{order:-1}
+@media (max-width:959px){.hk-layout{display:flex;flex-direction:column}}
+.hk-pconly{display:none;font-size:12px;max-width:140px;text-align:right}
+/* Phones: the list of beds first (what needs doing); the map is drawn on a computer. */
+@media (max-width:699px){
+  .hk-layout{display:flex;flex-direction:column}
+  .hk-layout.editing #hk-map-card{order:-1}
+  #hk-edit{display:none}
+  .hk-pconly{display:inline}
+  #hk-tools{display:none}
+}
+/* Settings → Property: one row per room. */
+.pr-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--border)}
+.pr-row:first-child{border-top:none}
+.pr-row input{flex:1;min-width:0}
+.pr-row select{width:auto;flex:none;max-width:44%}
+.stepper{display:inline-flex;align-items:center;border:1px solid var(--border);border-radius:8px;overflow:hidden;flex:none}
+.stepper button{border:none;border-radius:0;padding:8px 11px;background:var(--bg);font-weight:700;line-height:1}
+.stepper span{min-width:64px;text-align:center;font-size:13px;padding:0 4px;white-space:nowrap}
+@media (max-width:480px){.pr-row{flex-wrap:wrap}.pr-row input{flex-basis:calc(100% - 38px)}.pr-row .stepper{margin-left:38px}}
+/* Calendar: a two-week timeline, one row per lane of reservations. */
+.beta{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--pop);border:1px solid var(--pop);border-radius:20px;padding:1px 7px;vertical-align:3px}
+.cal-nav{display:inline-flex;gap:4px}
+.cal-nav button{min-width:34px}
+button.primary-lite{background:var(--pop);border-color:var(--pop);color:var(--on-pop);font-weight:600}
+.cal-today{display:flex;gap:10px;margin:14px 0 4px;flex-wrap:wrap}
+.cal-stat{flex:1;min-width:110px;background:var(--bg);border-radius:12px;padding:10px 14px}
+.cal-stat b{display:block;font-size:22px;line-height:1.1}
+.cal-stat span{font-size:12px;color:var(--muted)}
+.cal-stat.arr b{color:#2f7d4f}.cal-stat.dep b{color:#c4553b}.cal-stat.in b{color:var(--pop)}
+.cal-wrap{overflow-x:auto;margin-top:14px;border:1px solid var(--border);border-radius:12px}
+.cal-grid{min-width:calc(130px + var(--days) * 120px);--side:130px}
+.cal-row{display:grid;grid-template-columns:var(--side) minmax(0,1fr);border-bottom:1px solid var(--border)}
+.cal-row.last{border-bottom:2px solid var(--border)}
+.cal-head{grid-template-columns:var(--side) repeat(var(--days),minmax(0,1fr));border-bottom:2px solid var(--border);background:var(--surface)}
+.cal-side{position:sticky;left:0;z-index:3;background:var(--surface);border-right:1px solid var(--border);display:flex;align-items:center;padding:0 12px;font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal-day{text-align:center;padding:10px 4px;border-right:1px solid var(--border)}
+.cal-day small{display:block;font-size:12px;color:var(--muted)}
+.cal-day b{display:block;font-size:17px;font-weight:600}
+.cal-day.we small{color:var(--link)}
+.cal-day.today{background:color-mix(in srgb,var(--text) 5%,var(--surface))}
+.cal-day.today b{color:var(--pop)}
+.cal-room{position:sticky;left:0;display:flex;align-items:center;gap:10px;padding:6px 12px;background:var(--bg);border-bottom:1px solid var(--border);font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.cal-room small{font-size:11px;font-weight:600;letter-spacing:0;color:var(--muted)}
+.cal-track{position:relative;display:grid;grid-template-columns:repeat(var(--days),minmax(0,1fr));height:42px}
+.cal-cell{border:none;border-right:1px solid var(--border);border-radius:0;background:var(--surface);padding:0;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.cal-cell.today{background:color-mix(in srgb,var(--text) 4%,var(--surface))}
+.cal-cell i{width:19px;height:19px;border-radius:50%;border:2px dashed var(--border);color:transparent;font-style:normal;font-size:13px;line-height:15px;transition:all .15s}
+.cal-cell:hover i{border-color:var(--muted);color:var(--muted)}
+/* Reservations: Costello's rounded pills, tinted by channel. */
+.cal-bar{position:absolute;top:6px;bottom:6px;z-index:2;display:flex;align-items:center;justify-content:center;gap:5px;padding:0 14px;border:none;border-radius:999px;font:inherit;font-size:12.5px;font-weight:700;overflow:hidden;white-space:nowrap;cursor:pointer;
+  background:color-mix(in srgb,var(--src) 32%,var(--surface));color:color-mix(in srgb,var(--src) 70%,#000);box-shadow:0 1px 3px rgba(0,0,0,.14);transition:filter .12s,transform .12s}
+.cal-bar span{overflow:hidden;text-overflow:ellipsis}
+.cal-bar small{font-weight:600;opacity:.75}
+.cal-bar:hover,.cal-bar.open{filter:brightness(.96);transform:translateY(-1px)}
+.cal-bar.open{box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--src)}
+.cal-bar.cut-l{border-top-left-radius:6px;border-bottom-left-radius:6px;padding-left:18px}
+.cal-bar.cut-r{border-top-right-radius:6px;border-bottom-right-radius:6px;padding-right:18px}
+.cal-bar.cut-l::before{content:'‹';position:absolute;left:5px;opacity:.5;font-weight:900}
+.cal-bar.cut-r::after{content:'›';position:absolute;right:5px;opacity:.5;font-weight:900}
+.src-booking{--src:#2f62c9}.src-airbnb{--src:#ff5a5f}.src-hostelworld{--src:#f08a24}.src-expedia{--src:#d4a20a}.src-other{--src:#7b7a75}.src-manual{--src:#17a88f}
+.cal-bar.k-block{background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--src) 22%,var(--surface)) 0 6px,color-mix(in srgb,var(--src) 10%,var(--surface)) 6px 12px);color:var(--muted);box-shadow:none}
+.src-chip{display:inline-block;font-size:11px;font-weight:700;color:#fff;background:var(--src);border-radius:20px;padding:1px 8px;margin-top:3px}
+.rp-line{font-size:13.5px;padding:3px 0}
+.rp-note{font-size:12px;margin:8px 0 0}
+.cal-empty{padding:18px 4px}
+@media (max-width:480px){
+  .cal-grid{--side:74px;min-width:calc(74px + var(--days) * 92px)}
+  .cal-side{padding:0 8px;font-size:11.5px}
+  .cal-bar{font-size:11.5px;padding:0 10px}
+  .cal-stat{min-width:90px;padding:8px 10px}
+  .cal-stat b{font-size:18px}
+}
+
+/* The reservation window, laid out like Costello's. */
+.res-modal{max-width:760px;padding:0;max-height:calc(100vh - 32px);overflow:auto}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.res-top{display:flex;align-items:center;gap:8px;padding:14px 18px;border-bottom:1px solid var(--border)}
+.res-name{flex:1;border:none;background:none;font-size:20px;font-weight:700;padding:4px 0;outline:none}
+.res-name:focus{outline:none}
+.res-x{border:none;background:none;font-size:24px;line-height:1;color:var(--muted);padding:2px 6px}
+.res-dates{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;padding:10px 18px 0}
+.res-channel{padding:6px 18px 0;margin:0;font-size:12px}
+.res-fields{display:grid;grid-template-columns:1.2fr 1fr 1.2fr;gap:16px;padding:6px 18px 4px}
+.res-notes{padding:0 18px}
+.res-notes textarea{display:block;width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font:inherit;font-size:14px;resize:vertical}
+.res-foot{display:flex;align-items:center;gap:8px;padding:14px 18px 16px}
+.res-foot button.primary{width:auto;margin:0;padding:10px 22px}
+.status-picker{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.status-chip{border:2px solid transparent;border-radius:16px;padding:6px 6px;font-size:11.5px;font-weight:700;line-height:1.15;opacity:.82;transition:transform .12s,opacity .12s,box-shadow .12s}
+.status-chip.on{opacity:1;border-color:rgba(0,0,0,.55);transform:scale(1.05);box-shadow:0 2px 8px rgba(0,0,0,.22)}
+.arrival-picker,.nat-picker{display:grid;gap:5px;align-content:start}
+.nat-picker{grid-template-columns:repeat(3,minmax(0,1fr))}
+.pick-row{display:grid;gap:5px}
+.pick-row.two{grid-template-columns:1fr 1fr}
+.nat-picker .pick-row.other{grid-column:1/-1;grid-template-columns:1fr 2fr}
+.pick{border:2px solid transparent;border-radius:16px;padding:5px 4px;font-size:12px;font-weight:600;background:var(--bg);color:var(--text);opacity:.88;transition:background .12s,opacity .12s}
+.pick.on{background:var(--accent);color:var(--on-accent);opacity:1}
+.pick-input{padding:5px 10px;font-size:13px;border-radius:16px}
+.rp-status{display:flex;flex-wrap:wrap;gap:5px;margin:2px 0 6px}
+.rp-status span{font-size:11px;font-weight:700;border-radius:20px;padding:2px 9px}
+.cal-bar.has-status{box-shadow:0 1px 3px rgba(0,0,0,.18)}
+@media (max-width:640px){
+  .res-dates{grid-template-columns:1fr 1fr}
+  .res-fields{grid-template-columns:1fr}
+}
+
+/* Subscription: the two plans side by side. */
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
+.plan{border:1px solid var(--border);border-radius:16px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:6px;background:var(--surface)}
+.plan.one{border-color:var(--pop);box-shadow:0 0 0 1px var(--pop)}
+.plan.current{background:color-mix(in srgb,var(--pop) 6%,var(--surface))}
+.plan .plan-name{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.plan .price{font-size:30px;font-weight:800;line-height:1.1;display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.plan .price small{font-size:13px;font-weight:500;color:var(--muted)}
+.plan .price small:empty{display:none}
+.plan .plan-note{font-size:12.5px;color:var(--muted);line-height:1.45}
+/* Check-in's price line: the "i" opens the price table in a bubble under it. */
+.plan .plan-note.has-help{position:relative}
+.plan .help-bubble{color:var(--text);font-size:13px}
+.pc-table{margin:4px 0 8px}
+.pc-row{display:flex;justify-content:space-between;gap:12px;padding:5px 0;font-size:13px;color:var(--muted)}
+.pc-row+.pc-row{border-top:1px solid var(--border)}
+.pc-row b{color:var(--text);font-size:13px}
+.plan .help-bubble p{font-size:12px;color:var(--muted)}
+.bi-voucher{margin-top:14px}
+/* Staging (theme.js): a badge in the corner. */
+html[data-staging] body::after{content:'STAGING';position:fixed;left:8px;bottom:8px;z-index:2000;background:#e8590c;color:#fff;font:700 11px/1 system-ui,sans-serif;letter-spacing:.08em;padding:5px 8px;border-radius:6px;pointer-events:none;opacity:.9}
+/* Switching property (see switchProperty in core.js). */
+#veil{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:var(--bg);opacity:0;pointer-events:none;transition:opacity .22s ease}
+html[data-switching] #veil{opacity:1;pointer-events:auto;transition:opacity .18s ease}
+.veil-in{display:flex;flex-direction:column;align-items:center;gap:12px;color:var(--text);font-size:15px}
+.veil-in .spinner{width:26px;height:26px;border-width:2.5px}
+/* Manage subscription / pause: two cards in the style of Help & support. */
+.bi-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:14px}
+.bi-act{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--text);transition:background .15s,transform .12s,box-shadow .15s}
+.bi-act:not(:disabled):hover{background:var(--bg);box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.bi-act:not(:disabled):active{transform:scale(.99)}
+.bi-act[hidden]{display:none}
+/* Nothing to show (no subscription yet, no error): no empty space under the plans. */
+.bi-actions:not(:has(>.bi-act:not([hidden]))),#bi-err:empty{display:none}
+.bi-act>svg,.bi-pause-ico{width:34px;height:34px;flex:none;padding:8px;border-radius:10px;background:var(--bg);box-sizing:border-box}
+.bi-act b{display:block;font-size:14px}
+.bi-act small{display:block;font-size:12px;color:var(--muted);margin-top:1px}
+.bi-go{font-size:20px;color:var(--muted);line-height:1}
+.bi-pause-ico{position:relative}
+.bi-pause-ico::before,.bi-pause-ico::after{content:'';position:absolute;top:10px;width:4px;height:14px;border-radius:2px;background:currentColor}
+.bi-pause-ico::before{left:11px}.bi-pause-ico::after{left:19px}
+.bi-pause-ico.paused::before{left:12px;top:9px;width:0;height:0;background:none;border-radius:0;border-left:13px solid currentColor;border-top:8px solid transparent;border-bottom:8px solid transparent}
+.bi-pause-ico.paused::after{display:none}
+/* The property switcher in the corner (more than one property). */
+.corner .prop-btn{position:relative}
+.corner .prop-btn[hidden]{display:none}
+.prop-chev{position:absolute;right:4px;bottom:5px;width:5px;height:5px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);opacity:.7}
+.bi-voucher input{flex:1;min-width:0;text-transform:uppercase}
+#rg-voucher{text-transform:uppercase}
+.bi-apts{margin-top:14px;padding:12px 14px;border:1px solid var(--border);border-radius:12px}
+.bi-apts .check-row{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:14px}
+.bi-apts .check-row input{width:18px;height:18px;accent-color:var(--accent)}
+.bi-apts p{font-size:13px;margin:8px 0}
+.plan ul{list-style:none;margin:10px 0 14px;padding:12px 0 0;border-top:1px solid var(--border);font-size:13.5px;color:var(--text);line-height:1.5;flex:1;display:flex;flex-direction:column;gap:7px}
+.plan li{position:relative;padding-left:24px}
+.plan li::before{content:'';position:absolute;left:2px;top:3px;width:12px;height:7px;border-left:2px solid var(--accent);border-bottom:2px solid var(--accent);transform:rotate(-45deg)}
+.upsell{padding:28px 20px;text-align:center}
+.upsell b{display:block;font-size:17px;margin-bottom:6px}
+
+/* Housekeeping: beds as coloured tiles, room by room. */
+.hk-layout.solo{display:block}
+.bed-room{margin-top:18px}
+.bed-room:first-child{margin-top:8px}
+.bed-room-h{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.bed-room-h .cnt{margin-left:auto;font-size:11px;color:var(--muted);letter-spacing:0;background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:1px 8px}
+.bed-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:10px}
+.bed-tile{position:relative;aspect-ratio:1/1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:6px;border:none;border-radius:16px;font:inherit;cursor:pointer;
+  background:linear-gradient(145deg,color-mix(in srgb,var(--tile) 55%,var(--surface)),var(--tile));color:var(--tile-ink);box-shadow:0 1px 2px rgba(0,0,0,.06),inset 0 0 0 1px rgba(0,0,0,.05);transition:transform .15s,box-shadow .15s}
+.bed-tile svg{width:26px;height:26px;opacity:.85}
+.bed-tile b{font-size:17px;line-height:1.1}
+.bed-tile small{font-size:10px;opacity:.75;line-height:1}
+.bed-tile .dots{display:flex;gap:3px;margin-top:3px}
+.bed-tile .dots i{width:7px;height:7px;border-radius:50%;box-shadow:0 0 0 1.5px rgba(255,255,255,.7)}
+.bed-tile.st-ok{--tile:var(--bed-ok);--tile-ink:var(--bed-ok-ink)}
+.bed-tile.st-due{--tile:var(--bed-due);--tile-ink:var(--bed-due-ink)}
+.bed-tile.st-dirty{--tile:var(--bed-dirty);--tile-ink:var(--bed-dirty-ink)}
+.bed-tile.st-none{--tile:var(--bed-plain);--tile-ink:var(--bed-plain-ink)}
+.bed-tile.st-use{--tile:var(--bed-use);--tile-ink:var(--bed-use-ink)}
+.bed-legend{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:16px;font-size:11.5px;color:var(--muted)}
+.bed-legend span{display:inline-flex;align-items:center;gap:5px}
+.bed-legend i{width:10px;height:10px;border-radius:3px;background:var(--bed-plain)}
+.bed-legend i.st-ok{background:var(--bed-ok)}.bed-legend i.st-use{background:var(--bed-use)}.bed-legend i.st-due{background:var(--bed-due)}.bed-legend i.st-dirty{background:var(--bed-dirty)}
+.bed-tile small.sh-flag{opacity:1;font-weight:700;margin-top:2px}
+.bp-sheets{padding:8px 0 10px;border-top:1px solid var(--border)}
+.bp-sheets-h{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
+.bp-sheets-h b{font-size:13.5px}
+.bp-sheets-h span{flex:1;font-size:12px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bp-edit-link{flex:none;font-size:12.5px}
+.bp-sheets-date{margin-top:2px}
+/* Sheets: three cards in their bed colours; the state now is filled in, the others pale. */
+.sh-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.sh-card{--tile:var(--bed-plain);--tile-ink:var(--bed-plain-ink);height:40px;padding:0 4px;border-radius:10px;border:1.5px solid color-mix(in srgb,var(--tile) 70%,var(--tile-ink) 30%);background:color-mix(in srgb,var(--tile) 28%,var(--surface));color:var(--tile-ink);font-size:13px;font-weight:600;transition:background .15s,transform .1s}
+.sh-card:hover{background:color-mix(in srgb,var(--tile) 55%,var(--surface))}
+.sh-card:active{transform:scale(.97)}
+.sh-card.on{background:var(--tile);border-color:var(--tile-ink);font-weight:700;box-shadow:inset 0 0 0 1px var(--tile-ink)}
+.sh-card.st-ok{--tile:var(--bed-ok);--tile-ink:var(--bed-ok-ink)}
+.sh-card.st-use{--tile:var(--bed-use);--tile-ink:var(--bed-use-ink)}
+.sh-card.st-dirty{--tile:var(--bed-dirty);--tile-ink:var(--bed-dirty-ink)}
+.bp-hint{font-size:12.5px;margin:8px 0 4px}
+.bed-tile.open{box-shadow:0 0 0 3px var(--surface),0 0 0 5px var(--pop);transform:translateY(-2px)}
+@media (hover:hover){.bed-tile:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.12)}}
+/* The open bed keeps its ring under the mouse too (the hover shadow took it away). */
+.bed-tile.open:hover{box-shadow:0 0 0 3px var(--surface),0 0 0 5px var(--pop)}
+.ln-ok{--ln:#3fae5a}.ln-due{--ln:#e3a21a}.ln-over{--ln:#e2513d}.ln-none{--ln:#b9b6ae}
+.dots i,.bp-item .dot{background:var(--ln)}
+@media (max-width:480px){.bed-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.bed-tile{border-radius:13px;padding:4px}.bed-tile svg{width:21px;height:21px}.bed-tile b{font-size:15px}}
+/* The pop-up of one bed. */
+.bed-pop{position:absolute;z-index:30;background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:0 14px 40px rgba(0,0,0,.2);padding:12px 14px 14px;animation:pop .16s ease-out}
+.bed-pop::before{content:'';position:absolute;top:-7px;left:calc(var(--arrow,50%) - 7px);width:12px;height:12px;background:var(--surface);border-left:1px solid var(--border);border-top:1px solid var(--border);transform:rotate(45deg)}
+.bp-head{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px}
+.bp-head>div{flex:1}
+.bp-head b{display:block;font-size:16px}
+.bp-head .muted{font-size:12px}
+.bp-x{border:none;background:none;font-size:20px;line-height:1;padding:0 4px;color:var(--muted)}
+.bp-note{font-size:12.5px;background:var(--bed-dirty);color:var(--bed-dirty-ink);border-radius:8px;padding:7px 9px;margin-bottom:8px}
+.bp-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--border)}
+.bp-item .dot{width:10px;height:10px;border-radius:50%;flex:none}
+.bp-item b{display:block;font-size:13.5px}
+.bp-item .when{display:block;font-size:12px;color:var(--muted)}
+.bp-item .when .ln-late{color:var(--danger);font-weight:600}
+.bp-tick{width:32px;height:32px;padding:0;border-radius:50%;font-weight:800;color:var(--done);border:1.5px solid var(--done);background:none;flex:none}
+.bp-tick:hover:not(:disabled){background:var(--done);color:var(--on-done)}
+.bp-tick.done{background:var(--done);color:var(--on-done);cursor:default;opacity:1}
+.bp-acts button:disabled{opacity:.45;cursor:default}
+.bp-acts{display:flex;gap:8px;margin-top:10px}
+.bp-acts button{flex:1}
+.bp-acts button.primary{margin:0;width:auto}
+.ln-row{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.ln-row input:first-child{flex:1;min-width:0}
+.ln-row input[type=number]{width:72px;flex:none}
+nav.tabs button{display:inline-flex;align-items:center;justify-content:center}
+.tab-plus{display:none!important}
+.plus-menu{position:absolute;z-index:25;width:300px;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:0 14px 36px rgba(0,0,0,.18);padding:6px;animation:pop .15s ease-out}
+.plus-menu button{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;border:none;background:none;padding:10px 12px;border-radius:8px;color:var(--text)}
+.plus-menu button:not(:disabled):hover{background:var(--bg)}
+.plus-menu button:disabled{opacity:.55;cursor:default}
+.plus-menu svg{width:22px;height:22px;flex:none;margin-top:1px}
+.plus-menu b{display:block;font-size:14px}
+.plus-menu small{display:block;font-size:12px;color:var(--muted);margin-top:1px}
+/* The property switcher (several properties): the name under the logo opens it. */
+.prop-menu{width:260px}
+.prop-menu button.on{opacity:1;background:var(--bg)}
+.prop-now{font-size:13px;white-space:nowrap}
+/* Check-in-only plans: no Dashboard, Housekeeping or Shifts (tabs and their settings). */
+html[data-full="0"] header.bar nav.tabs button[data-tab=board],
+html[data-full="0"] header.bar nav.tabs button[data-tab=housekeeping],
+html[data-full="0"] header.bar nav.tabs button[data-tab=shifts],
+html[data-full="0"] [data-full]{display:none!important}
+/* …so on a phone the one tab left (Check-in) keeps its size, centred, instead of filling the width. */
+@media (max-width:480px){html[data-full="0"] .wrap.app header.bar nav.tabs{justify-content:center}html[data-full="0"] .wrap.app header.bar nav.tabs button{flex:0 0 auto;min-width:128px;padding:7px 16px}}
+.prop-menu .prop-add{border-top:1px solid var(--border);border-radius:0 0 8px 8px;margin-top:4px}
+.prop-menu .prop-add b{color:var(--accent, var(--text))}
+#prop-add-open{display:block;margin-top:8px}
+#form-prop-add{margin-top:10px}
+@media (min-width:700px){
+  .tab-plus{display:inline-flex!important;width:34px;font-size:20px;line-height:1;padding:0!important;border:1px solid var(--tabs-border)!important;border-radius:7px}
+  nav.tabs button[data-tab=checkin]{display:none}
+  .wrap.app header.bar{position:relative}
+  .plus-menu{top:calc(100% - 6px)}
+}
+nav.tabs button svg{width:18px;height:18px;display:block}
+.zoom{position:fixed;inset:0;background:rgba(0,0,0,.9);display:flex;align-items:center;justify-content:center;z-index:20;cursor:zoom-out}
+.zoom img{max-width:100%;max-height:100%}
+
+/* ----- Header corner: light/dark and Settings, top right ----- */
+.wrap.app header.bar{position:relative}
+.corner{position:absolute;top:16px;right:20px;display:flex;gap:8px;z-index:2}
+.corner button{width:38px;height:38px;padding:0;display:inline-flex;align-items:center;justify-content:center;border-radius:10px;background:rgba(255,255,255,.92);color:#181816;border:1px solid rgba(0,0,0,.06);box-shadow:0 2px 8px rgba(0,0,0,.18);transition:background .15s,color .15s,transform .12s}
+.corner button:hover{background:#fff}
+.corner button:active{transform:scale(.94)}
+.corner button.on{background:#181816;color:#fff;border-color:#181816}
+.corner svg{width:18px;height:18px;display:block}
+#mode-toggle .i-sun{display:none}
+:root[data-mode=dark] #mode-toggle .i-sun{display:block}
+:root[data-mode=dark] #mode-toggle .i-moon{display:none}
+@media (prefers-color-scheme:dark){:root:not([data-mode=light]) #mode-toggle .i-sun{display:block}:root:not([data-mode=light]) #mode-toggle .i-moon{display:none}}
+@media (max-width:640px){.corner{top:12px;right:14px;gap:6px}.corner button{width:34px;height:34px;border-radius:9px}.corner svg{width:16px;height:16px}}
+
+/* Phones: a smaller menu that fits on one line. */
+@media (max-width:480px){
+  .wrap.app header.bar nav.tabs{gap:4px;margin-top:4px}
+  .wrap.app header.bar nav.tabs button{padding:6px 4px;font-size:11.5px;border-radius:8px;flex:1 1 0;min-width:0}
+}
+
+/* ----- ISTAT report ----- */
+.is-modal{max-width:560px;max-height:calc(100vh - 32px);display:flex;flex-direction:column}
+.is-modal .modal-body{overflow-y:auto}
+.is-range{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px}
+.is-range label{margin-top:0}
+.is-table{width:100%;border-collapse:collapse;font-size:14px}
+.is-table th,.is-table td{padding:7px 6px;border-top:1px solid var(--border);text-align:right}
+.is-table th:first-child,.is-table td:first-child{text-align:left}
+.is-table th{font-weight:600;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.03em;border-top:none}
+.is-table tr.tot td{font-weight:700}
+.is-days{display:flex;flex-direction:column;gap:8px}
+.is-day{border:1px solid var(--border);border-radius:10px;padding:9px 12px;font-size:13.5px}
+.is-day>b{display:block;margin-bottom:4px;text-transform:capitalize}
+.is-day>div{display:flex;gap:10px;align-items:baseline}
+.is-k{flex:none;width:88px;font-weight:600}
+.is-in .is-k{color:var(--done)}
+.is-outl .is-k{color:var(--muted)}
+.is-v{color:var(--text)}
+
+/* ----- Note replies: folded under the note, light and small ----- */
+.note .acts button.on{color:var(--text);font-weight:700}
+.replies{margin-top:8px;padding-top:8px;border-top:1px dashed var(--border);display:flex;flex-direction:column;gap:5px;animation:fade .15s ease-out}
+.reply{font-size:12.5px;line-height:1.4}
+.reply b{font-weight:700}
+/* The name and the text across the whole width; the time and × on a line under them. */
+.reply .rline{overflow-wrap:anywhere;white-space:pre-wrap}
+.reply .rfoot{display:flex;align-items:center;gap:6px;margin-top:1px}
+.reply time{font-size:11px;color:var(--muted)}
+.reply button{flex:none;border:none;background:none;padding:0 2px;color:var(--muted);font-size:14px;line-height:1;opacity:0;transition:opacity .12s}
+.reply:hover button,.reply button:focus-visible{opacity:1}
+@media (hover:none){.reply button{opacity:.7}}
+.reply-new{display:flex;gap:6px;margin-top:3px}
+.reply-new input{flex:1;min-width:0;padding:6px 10px;font-size:13px;border-radius:16px;border:1px solid var(--border);background:var(--surface);color:var(--text)}
+.reply-new button{flex:none;width:30px;height:30px;padding:0;border-radius:50%;border:none;background:var(--pop);color:var(--on-pop);display:inline-flex;align-items:center;justify-content:center}
+.reply-new button:disabled{opacity:.5}
+
+/* ----- Team invites ----- */
+.row.invited .grow>div:first-child{font-style:italic}
+.invite-done{margin-top:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--bg);animation:pop .18s ease-out}
+.invite-link{display:flex;gap:8px;margin:8px 0 4px}
+.invite-link input{flex:1;min-width:0;font-size:13px}
+.invite-done p{margin:6px 0 0;font-size:13px}
+#iv-open{display:block;margin-top:10px}
+
+/* Settings → Team: data-see-x="0" — the area isn't there; data-edit-x="0" —
+   only to look at (core.js renderApp). */
+:root[data-checkin="0"] :is(header.bar nav.tabs button[data-tab=checkin],#pm-checkin,#sec-istat){display:none!important}
+:root[data-edit-checkin="0"] :is(#pm-checkin,#ci-add,#ci-sendbar,#tab-checkin .guest .head input[type=checkbox]){display:none!important}
+:root[data-edit-checkin="0"]:not([data-preview="1"]) #tab-plus,:root[data-edit-checkin="0"][data-edit-calendar="0"] #tab-plus{display:none!important}
+:root[data-see-housekeeping="0"] header.bar nav.tabs button[data-tab=housekeeping],
+:root[data-see-shifts="0"] header.bar nav.tabs button[data-tab=shifts],
+:root[data-see-calendar="0"] header.bar nav.tabs button[data-tab=calendar],
+:root[data-see-attention="0"] #bd-att-card,
+:root[data-see-notes="0"] :is(#bd-notes-card,#bd-handover-card),
+:root[data-see-guidelines="0"] #bd-routine-card{display:none!important}
+:root[data-edit-notes="0"] #nt-open{display:none!important}
+:root[data-edit-calendar="0"] :is(#pm-res,#cal-add,#cal-sync){display:none!important}
+:root[data-edit-calendar="0"] .cal-cell{cursor:default}
+:root[data-edit-calendar="0"] .cal-cell i{display:none}
+
+/* ----- Settings → Channel manager ----- */
+.cx-intro{margin:0 0 10px}
+.cx-rooms .pill.ok{background:var(--bed-ok);color:var(--bed-ok-ink)}
+.cx-acts{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.cx-acts button.primary{width:auto;margin:0;padding:10px 20px}
+.cx-acts a.button{display:inline-flex;align-items:center;text-decoration:none;color:var(--text);border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;background:var(--surface)}
+.cx-sync,.cx-next{font-size:13px;margin:8px 0 0}
+
+/* ----- Notes the owner put into Needs attention ----- */
+.att-item.note{background:var(--warn-bg);color:var(--text);text-align:left}
+.att-item.note .grow{white-space:normal;line-height:1.35}
+.att-item .att-by{display:block;font-size:11.5px;color:var(--muted);margin-top:2px;font-weight:500}
+.note.flagged{border-color:var(--warn);box-shadow:inset 3px 0 0 var(--warn)}
+.note .acts button.on{color:var(--warn)}
+.note.flash{animation:noteflash 1.2s ease-out}
+@keyframes noteflash{0%,40%{box-shadow:0 0 0 3px var(--warn)}100%{box-shadow:0 0 0 0 transparent}}
+@media (prefers-reduced-motion:reduce){.note.flash{animation:none}}
+/* New note: "Needs attention" (owner) — its own switch under the categories, in warning orange. */
+.nt-attn{display:flex;align-items:center;gap:10px;width:100%;margin-top:12px;padding:9px 12px;text-align:left;border:1.5px dashed var(--warn);border-radius:10px;background:none;color:var(--text);transition:background .15s,border-color .15s}
+.nt-attn:hover{background:var(--warn-bg)}
+.nt-attn.on{border-style:solid;background:var(--warn-bg)}
+.nt-attn-ico{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid var(--warn);color:var(--warn);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;transition:background .15s,color .15s}
+.nt-attn.on .nt-attn-ico{background:var(--warn);color:#fff}
+.nt-attn b{display:block;font-size:14px;color:var(--warn)}
+.nt-attn small{display:block;font-size:12px;color:var(--muted)}
+/* Its item in Needs attention: the same "!" and the owner's tick. */
+.att-item.note>span:first-child{width:22px;height:22px;flex:none;border-radius:50%;background:var(--warn);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+.att-done{flex:none;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--done);color:var(--done);display:inline-flex;align-items:center;justify-content:center;font-weight:800;cursor:pointer}
+.att-done:hover{background:var(--done);color:var(--on-done)}
+
+/* ----- Header picture chosen in Settings → Language and design ----- */
+.wrap.app header.bar[data-art=plain]{background:var(--hdr-color)}
+.wrap.app header.bar[data-art=photo]{background-image:linear-gradient(90deg,rgba(8,12,28,.45),rgba(8,12,28,.05) 55%),var(--hdr-img);background-size:cover;background-position:center,var(--hdr-pos,50% 50%)}
+.hp-stage{display:flex;justify-content:center;margin:0 0 10px}
+.hp-wrap{position:relative;overflow:hidden;border-radius:10px;cursor:grab;touch-action:none;user-select:none;line-height:0}
+.hp-wrap.moving{cursor:grabbing}
+.hp-wrap img{display:block;max-width:100%;max-height:300px;pointer-events:none}
+.hp-window{position:absolute;box-sizing:border-box;border:2px solid #fff;border-radius:6px;box-shadow:0 0 0 9999px rgba(8,12,28,.5),0 2px 10px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;transition:box-shadow .15s}
+.hp-window span{color:#fff;font-size:20px;line-height:1;text-shadow:0 1px 4px rgba(0,0,0,.6);animation:hp-nudge 1.6s ease-in-out 2}
+.hp-wrap.moving .hp-window{box-shadow:0 0 0 9999px rgba(8,12,28,.6),0 0 0 4px rgba(255,255,255,.35)}
+@keyframes hp-nudge{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.hdr-note{font-size:12px;margin:0;text-align:center}
+
+/* Parts still being built (data-preview): only for properties in preview. */
+:root:not([data-preview="1"]) [data-preview]{display:none!important}
+/* Without the preview parts the "+" would only hold "Add guests": Check-in is a normal tab instead. */
+:root:not([data-preview="1"]) #tab-plus{display:none!important}
+:root:not([data-preview="1"]):not([data-checkin="0"]) header.bar nav.tabs button[data-tab=checkin]{display:inline-flex!important}
+
+
+/* "Check your inbox" after signing up. */
+.confirm-card{margin-top:24px;text-align:center}
+.confirm-card .confirm-ico{font-size:40px;line-height:1;margin-bottom:6px}
+.confirm-card p{margin:8px 0}
+.confirm-card button{margin-top:10px}
+
+/* Settings → Police registration: the country's flag next to the picker. Drawn
+   with CSS, not an emoji — Windows shows emoji flags as two letters. */
+.reg-pick{position:relative}
+.reg-native{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}
+.reg-btn{display:flex;align-items:center;gap:10px;width:100%;margin:0;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font:inherit;font-size:15px;text-align:left;cursor:pointer}
+.reg-btn .reg-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.reg-chev{color:var(--muted);font-size:12px}
+.reg-flag{flex:none;display:inline-flex;width:24px;height:16px;border-radius:3px;overflow:hidden;box-shadow:0 0 0 1px rgba(0,0,0,.12)}
+.reg-flag svg{width:100%;height:100%;display:block}
+.reg-list{position:absolute;z-index:20;left:0;right:0;top:calc(100% + 4px);margin:0;padding:4px;list-style:none;background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.14);max-height:300px;overflow:auto}
+.reg-list li{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:7px;cursor:pointer;font-size:14.5px}
+.reg-list li .reg-name{flex:1}
+.reg-list li:hover,.reg-list li:focus{background:var(--bg);outline:none}
+.reg-list li[aria-selected="true"]{font-weight:700}
+.flag{flex:none;width:30px;height:20px;border-radius:3px;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
+.flag[data-country=IT]{background:linear-gradient(90deg,#009246 33.33%,#fff 33.33% 66.66%,#ce2b37 66.66%)}
+
+/* Default look: the help bubble in a soft blue (the "+" blue), not grey. */
+:root[data-theme=default]{--help-bg:#eef3fd;--help-line:#3a6fd4}
+@media (prefers-color-scheme:dark){:root[data-theme=default]:not([data-mode=light]){--help-bg:#18213a;--help-line:#6f9bf0}}
+:root[data-theme=default][data-mode=dark]{--help-bg:#18213a;--help-line:#6f9bf0}
+
+/* Subscription: one clear button across the plan card. */
+.plan .plan-btn{width:100%;margin:0;padding:8px 14px;border-radius:9px;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .12s,box-shadow .15s,background .15s}
+.plan .plan-btn.go{background:var(--accent);color:var(--on-accent);border:none;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.plan .plan-btn.go:not(:disabled):hover{transform:translateY(-1px);box-shadow:0 7px 20px rgba(0,0,0,.22)}
+.plan .plan-btn.go .arrow{transition:transform .15s}
+.plan .plan-btn.go:not(:disabled):hover .arrow{transform:translateX(3px)}
+.plan .plan-btn.mine{background:var(--bed-ok);color:var(--bed-ok-ink);border:none;opacity:1}
+.plan .plan-btn.soon{background:none;border:1px dashed var(--border);color:var(--muted)}
+.plan .trial-note{font-size:12px;color:var(--muted);text-align:center;margin-top:6px}
+
+/* ----- User menu (top right) ----- */
+.user-menu{position:absolute;z-index:30;top:62px;right:20px;width:290px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:14px;box-shadow:0 16px 40px rgba(0,0,0,.22);padding:14px;animation:pop .15s ease-out;text-shadow:none}
+@media (max-width:640px){.user-menu{top:54px;right:14px;width:min(290px,calc(100vw - 28px))}}
+.um-head{display:flex;gap:12px;align-items:center}
+.um-avatar{flex:none;width:44px;height:44px;border-radius:50%;color:#fff;font-weight:700;font-size:16px;display:inline-flex;align-items:center;justify-content:center}
+.um-name{font-weight:700;font-size:15px}
+.um-email,.um-place{font-size:12.5px;color:var(--muted);overflow-wrap:anywhere}
+.um-label{margin:14px 0 6px;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.um-colors{display:flex;gap:7px;flex-wrap:wrap}
+.member-dot{flex:none;width:22px;height:22px;padding:0;border-radius:50%;border:2px solid var(--surface);box-shadow:0 0 0 1px var(--border)}
+.user-menu .um-label:first-child{margin-top:2px}
+#um-team-label{display:flex;align-items:center;gap:6px;margin-bottom:9px;font-size:13px;font-weight:700;text-transform:none;letter-spacing:0;color:var(--text)}
+#um-team-label::before{content:'⇄';display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--help-bg);color:var(--accent);font-size:13px}
+.um-actions:first-child{margin-top:0;padding-top:0;border-top:none}
+/* The rest of the team in a row left of your name tag while the menu is open,
+   tags like yours (core.js renderSideTeam); the nearest one first. */
+.corner .um-side{position:absolute;top:0;right:calc(100% + 8px);display:flex;flex-direction:row-reverse;gap:6px;max-width:calc(100vw - 210px);overflow-x:auto;scrollbar-width:none;padding-bottom:10px}
+.corner .um-side::-webkit-scrollbar{display:none}
+.corner .um-side[hidden]{display:none}
+.corner .um-side .who-chip{flex:none;box-shadow:0 2px 8px rgba(0,0,0,.18);animation:sideIn .2s ease-out both}
+@keyframes sideIn{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.um-side .who-chip{animation:none!important}}
+/* On a phone they head the menu instead, as a row of tags that wraps. */
+.user-menu .um-side{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 12px;padding:0 0 12px;border-bottom:1px solid var(--border)}
+.user-menu .um-side[hidden]{display:none}
+.user-menu .um-side+.um-actions{margin-top:0;padding-top:0;border-top:none}
+.user-menu .um-side .who-chip{width:auto;max-width:100%;margin:0;padding:0 13px;border-radius:9px;border:1px solid rgba(0,0,0,.08);background:var(--who);color:var(--who-ink,#fff);box-shadow:0 2px 6px rgba(0,0,0,.15);font-size:13px;font-weight:700;line-height:32px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;animation:sideIn .2s ease-out both}
+.um-color{width:26px;height:26px;padding:0;border-radius:50%;border:2px solid var(--surface);box-shadow:0 0 0 1px var(--border);cursor:pointer;transition:transform .12s}
+.um-color:hover{transform:scale(1.1)}
+.um-color.on{box-shadow:0 0 0 2px var(--text)}
+.um-actions{display:flex;flex-direction:column;margin-top:12px;padding-top:8px;border-top:1px solid var(--border)}
+.um-actions button{border:none;background:none;text-align:left;padding:9px 6px;border-radius:8px;font-size:14px;color:var(--text)}
+.um-actions button:hover{background:var(--bg)}
+.um-actions button.danger{color:var(--danger)}
+/* Menu rows don't shrink on press (wide rows wobbled, and with Quicklinks
+   opening below at the same moment the whole menu jiggled): a tint instead. */
+.um-actions button:active{transform:none!important;background:var(--bg)}
+/* Quicklinks (settings.js renderFavs): a menu item under The Vault. Its
+   links open in a column beside the menu (on a tap; on a computer on hover);
+   phones too narrow for that get them in a row below. */
+.um-sub[hidden]{display:none}
+.um-sub{position:relative;display:flex;flex-direction:column}
+.um-sub>button{display:flex;align-items:center;width:100%}
+.um-sub>button::after{content:'›';margin-left:auto;font-size:17px;line-height:1;color:var(--muted);transition:transform .15s}
+.um-sub.open>button::after{transform:rotate(90deg)}
+/* A small toolbar: one icon per quicklink (its name shows at once on hover),
+   a + on each free spot that leads to Settings → Quicklinks. */
+.um-quick-list{display:none;gap:4px;padding:4px 6px}
+.um-sub.open .um-quick-list{display:flex}
+.um-actions .um-quick-icon{position:relative;display:flex;align-items:center;justify-content:center;width:36px;height:36px;padding:0;border-radius:8px;color:var(--accent)}
+.um-quick-icon svg{width:22px;height:22px}
+.um-actions .um-quick-add{border:1.5px dashed color-mix(in srgb,var(--muted) 45%,transparent);color:var(--muted);font-size:18px;line-height:1}
+.um-actions .um-quick-add:hover{border-color:var(--accent);color:var(--accent)}
+@media (min-width:360px){
+  .um-sub>button::after{content:none}
+  /* A column down the menu's left side, sliding out. It is placed from the
+     menu itself (the row isn't its anchor), level with its top. */
+  .um-sub{position:static}
+  .um-quick-list,.um-sub.open .um-quick-list{display:flex;flex-direction:column;position:absolute;top:-1px;right:calc(100% + 6px);padding:5px;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.16);
+    opacity:0;visibility:hidden;transform:translateX(10px);transition:opacity .16s,transform .16s,visibility 0s .25s}
+  .um-sub.open .um-quick-list{opacity:1;visibility:visible;transform:none;transition:opacity .16s,transform .16s,visibility 0s}
+}
+@media (hover:hover) and (min-width:700px){
+  /* Covers the gap and the menu's padding, so the mouse can cross over to it. */
+  .um-quick-list::before{content:'';position:absolute;top:0;bottom:0;left:100%;width:22px}
+  .um-sub:hover .um-quick-list,.um-sub:focus-within .um-quick-list{opacity:1;visibility:visible;transform:none;transition:opacity .16s,transform .16s,visibility 0s}
+  .um-sub:hover>button{background:var(--bg)}
+  /* The name to the left, right away (the browser's own hint takes a second or two). */
+  .um-quick-icon[data-tip]:hover::after{content:attr(data-tip);position:absolute;right:calc(100% + 8px);top:50%;transform:translateY(-50%);white-space:nowrap;padding:5px 9px;border-radius:7px;background:var(--text);color:var(--surface);font-size:12.5px;font-weight:500;pointer-events:none}
+}
+
+/* ----- Settings → Help & support ----- */
+.faq-title{margin:22px 0 10px;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.faq{display:flex;flex-direction:column;gap:8px}
+.faq details{background:color-mix(in srgb,var(--link) 5%,var(--surface));border:1px solid color-mix(in srgb,var(--link) 12%,var(--border));border-radius:12px;padding:0;transition:background .15s}
+.faq details[open]{background:var(--surface)}
+.faq summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;padding:12px 14px;font-weight:550;font-size:14.5px;line-height:1.35}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:'+';margin-left:auto;flex:none;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--link) 12%,transparent);color:var(--link);font-size:17px;font-weight:600;transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq p{margin:0;padding:0 14px 13px;font-size:14px;line-height:1.55;color:var(--muted)}
+#form-support{margin-top:14px}
+#form-support textarea{display:block;width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font:inherit;font-size:14px;resize:vertical}
+
+/* ----- Light ↔ dark switch: a short, quiet cross-fade ----- */
+::view-transition-old(root),::view-transition-new(root){animation-duration:.25s;animation-timing-function:ease}
+/* Browsers without View Transitions: a soft cross-fade. */
+html.mode-fade body,html.mode-fade .card,html.mode-fade .sect,html.mode-fade .note,html.mode-fade .att-item,html.mode-fade input,html.mode-fade textarea,html.mode-fade select{transition:background-color .35s ease,color .35s ease,border-color .35s ease}
+/* The icon turns as it changes. */
+#mode-toggle.turn svg{animation:mode-turn .5s cubic-bezier(.4,0,.2,1)}
+@keyframes mode-turn{from{transform:rotate(-90deg) scale(.6);opacity:.3}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}#mode-toggle.turn svg{animation:none}}
+
+/* Flowy, the help assistant (Settings → Help & support) */
+.flowy{border:1px solid var(--border);border-radius:12px;padding:12px;margin:0 0 16px;background:var(--surface)}
+.flowy-head{display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center;margin-bottom:12px}
+.sp-open{display:flex;align-items:center;gap:12px;width:100%;margin:14px 0 0;padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font:inherit;text-align:left;cursor:pointer}
+.sp-open:hover{border-color:var(--accent)}
+.sp-open b{display:block;font-size:14.5px}
+.sp-open small{display:block;color:var(--muted);font-size:12.5px}
+.sp-open-ico{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#4cc4c0,#3a7bd5);box-shadow:0 3px 10px rgba(58,123,213,.3);flex:none}
+.sp-open-ico svg{width:18px;height:18px}
+.flowy-head small{display:block;color:var(--muted);font-size:12.5px}
+.flowy-ico{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#ff8a3d,#e8457c);box-shadow:0 3px 10px rgba(232,69,124,.3);flex:none}
+.flowy-log{display:flex;flex-direction:column;gap:8px;max-height:340px;overflow-y:auto;margin-bottom:10px}
+.flowy-log:empty{display:none}
+.flowy-msg{max-width:88%;padding:8px 11px;border-radius:12px;font-size:14px;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere}
+.flowy-msg.assistant{align-self:flex-start;background:var(--bg);border:1px solid var(--border)}
+.flowy-msg.user{align-self:flex-end;background:var(--accent);color:var(--on-accent)}
+.flowy-msg.thinking{color:var(--muted);font-style:italic}
+.flowy-form{display:flex;gap:8px}
+.flowy-form input{flex:1;min-width:0;width:auto}
+.flowy-form button{flex:none;width:auto;margin:0;padding-left:18px;padding-right:18px}
+
+/* The welcome tour (tour.js): a dimmed page, one highlighted part, a card */
+.tour-block{position:fixed;inset:0;z-index:1000}
+.tour-spot{position:fixed;z-index:1001;border-radius:12px;pointer-events:none;box-shadow:0 0 0 3px var(--accent),0 0 0 9999px rgba(10,10,15,.58);transition:left .25s,top .25s,width .25s,height .25s}
+.tour-spot[hidden]{display:none}
+.tour-card{position:fixed;z-index:1002;width:min(340px,calc(100vw - 24px));background:var(--surface);color:var(--text);border-radius:14px;padding:16px 16px 12px;box-shadow:0 18px 50px rgba(0,0,0,.35);transition:left .25s,top .25s}
+.tour-card.centered{box-shadow:0 0 0 9999px rgba(10,10,15,.58),0 18px 50px rgba(0,0,0,.35)}
+.tour-card h3{margin:2px 0 6px;font-size:17px}
+.tour-card p{margin:0 0 12px;font-size:14.5px;line-height:1.5;color:var(--text)}
+.tour-count{font-size:12px;color:var(--muted);font-weight:600}
+.tour-nav{display:flex;align-items:center;gap:8px}
+.tour-nav .link{margin-right:auto;font-size:13.5px;color:var(--muted)}
+.tour-nav button:not(.link){width:auto;margin:0;padding:8px 14px}
+@media (prefers-reduced-motion:reduce){.tour-spot,.tour-card{transition:none}}
+
+/* Settings → Team: what each person may do (Access, in the person's window) */
+/* An on/off switch (Settings → Team access, Housekeeping → daily sheets): words on the left, the switch on the right. */
+input.switch{-webkit-appearance:none;appearance:none;flex:none;align-self:center;display:block;position:relative;box-sizing:border-box;width:36px;min-width:36px;height:20px;min-height:20px;max-height:20px;padding:0;margin:0;vertical-align:middle;font-size:0;border:none;border-radius:20px;background:color-mix(in srgb,var(--text) 22%,transparent);cursor:pointer;transition:background .15s}
+input.switch::before{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .15s}
+input.switch:checked{background:var(--ok)}
+input.switch:checked::before{transform:translateX(16px)}
+input.switch:focus{outline:none}
+input.switch:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.access-row{display:flex;align-items:center;gap:12px;margin:0;padding:7px 0;color:var(--text);font-size:13.5px;cursor:pointer}
+.access-row>span{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.access-row b{font-weight:600}
+.access-row small{font-size:12px;color:var(--muted);line-height:1.35}
+.switch-row>span{line-height:20px}
+/* Settings → Housekeeping: three groups alike (heading, one line, settings), a line between them. */
+.hk-group+.hk-group{border-top:1px solid var(--border);margin-top:20px;padding-top:18px}
+.hk-gh{font-size:15px;margin:0 0 2px}
+.hk-gd{margin:0 0 12px;font-size:13.5px;line-height:1.45}
+.hk-opt{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface);cursor:pointer}
+.hk-opt>span{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font-size:14.5px;line-height:1.35}
+.hk-opt b{font-weight:600;color:var(--text)}
+.hk-opt small{font-size:12.5px;color:var(--muted)}
+.hk-opt small[hidden]{display:none}
+.hk-opt.off{opacity:.55;cursor:default}
+.hk-opt-after{margin:14px 0 0}
+.hk-sub{margin:0 0 12px;padding:10px 12px;border-radius:10px;background:var(--bg)}
+.hk-more{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:4px 0 0}
+.hk-more .chips{display:contents}
+.hk-save{margin-top:22px}
+.switch-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px;font-size:15px;font-weight:600;color:var(--text);cursor:pointer}
+.sh-days-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:8px;font-size:14.5px}
+.sh-days-row[hidden]{display:none}
+#sh-days{width:54px;padding:2px 6px;font-size:16px;text-align:center;border-radius:6px}
+.rm-listed{font-size:12.5px;margin:4px 0 10px}
+/* Access: a switch per area, a thin line between them (settings.js levelRows). */
+.level-row+.level-row{border-top:1px solid var(--border)}
+.level-row input.switch{margin:0}
+/* The team: a name per row; a tap opens the person's window. */
+button.row.member{width:100%;margin:0;padding:10px 6px;border:0;border-top:1px solid var(--border);border-radius:0;background:none;color:var(--text);font:inherit;font-size:15px;text-align:left;cursor:pointer;transition:background .15s}
+button.row.member:hover{background:color-mix(in srgb,var(--text) 4%,transparent)}
+/* No shrink when pressed (as other buttons do): on a full-width row it looks like a jump sideways. */
+button.row.member:active{transform:none!important;background:color-mix(in srgb,var(--text) 8%,transparent)}
+div.row.member{padding:10px 6px;font-size:15px}
+.row.member .grow{min-width:0;overflow-wrap:anywhere}
+.member-chev{color:var(--muted);font-size:18px;line-height:1}
+.seg.mb-show{display:flex;width:100%}
+.seg.mb-show button{flex:1}
+.seg.mb-show button.on{background:var(--accent);color:var(--on-accent)}
+.mb-show button:disabled{opacity:.45;cursor:default}
+#mb-owner{display:block;margin-top:8px}
+#mb-owner[hidden]{display:none}
+.mb-more{display:flex;gap:6px;flex-wrap:wrap;margin-top:18px;padding-top:14px;border-top:1px solid var(--border)}
+.mb-more[hidden]{display:none}
+.mb-more .danger{margin-left:auto}
+
+/* Settings → Property: drag the grip to reorder the rooms */
+.pr-grip{flex:none;width:30px;height:34px;padding:0;border:none;background:none;color:var(--muted);font-size:18px;line-height:1;cursor:grab;touch-action:none;border-radius:8px}
+.pr-grip:hover,.pr-grip:focus-visible{background:var(--bg);color:var(--text)}
+.pr-row.dragging{position:relative;z-index:5;background:var(--surface);border-radius:10px;box-shadow:0 10px 28px rgba(0,0,0,.18);border-top-color:transparent}
+.pr-row.dragging .pr-grip{cursor:grabbing}
+
+/* Housekeeping: recurring tasks */
+#hk-tasks-card{margin-bottom:16px}
+.hk-task{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--border)}
+.hk-task:first-child{border-top:none}
+.hk-task-name{font-weight:600}
+.hk-task small{display:block;font-size:12.5px}
+.hk-task-when{text-align:right;font-size:13px;flex:none;max-width:45%}
+.hk-task-when .link{font-size:12.5px;display:block;margin-left:auto}
+.hk-task-edit{padding:0 0 12px}
+.hk-task-edit .bp-acts{justify-content:flex-end}
+.hk-task.due .hk-task-when b{color:var(--warn)}
+.hk-check{width:22px;height:22px;flex:none;border-radius:50%;border:2px solid var(--border);background:var(--surface);padding:0;font-size:12px;line-height:1;font-weight:700;color:var(--on-done)}
+.hk-task.due .hk-check{border-color:var(--accent)}
+.hk-task.due .hk-check:hover{background:var(--bg)}
+.hk-task:not(.due) .hk-check{background:var(--done);border-color:var(--done);opacity:.85}
+.ln-h{font-size:15px;margin:22px 0 4px}
+.tk-row select{width:auto;flex:none;max-width:38%}
+@media (max-width:520px){.tk-row{flex-wrap:wrap}.tk-row input:first-child{flex-basis:100%}.tk-row select{flex:1;min-width:0;max-width:none}}
+
+/* Housekeeping: a bed's dates, corrected by hand (Edit) */
+.bp-edit-help{font-size:13px;margin:4px 0 10px}
+.bp-edit{display:flex;flex-direction:column;gap:8px}
+.bp-edit-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0;font-size:14px;color:var(--text)}
+.bp-edit-row span{flex:1}
+.bp-edit-row input{width:auto;flex:none;padding:6px 8px;font-size:14px}
+
+/* Shifts: the week's rota — a table, a coloured stripe per day, people as badges */
+.sh-top{align-items:center;flex-wrap:wrap}
+.sh-nav{display:flex;justify-content:center;gap:6px;margin:12px 0 0}
+.sh-nav button{width:auto;margin:0}
+.sh-tools{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 0}
+.sh-tools button{width:auto;margin:0}
+.sh-people{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:12px 0 4px}
+.sh-person:disabled{cursor:default;opacity:1}
+.sh-person.me{box-shadow:0 0 0 2px var(--surface),0 0 0 3.5px var(--c)}
+.sh-person{display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:999px;border:none;background:var(--c);color:#fff;font-size:13px;font-weight:700;touch-action:none;cursor:grab;width:auto;margin:0;box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.sh-person small{font-weight:600;opacity:.85;font-size:11.5px}
+.sh-person.on{box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--c)}
+.sh-help{font-size:13px;margin:8px 0 12px;text-align:center}
+.sh-week{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.sh-table{width:100%;border-collapse:separate;border-spacing:0 6px;min-width:320px;table-layout:fixed}
+.sh-table thead th:first-child{width:78px}
+.sh-table thead th{font-size:12px;text-align:left;padding:0 8px 2px;color:var(--muted);font-weight:600}
+.sh-table thead th b{display:block;color:var(--text);font-size:13.5px}
+.sh-table thead th small{font-size:11.5px}
+.sh-row th,.sh-row td{background:color-mix(in srgb,var(--day) 9%,var(--surface));padding:8px;vertical-align:middle}
+.sh-row th{text-align:left;width:78px;border-left:6px solid var(--day);border-radius:10px 0 0 10px;white-space:nowrap}
+.sh-row th b{display:block;font-size:14px}
+.sh-row th small{color:var(--text);opacity:.75;font-size:12.5px;font-weight:600}
+#sh-range{color:var(--text);font-size:14.5px;font-weight:700;margin-top:2px}
+.sh-row td:last-child{border-radius:0 10px 10px 0}
+.sh-row.today th,.sh-row.today td{background:color-mix(in srgb,var(--day) 20%,var(--surface))}
+.sh-row.today th b::after{content:' •';color:var(--day)}
+.sh-cell{min-width:110px;height:44px;transition:background .12s,box-shadow .12s}
+.sh-cell + .sh-cell{border-left:1px solid color-mix(in srgb,var(--day) 22%,transparent)}
+.sh-cell.over{box-shadow:inset 0 0 0 2px var(--day);background:color-mix(in srgb,var(--day) 28%,var(--surface))!important}
+.sh-week.picking .sh-cell{cursor:copy}
+.sh-week.picking .sh-cell:hover{box-shadow:inset 0 0 0 2px var(--day)}
+.sh-chip{display:inline-flex;align-items:center;gap:2px;max-width:100%;margin:2px 4px 2px 0;padding:3px 10px;border-radius:12px;background:var(--c);color:#fff;font-size:12.5px;font-weight:700;vertical-align:middle;box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.sh-chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sh-chip.mine{box-shadow:0 0 0 2px var(--surface),0 0 0 3.5px var(--c)}
+.sh-chip.movable{touch-action:none;cursor:grab;padding-right:4px;-webkit-user-select:none;user-select:none}
+.sh-chip.dragging{opacity:.35}
+.sh-x{border:none;background:none;padding:0 3px;width:auto;margin:0 0 0 2px;color:#fff;opacity:.75;font-size:14px;line-height:1;font-weight:700}
+.sh-x:hover{opacity:1}
+.sh-ghost{position:fixed;z-index:1000;pointer-events:none;transform:translate(-50%,-60%) rotate(-3deg);box-shadow:0 10px 26px rgba(0,0,0,.28);opacity:.95}
+.sh-label{display:none}
+.sh-top .grow{text-align:center}
+.au-soon{font-size:12.5px;margin:16px 0 0}
+.au-part{margin-top:14px}
+.reg-sub{color:var(--muted);font-weight:400}
+.au-ross{margin-top:12px;border:1px solid var(--border);border-radius:12px;padding:0 14px}
+.au-ross summary{cursor:pointer;padding:12px 0;font-weight:600}
+.au-ross[open]{padding-bottom:14px}
+/* One system per page (the Report picker): no heading of its own. */
+.au-ross > summary{display:none}
+.au-ross{margin-top:0;border:0;padding:0}
+.au-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.au-center{text-align:center}
+#au-rimovcli .au-acts,#au-ross .au-acts{justify-content:center}
+/* France: the fiches print one per page; nothing else of the app is printed then. */
+#print-fiches{display:none}
+@media print{
+  body>*:not(#print-fiches){display:none!important}
+  body{background:#fff!important}
+  #print-fiches{display:block;color:#000;font:14px/1.5 system-ui,sans-serif}
+  .fiche{page-break-after:always;padding:24px}
+  .fiche h2{font-size:20px;margin:0 0 4px}
+  .fiche .fe{margin:0 0 18px;color:#444}
+  .fiche p{display:flex;gap:12px;margin:0;padding:7px 0;border-bottom:1px solid #ccc}
+  .fiche .fl{width:220px;flex:none;color:#444}
+  .fiche .fs{margin-top:40px;padding-top:50px;border-bottom:1px solid #000;width:320px}
+}
+.hk-only{display:inline-flex;align-items:center;gap:8px;margin:0;font-size:14px;font-weight:500;color:var(--text);cursor:pointer}
+.hk-only input{width:18px;height:18px;margin:0;accent-color:var(--link)}
+.sh-chip.movable{cursor:pointer}
+.sh-chip .sh-time{flex:none;font-size:11px;font-weight:600;opacity:.85;margin-left:5px;white-space:nowrap}
+.sh-chip.has-time>span:first-child{min-width:0}
+.sh-chip.stacked{display:inline-grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:2px;line-height:1.2}
+.sh-chip.stacked .sh-time{grid-row:2;grid-column:1;margin-left:0}
+.sh-chip.stacked>:not(span):not(.sh-time){grid-row:1/3;grid-column:2}
+.ex-times{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ex-times>div,.ex-times input{min-width:0}
+/* Date fields have a wide built-in minimum on phones: make them fit their column. */
+.ex-times input{width:100%;max-width:100%;box-sizing:border-box}
+.tpick{display:flex;align-items:center;gap:6px}
+.tpick b{font-size:16px;color:var(--muted)}
+.tpick select{flex:1;min-width:0;font-size:16px;font-weight:650;text-align:center;text-align-last:center;padding:7px 6px;border-radius:10px;font-variant-numeric:tabular-nums}
+/* Phones: no table — each day a card, each kind of shift a line with the people on it. */
+@media (max-width:640px){
+  .sh-week{overflow:visible}
+  .sh-table,.sh-table tbody,.sh-row,.sh-row th,.sh-row td{display:block;width:auto}
+  .sh-table{min-width:0;border-spacing:0}
+  .sh-table thead{display:none}
+  .sh-row{margin:0 0 10px;border-left:6px solid var(--day);border-radius:12px;overflow:hidden;background:color-mix(in srgb,var(--day) 9%,var(--surface))}
+  .sh-row th,.sh-row td{background:none!important}
+  .sh-row th{border-left:none;border-radius:0;padding:10px 12px 4px;display:flex;align-items:baseline;gap:8px}
+  .sh-row th b{display:inline;font-size:15px}
+  .sh-row.today{background:color-mix(in srgb,var(--day) 20%,var(--surface))}
+  .sh-row .sh-cell{display:flex!important;align-items:center;flex-wrap:wrap;gap:4px 6px;min-width:0;height:auto;min-height:44px;padding:6px 12px 6px 112px;position:relative}
+  .sh-cell + .sh-cell{border-left:none;border-top:1px solid color-mix(in srgb,var(--day) 22%,transparent)}
+  .sh-row td:last-child{border-radius:0}
+  .sh-label{display:flex;flex-direction:column;position:absolute;left:12px;top:50%;transform:translateY(-50%);width:94px;line-height:1.2;pointer-events:none}
+  .sh-label b{font-size:13.5px;display:flex;align-items:center;gap:5px}
+  .sh-label b::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--c);flex:none}
+  .sh-label small{font-size:11.5px;color:var(--muted);padding-left:12px}
+  .sh-chip{margin:0;font-size:13px;padding:5px 6px 5px 11px}
+  .sh-x{font-size:16px;padding:2px 5px}
+}
+/* A tab someone hid (Settings → Your account → Tabs I use). */
+:root:root .wrap.app header.bar nav.tabs button.tab-off[data-tab]{display:none!important}
+/* Menu icons: next to the name on a computer, above it on a phone (below). */
+.wrap.app header.bar nav.tabs button[data-tab]{display:inline-flex;align-items:center;justify-content:center;gap:7px}
+.wrap.app header.bar nav.tabs .tab-ico{display:block;width:16px;height:16px;flex:none}
+/* Housekeeping on a computer: the beds on the left, the recurring tasks on the right. */
+@media (min-width:1100px){
+  #tab-housekeeping:not([hidden]):has(#hk-tasks-card:not([hidden])){display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start}
+  #tab-housekeeping:has(#hk-tasks-card:not([hidden])) #hk-layout{grid-column:1;grid-row:1}
+  #tab-housekeeping:has(#hk-tasks-card:not([hidden])) #hk-tasks-card{grid-column:2;grid-row:1;margin:0;position:sticky;top:16px}
+}
+/* Phones: the menu is icons with small labels, all tabs side by side. */
+@media (max-width:640px){
+  .wrap.app header.bar nav.tabs{width:100%;gap:5px;overflow:visible}
+  .wrap.app header.bar nav.tabs button{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:7px 2px 6px;font-size:10.5px;font-weight:650;letter-spacing:-.01em;border-radius:11px}
+  .wrap.app header.bar nav.tabs button span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .wrap.app header.bar nav.tabs .tab-ico{display:block;width:19px;height:19px}
+  .wrap.app header.bar nav.tabs button.tab-plus{flex:0 0 40px}
+}
+.st-row input[type=time]{width:auto;flex:none}
+.st-row input:not([type=time]){flex:1;min-width:0}
+.st-len{min-width:40px;font-size:13px}
+/* Settings → Shifts: the kinds of shift reordered by the grip, like the rooms */
+.st-row.dragging{position:relative;z-index:5;background:var(--surface);border-radius:10px;box-shadow:0 10px 28px rgba(0,0,0,.18)}
+.st-row.dragging .pr-grip{cursor:grabbing}
+@media (max-width:520px){.st-row{flex-wrap:wrap}.st-row input:not([type=time]){flex-basis:calc(100% - 38px)}.st-row input[type=time]{margin-left:38px}.st-row input[type=time]~input[type=time]{margin-left:0}}
+
+/* Notes on the rota: a tap on a shift opens its note; a shift with one shows a small icon in its corner */
+.sh-cell{position:relative}
+.sh-cell.tappable{cursor:pointer}
+/* Mouse over a shift: it lights up, so it's clear which one a click writes the
+   note on (not while over a name or note in it — those open their own thing). */
+@media (hover:hover){.sh-week:not(.picking) .sh-cell.tappable:hover:not(:has(.sh-chip:hover)){box-shadow:inset 0 0 0 2px var(--day);background:color-mix(in srgb,var(--day) 16%,var(--surface))!important}}
+.sh-note-ico{flex:none;width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sh-note{gap:4px;font-weight:600;cursor:pointer}
+.sh-note.movable{padding-right:10px}
+.sn-text[readonly]{resize:none}
+.sn-text{display:block;width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font:inherit;font-size:15px;resize:vertical}
+.sn-text:focus{outline:2px solid var(--accent);outline-offset:-1px}
+
+.sh-hours{margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
+
+/* ----- Pastel: soft colour instead of grey. Lavender-tinted neutrals, and the
+   main cards each in their own light shade (--hue), in light and dark mode. ----- */
+:root[data-theme=default]{--bg:#f8f5fb;--surface:#fff;--text:#2a2633;--muted:#7c7495;--border:#e9e3f2;--link:#5b45c4;--help-bg:#f1edff;--logo-accent:#9d85f2;--tabs-bg:#fff;--tabs-border:#e9e3f2}
+@media (prefers-color-scheme:dark){:root[data-theme=default]:not([data-mode=light]){--bg:#15131b;--surface:#1e1b26;--text:#ece9f3;--muted:#a39cbb;--border:#2f2a3b;--link:#b9a8ff;--help-bg:#29233a;--logo-accent:#a99bf0}}
+:root[data-theme=default][data-mode=dark]{--bg:#15131b;--surface:#1e1b26;--text:#ece9f3;--muted:#a39cbb;--border:#2f2a3b;--link:#b9a8ff;--help-bg:#29233a;--logo-accent:#a99bf0}
+.card.tint{background:color-mix(in srgb,var(--hue) 14%,var(--surface));border-color:color-mix(in srgb,var(--hue) 28%,var(--border))}
+.card.tint>h2{color:color-mix(in srgb,var(--hue) 55%,var(--text))}
+#tab-shifts>.card{background:color-mix(in srgb,#7fb6f0 10%,var(--surface));border-color:color-mix(in srgb,#7fb6f0 25%,var(--border))}
+#hk-tasks-card,#hk-list-card{background:color-mix(in srgb,#f2c94c 11%,var(--surface));border-color:color-mix(in srgb,#f2c94c 28%,var(--border))}
+body{background-image:radial-gradient(color-mix(in srgb,#9d85f2 16%,transparent) 1px,transparent 1.3px)}
+.fl-modal{max-width:520px}
+.fl-modal .flowy{border:none;padding:0;margin:0;background:none}
+.sp-open .flowy-ico svg{width:22px;height:22px}
+.faq+.sp-open{margin-top:18px}
+#hk-list-card>.top{justify-content:flex-start}
+@media (max-width:640px){#hk-filter{width:100%}.hk-only{width:100%}}
+.sp-open+.sp-open{margin-top:8px}
+.reg-btn:active{transform:none!important}
+.legal-links{font-size:12.5px;margin:14px 0 0}
+.legal-links a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+/* Check-in: nights in one tap. */
+.quick{display:flex;align-items:center;gap:8px;min-width:0}
+.quick .seg{flex:1;min-width:0}
+.quick .seg button{flex:1}
+.quick input{flex:1;min-width:44px;max-width:80px;text-align:center}
+/* One bar, seven parts: the chosen number filled, the rest quiet. */
+.seg{display:inline-flex;flex:none;padding:2px;border-radius:10px;background:color-mix(in srgb,var(--text) 6%,transparent);gap:1px}
+.seg button{flex:none;min-width:32px;height:30px;padding:0 6px;border:0;border-radius:8px;background:transparent;color:var(--muted);font-size:13.5px;font-weight:600;transition:background .15s,color .15s}
+.seg button:hover{color:var(--text)}
+.seg button.on{background:var(--surface);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.14)}
+.quick-head{grid-column:2/4;display:flex;align-items:center;gap:8px;margin-top:8px}
+.quick-head .seg{flex:1}
+.quick-head .seg button{flex:1}
+.qh-label{font-size:12px;color:var(--muted)}
+.qh-warn{margin-top:6px;padding:6px 10px;border-radius:8px;background:var(--warn-bg);color:var(--warn);font-size:13px}
+.quick-head .seg button{min-width:28px;height:26px;font-size:12.5px}
+@media (max-width:380px){.seg button{min-width:28px}.quick-head .seg button{min-width:25px}}
+
+
+@media (prefers-reduced-motion:reduce){.confetti,[class*=party]{animation:none!important}}
+
+/* The property under the logo: plain with one, a pill that switches with more. */
+.prop-pill{display:inline-flex;align-items:center;gap:6px;margin-top:4px;padding:0;border:0;background:none;color:inherit;opacity:.85;font:inherit;font-size:14px;font-weight:500;max-width:100%;cursor:default}
+.prop-pill svg,.prop-pill .prop-chev{display:none}
+.prop-pill:disabled{opacity:.85}
+.prop-pill #hd-property{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.prop-pill.many{cursor:pointer;opacity:1;padding:5px 12px 5px 9px;border-radius:99px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);font-weight:600;transition:background .15s}
+.prop-pill.many:hover,.prop-pill.many[aria-expanded=true]{background:rgba(255,255,255,.28)}
+.prop-pill.many svg{display:block;width:15px;height:15px;flex:none}
+.prop-pill.many .prop-chev{display:block;position:static;width:6px;height:6px;margin-left:2px;border-right:1.8px solid currentColor;border-bottom:1.8px solid currentColor;transform:rotate(45deg) translateY(-2px);opacity:.9}
+
+/* Our header photos: on a computer the header is a wide strip, so each photo
+   has its own position for it (set in core.js). */
+@media (min-width:700px){.wrap.app header.bar[data-art=photo]{background-position:center,var(--hdr-pos-wide,var(--hdr-pos,50% 50%))}}
+/* The eye in password fields (core.js addPasswordEyes). */
+.pw-wrap{position:relative;display:block}
+.pw-wrap input{padding-right:46px}
+.pw-eye{position:absolute;top:0;right:0;bottom:0;width:44px;margin:0;padding:0;border:0;background:none;color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:none}
+.pw-eye:hover{color:var(--text)}
+
+/* The user menu: people without an e-mail, one tap to carry on as them. */
+
+/* ===== The Vault (js/vault.js) ===== */
+.vt-top{align-items:center;flex-wrap:wrap}
+.vt-tools{display:flex;gap:6px;flex-wrap:wrap}
+.vt-search{margin:14px 0 6px}
+.vt-path{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:8px 0 2px;font-size:14px}
+.vt-path b{flex:1;min-width:0;overflow-wrap:anywhere}
+.vt-row{gap:6px}
+.vt-open{display:flex;align-items:center;gap:12px;border:none;background:none;padding:2px 0;text-align:left;min-width:0}
+/* A wide row shrunk on press slid its icon sideways: it stays put. */
+.vt-open:active{transform:none!important}
+.vt-ico{flex:none;display:grid;place-items:center;width:38px;height:38px;border-radius:10px;--ic:#6b6b6b;color:var(--ic);background:color-mix(in srgb,var(--ic) 14%,transparent)}
+.vt-ico-folder{--ic:#d98a00}.vt-ico-page{--ic:#3a6fd4}.vt-ico-image{--ic:#12805c}.vt-ico-pdf{--ic:#c7372f}.vt-ico-file{--ic:#7a5bc7}
+@media (prefers-color-scheme:dark){:root:not([data-mode=light]) .vt-ico{filter:brightness(1.35)}}
+:root[data-mode=dark] .vt-ico{filter:brightness(1.35)}
+.vt-words small svg{vertical-align:-2px;margin-right:4px}
+.vt-dl{display:grid;place-items:center;padding:7px 9px}
+.vt-who{display:inline-flex;align-items:center;gap:5px}
+.vt-words{display:flex;flex-direction:column;min-width:0}
+.vt-name{font-weight:600;overflow-wrap:anywhere}
+/* Phones: the Vault's title, line under it and buttons in the middle. */
+@media (max-width:640px){.vt-top{flex-direction:column;text-align:center}.vt-tools{justify-content:center}}
+/* A row's buttons: Edit as a word, but on phones a small pencil like the bin and download. */
+.vt-ed svg{display:none}
+@media (max-width:640px){
+  .vt-row{gap:2px}
+  .vt-ed span{display:none}
+  .vt-ed svg{display:block}
+  .vt-row .vt-dl,.vt-row .vt-ed{display:grid;place-items:center;padding:5px;border-color:transparent;background:none}
+  .vt-row .vt-dl svg,.vt-row .vt-ed svg{width:17px;height:17px}
+}
+.vt-usage{display:flex;align-items:center;gap:10px;margin-top:10px}
+.vt-bar{flex:none;width:120px;height:6px;border-radius:3px;background:var(--bg);border:1px solid var(--border);overflow:hidden}
+.vt-bar i{display:block;height:100%;background:var(--accent)}
+.vt-bar.full i{background:var(--danger)}
+.vt-check{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text);margin:8px 0;cursor:pointer}
+.vt-check input{width:18px;height:18px;flex:none;margin:0;accent-color:var(--accent)}
+.vt-acc-who{margin:4px 0 8px 28px}
+.vt-acc-who[hidden]{display:none}
+.vt-acc-group+.vt-acc-group{border-top:1px solid var(--border);margin-top:6px;padding-top:4px}
+.vt-modal{max-width:640px}
+.vt-folder-modal{max-width:360px}
+.vt-folder-modal .modal-body{padding:20px}
+.vt-folder-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.vt-folder-head h2{margin:0;font-size:17px}
+.vt-folder-foot{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.vt-folder-foot button.primary{width:auto;margin:0}
+.vt-modal .modal-head h2{overflow-wrap:anywhere}
+.vt-body{font-size:15px;line-height:1.55;overflow-wrap:anywhere}
+.vt-body h3{font-size:16px;margin:14px 0 6px}
+.vt-body h3:first-child,.vt-body p:first-child{margin-top:0}
+.vt-body p{margin:0 0 10px}
+.vt-body ul{margin:0 0 10px;padding-left:22px}
+.vt-body a{color:var(--link)}
+.vt-text{display:block;width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font:inherit;font-size:15px;resize:vertical}
+.vt-text:focus{outline:2px solid var(--accent);outline-offset:-1px}
+.vt-format{margin:6px 0 0;font-size:12px}
+.vt-pic-modal{max-width:900px}
+.vt-pic-modal img{display:block;max-width:100%;max-height:70vh;margin:0 auto;border-radius:8px}
+/* Two structures (settings.js openStructures): two logins side by side, stacked on phones. */
+.ts-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ts-card{position:relative;border:1px solid var(--border);border-radius:12px;padding:22px 14px 14px;background:var(--bg)}
+.ts-num{position:absolute;top:-10px;left:12px;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--on-accent);font-size:12px;font-weight:700}
+.ts-card input{background:var(--surface)}
+.ts-acts{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
+.ts-acts button.primary{width:auto;margin:0}
+@media (max-width:640px){.ts-grid{grid-template-columns:1fr;gap:18px}.ts-acts button{flex:1}}
+/* Reports → the login's check: on phones the words on top, the two buttons the same size side by side. */
+#se-check .au-acts{margin-top:0;flex-wrap:nowrap}
+#se-check .au-acts button{white-space:nowrap}
+@media (max-width:640px){#se-check .top{flex-direction:column;align-items:stretch;gap:10px}#se-check .au-acts{display:grid;grid-template-columns:1fr 1fr}}
+/* Date fields: our own month grid (core.js dateField; the phone picker ignores the app language). */
+.date-field{position:relative;display:block}
+.date-btn{width:100%;text-align:left;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);font:inherit;font-size:16px;margin:0}
+.date-btn:disabled{opacity:.6}
+.date-cal{position:absolute;top:calc(100% + 4px);left:0;z-index:30;width:264px;padding:8px;border:1px solid var(--border);border-radius:12px;background:var(--surface);box-shadow:0 8px 24px rgba(0,0,0,.15)}
+.date-cal.left{left:auto;right:0}
+.date-cal-h{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:6px}
+.date-cal-h b{font-size:13.5px;text-transform:capitalize}
+.date-cal-h button{min-width:34px;margin:0}
+.date-cal-d{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}
+.date-cal-d small{font-size:11px;color:var(--muted);text-transform:uppercase;padding:2px 0}
+.date-cal-d button{padding:6px 0;margin:0;font-size:13px;border:0;background:none;border-radius:8px;min-width:0;width:auto;color:var(--text)}
+.date-cal-d button.today{font-weight:700;color:var(--accent)}
+.date-cal-d button.on{background:var(--accent);color:var(--on-accent)}
+.date-cal-d button:disabled{opacity:.3}
+.date-cal .link{margin-top:6px;font-size:13px}
+.bp-edit-row .date-field{flex:none}
+.bp-edit-row .date-btn{width:auto;font-size:14px;padding:6px 10px}
+/* Who is signing in: the people this device remembers, like Google's account chooser. */
+.who-list{display:flex;flex-direction:column;gap:6px;margin:0 0 12px}
+.who-item{display:flex;align-items:center;gap:4px}
+.who-row{display:flex;align-items:center;gap:12px;flex:1;min-width:0;width:100%;margin:0;padding:8px 10px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font:inherit;font-weight:400;text-align:left;cursor:pointer}
+.who-row:hover{background:var(--bg)}
+.who-row.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.who-row .um-avatar{width:36px;height:36px;font-size:14px}
+.who-row .grow{min-width:0}
+.who-row b{display:block;font-size:14.5px;font-weight:600}
+.who-row small{display:block;font-size:12.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.who-forget{flex:none;width:32px;height:32px;padding:0;margin:0;border:0;background:none;color:var(--muted);font-size:18px;border-radius:8px}
+.who-forget:hover{background:var(--bg);color:var(--text)}
+.who-modal{max-width:420px}
+/* The hostel's device: names on the sign-in screen (core.js renderLoginTeam). */
+.who-team .who-pass{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 4px}
+.who-team .who-pass input{flex:1;min-width:0;margin:0}
+.who-team .who-pass button{margin:0}
+.who-team .who-pass .err{flex-basis:100%;margin:0}
+.who-team .who-pass .pw-wrap{flex:1;min-width:0}
+.li-team-place{font-size:13px;color:var(--muted);margin:12px 0 6px;font-weight:600}
+.li-team-links{margin:6px 0 0;font-size:13px}
+/* Your name tag next to light/dark, like the old Costello app, with your
+   colour on the left; it opens the user menu (the team in it, .um-team). */
+.corner .who-chips{position:relative;display:flex;flex-direction:column;align-items:flex-end}
+.corner .who-chips[hidden]{display:none}
+.corner .who-chip{width:auto;max-width:160px;padding:0 14px;background:var(--who);color:var(--who-ink,#fff);border:1px solid rgba(0,0,0,.08);font-size:13.5px;font-weight:700;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;line-height:36px}
+.corner .who-chip:hover{background:var(--who);filter:brightness(1.07)}
+.corner .who-chip[aria-expanded=true]{box-shadow:0 0 0 2px rgba(255,255,255,.95),0 2px 8px rgba(0,0,0,.25)}
+.corner .who-me::after{content:'▾';margin-left:6px;font-size:10px;opacity:.75}
+@media (max-width:640px){.corner .who-chip{max-width:120px;padding:0 11px;font-size:13px;line-height:32px}}
+/* Settings → Reports → RiMovCli: guests left out, to fill in (settings.js renderRmMissing). */
+.rm-missing{margin-top:8px}
+.rm-missing > p{margin:0 0 8px;font-size:13px}
+.rm-miss{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--border)}
+.rm-miss .grow{min-width:140px}
+.rm-miss b{display:block;font-size:14px}
+.rm-miss small{color:var(--muted);font-size:12.5px}
+.rm-miss input{width:auto;flex:0 1 170px;min-width:0;margin:0}
+.rm-miss button{margin:0}
+.rm-miss .err{flex-basis:100%;min-height:0;margin:0}
+/* RiMovCli: the starting point (the portal's last day), a small box of its own. */
+.rm-start{margin-top:14px;padding:10px 12px;border:1px solid var(--border);border-radius:10px}
+.rm-start summary{cursor:pointer;font-weight:600;font-size:14px}
+.rm-start p{font-size:13px;margin:8px 0}
+.rm-start textarea{width:100%;font:inherit;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text)}
+
+/* Phones zoom into any field with text under 16px when it's tapped (the reply
+   under a note was 13px): on touch screens every field gets 16px. */
+@media (hover:none) and (pointer:coarse){input,textarea,select{font-size:16px!important}}

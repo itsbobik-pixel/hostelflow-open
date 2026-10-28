@@ -1,0 +1,6 @@
+# Local secrets for `wrangler dev` — copy to .dev.vars (never committed).
+DEV=1
+# 32 random bytes in base64 (see README.md).
+CREDENTIALS_KEY=
+# Optional: scans for properties without their own Claude key.
+ANTHROPIC_API_KEY=

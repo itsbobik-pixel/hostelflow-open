@@ -1,0 +1,35 @@
+:root{--ink:#16161a;--muted:#6c6b74;--line:#e7e3dc;--bg:#fbf9f5;--card:#fff;--main:#2563eb;--shadow:#c2410c;--ok:#15803d;--bad:#b91c1c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:1100px;margin:0 auto;padding:24px 16px 60px}
+h1{font-size:24px;margin:0 0 8px}
+h2{font-size:17px;margin:28px 0 10px}
+.muted{color:var(--muted)}
+.warn{background:#fff7ed;border:1px solid #fdba74;border-radius:10px;padding:10px 14px}
+.drop{display:flex;align-items:center;gap:14px;padding:18px;border:2px dashed var(--line);border-radius:14px;background:var(--card);cursor:pointer}
+.drop input{max-width:220px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:0 0 14px}
+.card-head{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
+.thumb{width:180px;max-height:130px;object-fit:contain;border-radius:8px;border:1px solid var(--line);background:#f4f1ec}
+.meta{flex:1;min-width:220px;font-size:13.5px}
+.meta b.m{color:var(--main)} .meta b.s{color:var(--shadow)}
+.x{border:0;background:none;color:var(--muted);cursor:pointer;font-size:13px}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:640px;margin-top:10px;font-size:14px}
+th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+td.v{font-family:ui-monospace,Consolas,monospace;font-size:13.5px}
+tr.diff td.v{background:#fff3e8}
+tr.same{color:var(--muted)}
+.pick{display:flex;gap:4px;flex-wrap:wrap}
+.pick button{border:1px solid var(--line);background:#fff;border-radius:7px;padding:3px 8px;font:inherit;font-size:12.5px;cursor:pointer}
+.pick button.on.main{background:var(--main);border-color:var(--main);color:#fff}
+.pick button.on.shadow{background:var(--shadow);border-color:var(--shadow);color:#fff}
+.pick button.on.both{background:var(--ok);border-color:var(--ok);color:#fff}
+.pick button.on.neither{background:var(--bad);border-color:var(--bad);color:#fff}
+.err{color:var(--bad);font-size:13px}
+.sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.box .big{font-size:22px;font-weight:700}
+.bar{display:flex;height:10px;border-radius:5px;overflow:hidden;background:#eee;margin:6px 0 2px}
+.bar i{display:block;height:100%}

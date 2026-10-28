@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Scan bench — HostelFlow</title>
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/ocr-compare.css">
+</head>
+<body>
+<!-- The scan bench (src/ocrbench.js): sample documents read by both models side by side. Not linked from the app. -->
+<main>
+  <h1>Porovnání AI skenu</h1>
+  <p class="warn"><b>Jen vzorové doklady</b> (např. PRADO) — žádné skutečné hosty. Přečtené hodnoty se tu ukládají. Fotka se neukládá nikam.</p>
+  <p id="who" class="muted">Načítám…</p>
+
+  <div id="tools" hidden>
+    <label class="drop">
+      <input id="files" type="file" accept="image/*" multiple>
+      <span><b>Nahrát fotky dokladů</b><br><small>můžeš vybrat víc najednou</small></span>
+    </label>
+    <p id="busy" class="muted"></p>
+
+    <h2>Souhrn</h2>
+    <div id="summary"></div>
+
+    <h2>Skeny</h2>
+    <p class="muted">U každého rozdílu klikni, kdo měl pravdu. Pole, která oba přečetli stejně, se počítají jako správně pro oba (když ne, oprav to kliknutím).</p>
+    <div id="rows"></div>
+  </div>
+</main>
+<script src="/ocr-compare.js"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+/* "Put HostelFlow on your phone" (js/install-guide.js): browser picker, steps
+   with a drawn phone. Works on the public page and in the app (inherits colours). */
+.ig{--ig-accent:#ff7a1a;--ig-line:rgba(128,128,128,.28);--ig-soft:rgba(128,128,128,.10);color:inherit;max-width:520px;margin:0 auto}
+.ig-h{font-size:20px;line-height:1.25;margin:14px 0 6px;text-align:center}
+.ig-sub{margin:0 auto 14px;text-align:center;opacity:.78;font-size:15px;line-height:1.45;max-width:420px;min-height:3em}
+.ig-picks{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ig-pick{position:relative;display:flex;align-items:center;gap:12px;padding:14px;border-radius:16px;border:1.5px solid var(--ig-line);background:var(--ig-soft);color:inherit;font:inherit;text-align:left;cursor:pointer;transition:transform .12s,border-color .15s}
+.ig-pick:hover{border-color:var(--ig-accent)}
+.ig-pick:active{transform:scale(.98)}
+.ig-pick.mine{border-color:var(--ig-accent);box-shadow:0 0 0 3px rgba(255,122,26,.18)}
+.ig-pick b{display:block;font-size:16px}
+.ig-pick small{display:block;opacity:.7;font-size:13px}
+.ig-pick em{position:absolute;top:-9px;right:10px;font-style:normal;font-size:11px;font-weight:700;background:var(--ig-accent);color:#fff;padding:2px 8px;border-radius:99px}
+.ig-logo-b{width:38px;height:38px;flex:none;border-radius:50%;display:grid;place-items:center}
+.ig-logo-b.safari{background:radial-gradient(circle at 50% 50%,#fff 0 22%,transparent 23%),conic-gradient(from 45deg,#e8473c 0 12.5%,#1d8cf8 12.5% 100%);box-shadow:inset 0 0 0 3px #d9ecff}
+.ig-logo-b.chrome{background:radial-gradient(circle,#1a73e8 0 26%,#fff 27% 36%,transparent 37%),conic-gradient(from -60deg,#ea4335 0 33.3%,#fbbc04 33.3% 66.6%,#34a853 66.6% 100%)}
+.ig-logo-b.pc{background:var(--ig-soft);border:1.5px solid var(--ig-line)}
+.ig-logo-b.pc svg{width:22px;height:22px}
+.ig-quick{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:14px;border-radius:16px;background:rgba(255,122,26,.10);border:1.5px solid rgba(255,122,26,.35);margin-bottom:14px}
+.ig-quick span{font-size:14px;opacity:.85}
+.ig-ok{text-align:center;font-size:16px;font-weight:600;padding:18px;border-radius:16px;background:rgba(52,199,89,.12)}
+.ig-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.ig-link{border:0;background:none;color:inherit;opacity:.75;font:inherit;font-size:14px;cursor:pointer;padding:4px 0}
+.ig-count{font-size:13px;opacity:.65}
+.ig-stage{display:flex;justify-content:center;padding:6px 0 2px;animation:ig-in .28s ease}
+@keyframes ig-in{from{opacity:0;transform:translateX(14px)}}
+.ig-dots{display:flex;justify-content:center;gap:6px;margin-top:12px}
+.ig-dots i{width:7px;height:7px;border-radius:99px;background:var(--ig-line);transition:width .2s}
+.ig-dots i.done{background:rgba(255,122,26,.5)}
+.ig-dots i.on{width:22px;background:var(--ig-accent)}
+.ig-nav{display:flex;gap:10px}
+.ig-btn{flex:1;padding:13px 16px;border-radius:14px;border:1.5px solid var(--ig-line);background:var(--ig-soft);color:inherit;font:inherit;font-weight:600;font-size:16px;cursor:pointer}
+.ig-btn:disabled{opacity:.35;cursor:default}
+.ig-btn.ig-primary{background:var(--ig-accent);border-color:var(--ig-accent);color:#fff}
+.ig-quick .ig-btn{flex:none;padding:12px 22px;margin-top:4px}
+
+/* ----- The drawn phone (always the browser's own light look) ----- */
+.ig-phone{width:236px;height:470px;border-radius:38px;padding:9px;background:#1c1c1e;box-shadow:0 18px 40px rgba(0,0,0,.25),inset 0 0 0 2px #3a3a3c;flex:none}
+.ig-screen{position:relative;width:100%;height:100%;border-radius:30px;overflow:hidden;background:#f2f2f7;color:#111;font:12px/1.3 -apple-system,system-ui,"Segoe UI",Roboto,sans-serif;display:flex;flex-direction:column}
+.ig-phone.android .ig-screen{border-radius:24px}
+.ig-status{display:flex;justify-content:space-between;padding:9px 18px 4px;font-size:11px;color:#111}
+.ig-status.dark{color:#fff}
+.ig-page{flex:1;display:flex;flex-direction:column;min-height:0}
+.ig-app-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 12px;background:#1f2433;color:#fff}
+.ig-logo{font-size:13px;letter-spacing:-.01em}
+.ig-logo b{color:#ff9a4d}
+.ig-av{width:22px;height:22px;border-radius:50%;background:#ff7a1a;font-size:9px;font-weight:700;display:grid;place-items:center}
+.ig-cards{padding:10px;display:flex;flex-direction:column;gap:8px}
+.ig-cards i{display:block;height:46px;border-radius:10px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.ig-cards i.s{height:24px;width:60%}
+.ig-dim{position:absolute;inset:0;background:rgba(0,0,0,.28);z-index:1}
+.ig-screen svg{width:16px;height:16px;flex:none}
+/* Safari (iOS 26): floating bar at the bottom */
+.ig-sbar{position:absolute;left:8px;right:8px;bottom:16px;display:flex;gap:6px;align-items:center;z-index:0}
+.ig-sb{height:34px;min-width:34px;border-radius:99px;background:rgba(255,255,255,.92);box-shadow:0 2px 10px rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;gap:4px;color:#111}
+.ig-addr{flex:1;font-size:12px}
+.ig-addr svg{width:11px;height:11px}
+/* Chrome: address at the top */
+.ig-ctop{display:flex;align-items:center;gap:6px;padding:6px 8px;background:#fff}
+.ig-omni{flex:1;height:30px;border-radius:99px;background:#eef0f3;display:flex;align-items:center;gap:5px;padding:0 10px;font-size:12px}
+.ig-omni svg{width:11px;height:11px}
+.ig-omni-sh{margin-left:auto;display:flex;padding:3px;border-radius:8px}
+.ig-cb{width:28px;height:28px;display:grid;place-items:center;border-radius:8px;color:#444}
+.ig-cbot{display:flex;justify-content:space-around;padding:9px 6px 16px;background:#fff;border-top:1px solid #e5e5ea;color:#333}
+/* iOS menus and sheets */
+.ig-pop{position:absolute;right:10px;bottom:60px;width:180px;border-radius:14px;background:rgba(250,250,252,.98);box-shadow:0 10px 30px rgba(0,0,0,.25);overflow:hidden;z-index:2}
+.ig-li{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #e5e5ea;font-size:12px;background:#fff}
+.ig-li:last-child{border-bottom:0}
+.ig-sheet{position:absolute;left:0;right:0;bottom:0;top:58px;background:#f2f2f7;border-radius:16px 16px 0 0;z-index:2;padding:12px 10px;display:flex;flex-direction:column;gap:10px}
+.ig-sheet-h{display:flex;gap:9px;align-items:center}
+.ig-sheet-h img,.ig-add-card img,.ig-adlg-app img{width:34px;height:34px;border-radius:8px}
+.ig-sheet-h small,.ig-add-card small,.ig-adlg-app small{display:block;color:#8e8e93;font-size:10.5px}
+.ig-apps{display:flex;gap:12px;padding:2px 4px}
+.ig-apps i{width:38px;height:38px;border-radius:50%}
+.ig-list{border-radius:12px;overflow:hidden}
+.ig-addscr{flex:1;background:#f2f2f7;display:flex;flex-direction:column;gap:12px;padding:0 0 10px}
+.ig-add-top{display:flex;justify-content:space-between;align-items:center;padding:10px 10px;font-size:11.5px;background:#f9f9f9;border-bottom:1px solid #e5e5ea}
+.ig-add-top b{font-size:11.5px;text-align:center;flex:1;padding:0 4px}
+.ig-blue{color:#0a84ff;font-weight:700;padding:3px 6px;border-radius:8px}
+.ig-add-top span:first-child{color:#0a84ff}
+.ig-add-card{margin:0 10px;background:#fff;border-radius:12px;padding:10px;display:flex;gap:10px;align-items:center}
+.ig-toggle{justify-content:space-between}
+.ig-toggle i{width:36px;height:22px;border-radius:99px;background:#34c759;position:relative}
+.ig-toggle i::after{content:'';position:absolute;right:2px;top:2px;width:18px;height:18px;border-radius:50%;background:#fff}
+/* Android menu and dialog */
+.ig-amenu{position:absolute;right:6px;top:30px;width:178px;background:#fff;border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.28);z-index:2;padding:4px 0;font-size:11.5px}
+.ig-arow{display:flex;justify-content:space-around;padding:6px 4px;border-bottom:1px solid #eee;color:#444}
+.ig-ai{padding:7.5px 14px}
+.ig-adlg{position:absolute;left:14px;right:14px;top:150px;background:#fff;border-radius:20px;padding:16px;z-index:2;display:flex;flex-direction:column;gap:12px;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.ig-adlg>b{font-size:14px}
+.ig-adlg-app{display:flex;gap:10px;align-items:center}
+.ig-adlg-btns{display:flex;justify-content:flex-end;gap:14px;color:#1a73e8;font-weight:600}
+.ig-adlg-btns span{padding:4px 8px;border-radius:99px}
+/* Home screen */
+.ig-home{flex:1;background:linear-gradient(160deg,#3b5bdb,#9c36b5 60%,#e8590c);display:flex;flex-direction:column}
+.ig-home.android{background:linear-gradient(170deg,#0b7285,#1864ab 55%,#364fc7)}
+.ig-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px 10px;padding:18px 14px}
+.ig-grid i{display:block;aspect-ratio:1;border-radius:12px;opacity:.9}
+.ig-home.android .ig-grid i{border-radius:50%}
+.ig-hf{display:flex;flex-direction:column;align-items:center;gap:3px;border-radius:12px}
+.ig-hf img{width:100%;aspect-ratio:1;border-radius:12px}
+.ig-hf small{color:#fff;font-size:9px}
+/* A computer */
+.ig-pc{width:100%;max-width:440px;height:280px;border-radius:12px;overflow:hidden;background:#f2f2f7;color:#111;font:12px/1.3 system-ui,"Segoe UI",sans-serif;box-shadow:0 14px 36px rgba(0,0,0,.22);display:flex;flex-direction:column;border:1px solid #d0d0d5;position:relative}
+.ig-pc-tabs{display:flex;align-items:center;gap:6px;padding:7px 10px;background:#dfe1e5}
+.ig-pc-tabs i{width:9px;height:9px;border-radius:50%;background:#ff5f57}
+.ig-pc-tabs i:nth-child(2){background:#febc2e}.ig-pc-tabs i:nth-child(3){background:#28c840}
+.ig-pc-tabs span{margin-left:8px;background:#fff;padding:4px 14px;border-radius:8px 8px 0 0;font-size:11px}
+.ig-pc-tabs img{width:16px;height:16px;border-radius:4px}
+.ig-pc-app .ig-pc-tabs span{background:none;margin:0}
+.ig-pc-bar{padding:6px 10px;background:#fff;border-bottom:1px solid #e5e5ea}
+.ig-pc-addr{display:flex;align-items:center;gap:6px;background:#eef0f3;border-radius:99px;padding:5px 10px;font-size:11.5px}
+.ig-pc-addr svg{width:12px;height:12px}
+.ig-pc-inst{margin-left:auto;display:flex;padding:3px;border-radius:6px}
+.ig-pc-inst svg{width:16px;height:16px}
+.ig-pc-page{flex:1;display:flex;flex-direction:column;position:relative}
+.ig-pc-pop{position:absolute;right:10px;top:4px;width:230px;background:#fff;border-radius:12px;padding:12px;box-shadow:0 10px 30px rgba(0,0,0,.28);display:flex;flex-direction:column;gap:10px;z-index:2}
+.ig-pc-pop .ig-adlg-btns{justify-content:flex-start;gap:8px}
+.ig-pc-pop .ig-adlg-btns span{border:1px solid #dadce0;padding:5px 12px;border-radius:99px;color:#1a73e8}
+.ig-pc-pop .ig-adlg-btns .ig-fill{background:#1a73e8;color:#fff;border-color:#1a73e8}
+/* Where to tap: a pulsing orange ring */
+.ig-hl{position:relative;z-index:3;outline:2.5px solid var(--ig-accent,#ff7a1a);outline-offset:2px;animation:ig-pulse 1.4s ease-in-out infinite}
+@keyframes ig-pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,122,26,.55)}50%{box-shadow:0 0 0 9px rgba(255,122,26,0)}}
+@media (prefers-reduced-motion:reduce){.ig-hl{animation:none}.ig-stage{animation:none}}
+@media (max-width:380px){.ig-picks{grid-template-columns:1fr}.ig-phone{width:220px;height:440px}}
+.ig-li.ig-hl,.ig-ai.ig-hl{outline-offset:-3px;border-radius:8px}
+
+/* Short screens (the guide in the app's window): a smaller phone. */
+@media (max-height:760px){.ig-phone{width:200px;height:400px;border-radius:32px}.ig-screen{border-radius:25px}.ig-sub{min-height:0}}
+/* /install: the sticky bar doesn't cover the guide's top row. */
+#guide{scroll-margin-top:76px}

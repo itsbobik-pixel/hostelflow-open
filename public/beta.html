@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="it" class="it" data-lang="it" data-auto>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HostelFlow — Alloggiati Web automatico: check-in con una foto per ostelli e B&amp;B</title>
+<meta name="description" content="Fotografa il documento dell'ospite e HostelFlow lo registra su Alloggiati Web con un clic, anche gruppi e famiglie, con ISTAT, Ross1000 e RiMovCli dagli stessi dati. Per ostelli e B&amp;B: 14 giorni gratis, poi da 9 € al mese.">
+<meta name="theme-color" content="#1f2433">
+<meta property="og:title" content="HostelFlow — Alloggiati Web automatico: check-in con una foto per ostelli e B&amp;B">
+<meta property="og:description" content="Fotografa il documento e l'ospite è su Alloggiati Web con un clic. 14 giorni gratis, poi da 9 € al mese.">
+<meta property="og:image" content="https://hostelflow.it/icon-512.png">
+<meta property="og:url" content="https://hostelflow.it/welcome">
+<link rel="canonical" href="https://hostelflow.it/welcome">
+<link rel="alternate" hreflang="it" href="https://hostelflow.it/welcome">
+<link rel="alternate" hreflang="en" href="https://hostelflow.it/en">
+<link rel="alternate" hreflang="x-default" href="https://hostelflow.it/welcome">
+<link rel="alternate" hreflang="es" href="https://hostelflow.it/es">
+<link rel="alternate" hreflang="fr" href="https://hostelflow.it/fr">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/landing.css">
+<script src="/landing.js" defer></script>
+</head>
+<body>
+<!-- The front page while HostelFlow looks for beta testers (src/worker.js FRONT_PAGE).
+     The full product page is landing.html, parked until after the beta. -->
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/welcome" aria-label="HostelFlow">
+      <svg class="mark" viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="120"/><path d="M176 112v288M176 290c0-60 36-92 80-92s80 32 80 92v34c0 44 30 70 70 56"/></svg>
+      <span>hostel<b>flow</b></span>
+    </a>
+    <nav class="links">
+      <a href="#cosa"><span class="it">Cosa fa</span><span class="en">What it does</span></a>
+      <a href="#come"><span class="it">Come partecipare</span><span class="en">How to join</span></a>
+      <a href="#prezzi"><span class="it">Prezzi</span><span class="en">Pricing</span></a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-right">
+      <button type="button" class="lang" id="lang" aria-label="Lingua / Language"><span class="it">EN</span><span class="en">IT</span></button>
+      <a class="signin" href="/app"><span class="it">Accedi</span><span class="en">Sign in</span></a>
+      <a class="btn small" href="/app#signup"><span class="it">Provalo ora</span><span class="en">Try it now</span></a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="wrap hero-in">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="dot"></span><span class="it">Per ostelli e B&amp;B</span><span class="en">For hostels and B&amp;Bs</span></p>
+        <h1>
+          <span class="it">Alloggiati Web <em>in automatico</em>.</span>
+          <span class="en">Alloggiati Web <em>on autopilot</em>.</span>
+        </h1>
+        <p class="lead">
+          <span class="it">Fotografa il documento dell'ospite: HostelFlow legge i dati, compila la schedina e la invia alla Questura con un clic. Niente più passaporti ricopiati a mano.</span>
+          <span class="en">Take a photo of the guest's ID: HostelFlow reads it, fills in the form and sends it to the police in one click. No more copying passports by hand.</span>
+        </p>
+        <ul class="ticks">
+          <li><span class="it">Gruppi e famiglie in un colpo solo</span><span class="en">Groups and families in one go</span></li>
+          <li><span class="it">Tramite il web service ufficiale della Polizia</span><span class="en">Through the police's official web service</span></li>
+          <li><span class="it">ISTAT, Ross1000 e RiMovCli dagli stessi dati</span><span class="en">ISTAT, Ross1000 and RiMovCli from the same data</span></li>
+          <li><span class="it">Foto dei documenti cancellate entro 48 ore</span><span class="en">ID photos deleted within 48 hours</span></li>
+          <li><span class="it">Collegamento con Cloudbeds</span><span class="en">Integration with Cloudbeds</span></li>
+        </ul>
+        <div class="cta">
+          <a class="btn big" href="/app#signup"><span class="it">Provalo ora</span><span class="en">Try it out now</span> <span class="arrow">→</span></a>
+          <a class="btn ghost big" href="#come"><span class="it">Come partecipare</span><span class="en">How to join</span></a>
+        </div>
+        <p class="m-signin"><span class="it">Hai già un account?</span><span class="en">Already have an account?</span> <a href="/app"><span class="it">Accedi</span><span class="en">Sign in</span></a></p>
+      </div>
+
+      <!-- The check-in on a phone: a real screenshot (demo data). The team's
+           Dashboard, housekeeping and shifts have their own page (/gestionale-ostello). -->
+      <div class="hero-shot phone" aria-hidden="true">
+        <div class="device">
+          <img class="shot" src="/shots/checkin-phone.jpg" width="390" height="844" alt="Il check-in di HostelFlow sul telefono: i dati letti dal documento, pronti per Alloggiati Web">
+        </div>
+        <div class="float-card">
+          <span class="fc-ico">⚡</span>
+          <div><b><span class="it">Automatico</span><span class="en">Automatic</span></b><small><span class="it">foto → Alloggiati Web</span><span class="en">photo → Alloggiati Web</span></small></div>
+        </div>
+      </div>
+    </div>
+    <div class="town" aria-hidden="true"></div>
+  </section>
+
+  <!-- ===== The check-in in 25 seconds: an animation, not a recording of the
+       app (made with docs/growth/video/checkin-animation.html; landing.js plays
+       it while it is on screen). ===== -->
+  <section class="sec demo" id="video">
+    <div class="wrap">
+      <p class="kicker"><span class="it">Guarda come funziona</span><span class="en">See how it works</span></p>
+      <h2><span class="it">Dalla foto ad Alloggiati Web in 25 secondi</span><span class="en">From photo to Alloggiati Web in 25 seconds</span></h2>
+      <div class="demo-video">
+        <video class="it" src="/video/checkin-it.mp4" poster="/video/checkin-it.jpg" width="1280" height="720" muted loop playsinline preload="none" aria-label="Il check-in con HostelFlow: foto del documento, dati compilati dall'AI, invio ad Alloggiati Web"></video>
+        <video class="en" src="/video/checkin-en.mp4" poster="/video/checkin-en.jpg" width="1280" height="720" muted loop playsinline preload="none" aria-label="Check-in with HostelFlow: photo of the ID, details filled in by AI, sent to Alloggiati Web"></video>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Why HostelFlow: small hostels, a seasonal pause, one price.
+       Competitors' prices (no names on purpose — comparative ads in Italy must
+       be exact): Vikey and Chekin charge about €4–10 per room or apartment a
+       month, checked 24. 10. 2026 — with 10 rooms that's €40–100. ===== -->
+  <section class="sec alt" id="perche">
+    <div class="wrap">
+      <p class="kicker"><span class="it">Perché HostelFlow</span><span class="en">Why HostelFlow</span></p>
+      <h2><span class="it">Non infilare il tuo ostello in un software per grandi hotel</span><span class="en">Don't squeeze your hostel into software built for big hotels</span></h2>
+      <div class="grid">
+        <div class="feat">
+          <span class="ico"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18v-7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v7M3 14h18M3 18v2M21 18v2M7 9V6h4v3"/></svg></span>
+          <h3><span class="it">Fatto per gli ostelli piccoli</span><span class="en">Made for small hostels</span></h3>
+          <p><span class="it">HostelFlow nasce alla reception di un ostello: letti, volontari, gruppi, arrivi a tarda sera. Solo quello che ti serve, niente menu da catena alberghiera.</span><span class="en">HostelFlow was born at a hostel reception desk: beds, volunteers, groups, late arrivals. Just what you need — no hotel-chain menus.</span></p>
+        </div>
+        <div class="feat">
+          <span class="ico"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg></span>
+          <h3><span class="it">In letargo in bassa stagione</span><span class="en">Put your hostel to sleep off-season</span></h3>
+          <p><span class="it">Chiudi per l'inverno? Metti in pausa l'abbonamento e non paghi nulla finché non riapri. Paghi solo quando lavori.</span><span class="en">Closed for the winter? Pause your subscription and pay nothing until you reopen. You only pay when you're open.</span></p>
+        </div>
+        <div class="feat">
+          <span class="ico"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg></span>
+          <h3><span class="it">Un prezzo per tutto l'ostello</span><span class="en">One price for the whole hostel</span></h3>
+          <p><span class="it">Molte app di check-in si pagano a camera o ad appartamento: con 10 camere sono 40–100 € al mese. Con HostelFlow un ostello di 40 letti paga 14 € al mese per il check-in.</span><span class="en">Many check-in apps charge per room or apartment: with 10 rooms that's €40–100 a month. With HostelFlow a 40-bed hostel pays €14 a month for check-in.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== What it does ===== -->
+  <section class="sec" id="cosa">
+    <div class="wrap">
+      <p class="kicker"><span class="it">Cosa fa già oggi</span><span class="en">What it does today</span></p>
+      <h2><span class="it">Meno copiare passaporti, più tempo per gli ospiti</span><span class="en">Less copying passports, more time for guests</span></h2>
+      <div class="grid">
+        <a class="feat product" href="/alloggiati-web-automatico">
+          <span class="ico"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></span>
+          <h3><span class="it">Check-in e Alloggiati Web</span><span class="en">Check-in and Alloggiati Web</span></h3>
+          <p><span class="it">Fotografi il documento, l'AI compila i dati, tu controlli e con un clic gli ospiti sono registrati in Questura. Anche più ospiti insieme. Per B&amp;B, affittacamere e appartamenti: da 9 € al mese.</span><span class="en">Take a photo of the ID, AI fills in the details, you check them and one click registers the guests with the Questura. Several at once, too. For B&amp;Bs, rooms and apartments: from €9 a month.</span></p>
+          <span class="more"><span class="it">Scopri il check-in</span><span class="en">See the check-in</span> →</span>
+        </a>
+        <a class="feat product" href="/gestionale-ostello">
+          <span class="ico"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 13h4M8 16h7"/></svg></span>
+          <h3><span class="it">Bacheca, pulizie e turni</span><span class="en">Dashboard, housekeeping and shifts</span></h3>
+          <p><span class="it">Una bacheca semplicissima per tutto lo staff e i volontari: note, cose da fare, letti da rifare e turni — tutti aggiornati, con facilità e divertimento. Per gli ostelli: +10 € al mese in più del check-in.</span><span class="en">A super simple dashboard for all your staff and volunteers: notes, to-dos, beds to make up and shifts — everyone up to date, with ease and fun. For hostels: +€10 a month on top of check-in.</span></p>
+          <span class="more"><span class="it">Scopri il lavoro di squadra</span><span class="en">See the teamwork</span> →</span>
+        </a>
+        <div class="feat">
+          <span class="ico"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
+          <h3><span class="it">Privacy prima di tutto</span><span class="en">Privacy first</span></h3>
+          <p><span class="it">Foto dei documenti cancellate appena l'ospite è registrato (al massimo entro 48 ore), insieme ai dati personali. Credenziali di Alloggiati conservate cifrate.</span><span class="en">ID photos deleted as soon as guests are registered (within 48 hours at the latest), personal details removed too. Your Alloggiati login is stored encrypted.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== How to join ===== -->
+  <section class="sec" id="come">
+    <div class="wrap">
+      <p class="kicker"><span class="it">Come partecipare</span><span class="en">How to join</span></p>
+      <h2><span class="it">Tre passi, cinque minuti</span><span class="en">Three steps, five minutes</span></h2>
+      <div class="steps">
+        <div class="step">
+          <span class="num">1</span>
+          <h3><span class="it">Crea l'account</span><span class="en">Create an account</span></h3>
+          <p><span class="it">Un minuto e sei dentro: niente da installare, funziona su telefono e PC. 14 giorni gratis.</span><span class="en">One minute and you're in — nothing to install, it works on phone and computer. Free for 14 days.</span></p>
+        </div>
+        <div class="step">
+          <span class="num">2</span>
+          <h3><span class="it">Collega Alloggiati Web</span><span class="en">Connect Alloggiati Web</span></h3>
+          <p><span class="it">Inserisci le credenziali della struttura nelle Impostazioni. Preferisci farlo insieme? Scrivi a <a href="mailto:support@hostelflow.it?subject=HostelFlow">support@hostelflow.it</a> e lo configuriamo in 10 minuti.</span><span class="en">Add your property's login in Settings. Rather do it together? Write to <a href="mailto:support@hostelflow.it?subject=HostelFlow">support@hostelflow.it</a> and we'll set it up in 10 minutes.</span></p>
+        </div>
+        <div class="step">
+          <span class="num">3</span>
+          <h3><span class="it">Tutto il team unito</span><span class="en">Feel the unity</span></h3>
+          <p><span class="it">Un'unica piattaforma semplice che unisce tutto il tuo flusso di lavoro.</span><span class="en">One simple platform that unifies your entire workflow.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Story: Bob adds his own text here (the quote was taken out) ===== -->
+
+  <!-- ===== Pricing (src/billing.js: the trial; tiers as decided 13. 10.) ===== -->
+  <section class="sec alt" id="prezzi">
+    <div class="wrap">
+      <p class="kicker"><span class="it">Prezzi</span><span class="en">Pricing</span></p>
+      <p class="vat-note"><span class="it">Prezzi IVA esclusa: l'IVA, se dovuta, si aggiunge al pagamento.</span><span class="en">Prices exclude VAT, which is added at checkout where due.</span></p>
+      <!-- The calculator (landing.js): Check-in priced by beds — up to 20 €9,
+           40 €14, 60 €19, 80 €29, 100 €39, above 100 write to us — and the team
+           part (Dashboard, Housekeeping, Shifts) +€10. Decided by Bob 24. 10.;
+           src/billing.js still charges the old plans until it is rewritten. -->
+      <div class="calc" id="calc">
+        <div class="calc-in">
+          <label for="calc-beds"><span class="it">Quanti letti ha la tua struttura?</span><span class="en">How many beds does your place have?</span></label>
+          <div class="calc-row">
+            <input type="range" id="calc-beds" min="1" max="101" value="30">
+            <output id="calc-beds-n" for="calc-beds">30</output>
+          </div>
+          <label class="calc-team"><input type="checkbox" id="calc-team"> <span><span class="it">Aggiungi Bacheca, Pulizie e Turni per tutto il team</span><span class="en">Add Dashboard, Housekeeping and Shifts for the whole team</span> <b>+10 €</b></span></label>
+        </div>
+        <div class="calc-out" aria-live="polite">
+          <div class="price" id="calc-price">19 € <small><span class="it">/ mese</span><span class="en">/ month</span></small></div>
+          <p class="plan-note" id="calc-detail"></p>
+          <a class="btn big full" id="calc-go" href="/app#signup"><span class="it">Prova gratis 14 giorni</span><span class="en">Try it free for 14 days</span> <span class="arrow">→</span></a>
+        </div>
+      </div>
+      <div class="plans three">
+        <div class="plan">
+          <div class="plan-top"><b>Check-in</b><span class="tag"><span class="it">In base ai letti</span><span class="en">Priced by beds</span></span></div>
+          <div class="price"><span class="it">da 9 €</span><span class="en">from €9</span> <small><span class="it">/ mese</span><span class="en">/ month</span></small></div>
+          <p class="plan-note"><span class="it">9 € fino a 20 letti · 14 € fino a 40 · 19 € fino a 60 · 29 € fino a 80 · 39 € fino a 100</span><span class="en">€9 up to 20 beds · €14 up to 40 · €19 up to 60 · €29 up to 80 · €39 up to 100</span></p>
+          <ul>
+            <li><span class="it">Check-in da una foto del documento</span><span class="en">Check-in from one photo of the ID</span></li>
+            <li><span class="it">Invio automatico ad Alloggiati Web</span><span class="en">Automatic Alloggiati Web registration</span></li>
+            <li><span class="it">ISTAT e Ross1000 dagli stessi dati</span><span class="en">ISTAT and Ross1000 from the same data</span></li>
+            <li><span class="it">RiMovCli Liguria: <a href="/rimovcli-liguria">nell'elenco della Regione</a></span><span class="en">RiMovCli Liguria: <a href="/rimovcli-liguria">listed by the Region</a></span></li>
+          </ul>
+          <a class="btn ghost big full" href="/app#signup"><span class="it">Prova gratis</span><span class="en">Try it free</span> <span class="arrow">→</span></a>
+        </div>
+        <div class="plan main">
+          <div class="plan-top"><b>+ Team</b><span class="tag"><span class="it">Tutta l'app</span><span class="en">The whole app</span></span></div>
+          <div class="price">+10 € <small><span class="it">/ mese</span><span class="en">/ month</span></small></div>
+          <p class="plan-note"><span class="it">in più del Check-in, per tutto il team</span><span class="en">on top of Check-in, for the whole team</span></p>
+          <ul>
+            <li><span class="it">Bacheca: note, cose da fare, linee guida</span><span class="en">Dashboard: notes, to-dos, guidelines</span></li>
+            <li><span class="it">Pulizie: letti, lenzuola, compiti</span><span class="en">Housekeeping: beds, linen, tasks</span></li>
+            <li><span class="it">Turni del personale</span><span class="en">Staff shifts</span></li>
+            <li><span class="it">Team con ruoli: staff e volontari</span><span class="en">Team with roles: staff and volunteers</span></li>
+          </ul>
+          <a class="btn big full" href="/app#signup"><span class="it">Prova gratis</span><span class="en">Try it free</span> <span class="arrow">→</span></a>
+        </div>
+        <div class="plan">
+          <div class="plan-top"><b><span class="it">Più appartamenti</span><span class="en">Multiple apartments</span></b><span class="tag soon-tag"><span class="it">Su richiesta</span><span class="en">On request</span></span></div>
+          <div class="price">3 € <small><span class="it">/ appartamento / mese</span><span class="en">/ apartment / month</span></small></div>
+          <p class="plan-note"><span class="it">da 15 € al mese</span><span class="en">starting at €15 a month</span></p>
+          <ul>
+            <li><span class="it">Il Check-in per ogni appartamento</span><span class="en">Check-in for every apartment</span></li>
+            <li><span class="it">Un solo account, passi da uno all'altro</span><span class="en">One account, switch between them</span></li>
+            <li><span class="it">Ogni appartamento con il suo Alloggiati Web</span><span class="en">Each apartment with its own Alloggiati Web</span></li>
+          </ul>
+          <a class="btn ghost big full" href="mailto:support@hostelflow.it?subject=HostelFlow%20%E2%80%94%20more%20apartments"><span class="it">Scrivici</span><span class="en">Write to us</span></a>
+        </div>
+      </div>
+      <p class="fine center"><span class="it">14 giorni gratis, senza carta. Poi pagamento sicuro con Stripe, disdici quando vuoi. Fino a 1000 documenti al mese per struttura (200 nei giorni di prova); se ne servono di più, scrivici.</span><span class="en">Free for 14 days, no card needed. After that, secure payment via Stripe — cancel anytime. Up to 1000 documents a month per property (200 during the trial); need more? Just ask.</span></p>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="sec alt" id="faq">
+    <div class="wrap narrow">
+      <p class="kicker">FAQ</p>
+      <h2><span class="it">Domande frequenti</span><span class="en">Questions</span></h2>
+      <details>
+        <summary><span class="it">Quanto costa?</span><span class="en">What does it cost?</span></summary>
+        <p><span class="it"><b>14 giorni gratis</b>, senza carta. Poi il check-in costa in base ai letti: <b>9 € al mese</b> fino a 20, <b>14 €</b> fino a 40, <b>19 €</b> fino a 60, <b>29 €</b> fino a 80, <b>39 €</b> fino a 100 (oltre, scrivici). Bacheca, pulizie e turni per tutto il team: <b>+10 €</b>. Disdici quando vuoi. <a href="#prezzi">Tutti i prezzi</a>.</span><span class="en"><b>Free for 14 days</b>, no card needed. Then check-in is priced by beds: <b>€9 a month</b> up to 20, <b>€14</b> up to 40, <b>€19</b> up to 60, <b>€29</b> up to 80, <b>€39</b> up to 100 (more? write to us). Dashboard, housekeeping and shifts for the whole team: <b>+€10</b>. Cancel anytime. <a href="#prezzi">All prices</a>.</span></p>
+      </details>
+      <details>
+        <summary><span class="it">Come arrivano i dati ad Alloggiati Web?</span><span class="en">How do guests get to Alloggiati Web?</span></summary>
+        <p><span class="it">Attraverso il servizio web ufficiale di Alloggiati Web, con l'utente, la password e la chiave web service della tua struttura, conservate cifrate. La ricevuta resta sul portale, come sempre.</span><span class="en">Through the official Alloggiati Web service, with your property's username, password and web service key, stored encrypted. The receipts stay on the portal as usual.</span></p>
+      </details>
+      <details>
+        <summary><span class="it">Cosa succede ai dati degli ospiti?</span><span class="en">What happens to guests' data?</span></summary>
+        <p><span class="it">Le foto dei documenti si cancellano automaticamente entro 48 ore. Dopo l'invio, HostelFlow elimina nomi e documenti e tiene solo ciò che serve alle statistiche (cittadinanza, residenza, date); in Italia i dati per il Ross1000 (sesso, nascita) si cancellano dopo 90 giorni.<span data-legal> Dettagli nell'<a href="/privacy">informativa sulla privacy</a>.</span></span><span class="en">ID photos are deleted automatically within 48 hours. Once guests are registered, HostelFlow removes names and documents and keeps only what statistics need (nationality, residence, dates); in Italy the Ross1000 details (sex, birth) go after 90 days.<span data-legal> Details in the <a href="/privacy">privacy policy</a>.</span></span></p>
+      </details>
+      <details>
+        <summary><span class="it">Funziona anche per B&amp;B e affittacamere?</span><span class="en">Does it work for B&amp;Bs and guesthouses?</span></summary>
+        <p><span class="it">Sì: chiunque debba comunicare gli ospiti ad Alloggiati Web. Ostelli, B&amp;B, affittacamere, case vacanze. Funziona nel browser di telefono e PC, niente da installare.</span><span class="en">Yes — anyone who has to register guests on Alloggiati Web: hostels, B&amp;Bs, guesthouses, holiday rentals. It runs in the browser on phone and PC, nothing to install.</span></p>
+      </details>
+      <details>
+        <summary><span class="it">C'è un'app per il telefono?</span><span class="en">Is there a phone app?</span></summary>
+        <p><span class="it">Sì, senza app store: aprite hostelflow.it e aggiungetelo alla schermata Home, si apre come un'app. <a href="/install">Come fare, passo per passo</a>.</span><span class="en">Yes, without an app store: open hostelflow.it and add it to your home screen, it opens like an app. <a href="/install">How, step by step</a>.</span></p>
+      </details>
+      <details>
+        <summary><span class="it">E se mi serve aiuto o manca qualcosa?</span><span class="en">What if I need help or something is missing?</span></summary>
+        <p><span class="it">Scrivici da <i>Aiuto e supporto</i> nell'app o a <a href="mailto:support@hostelflow.it">support@hostelflow.it</a>. Rispondiamo presto, e i vostri suggerimenti decidono cosa costruiamo dopo.</span><span class="en">Write to us from <i>Help &amp; support</i> in the app or at <a href="mailto:support@hostelflow.it">support@hostelflow.it</a>. We answer quickly — and your suggestions decide what we build next.</span></p>
+      </details>
+    </div>
+  </section>
+
+  <!-- ===== Final call ===== -->
+  <section class="final">
+    <div class="wrap final-in">
+      <h2><span class="it">Pronto a semplificare?</span><span class="en">Ready to simplify?</span></h2>
+      <p><span class="it">Provalo ora: 14 giorni gratis, senza carta.</span><span class="en">Try it now — free for 14 days, no card needed.</span></p>
+      <a class="btn big light" href="/app#signup"><span class="it">Provalo ora</span><span class="en">Try it out now</span> <span class="arrow">→</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <a class="brand" href="/welcome" aria-label="HostelFlow">
+      <svg class="mark" viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="120"/><path d="M176 112v288M176 290c0-60 36-92 80-92s80 32 80 92v34c0 44 30 70 70 56"/></svg>
+      <span>hostel<b>flow</b></span>
+    </a>
+    <div class="foot-links">
+      <a href="mailto:support@hostelflow.it">support@hostelflow.it</a>
+      <a href="/app"><span class="it">Accedi</span><span class="en">Sign in</span></a>
+      <a href="/alloggiati-web-automatico">Alloggiati Web</a>
+      <a href="/istat-ross1000">ISTAT e Ross1000</a>
+      <a href="/rimovcli-liguria">RiMovCli Liguria</a>
+      <a href="/gestionale-ostello"><span class="it">Gestionale per ostelli</span><span class="en">Hostel software</span></a>
+      <a href="/en" hreflang="en">English</a>
+      <a href="/es" hreflang="es">Español</a>
+      <a href="/fr" hreflang="fr">Français</a>
+      <a href="/privacy" data-legal>Privacy</a>
+      <a href="/terms" data-legal><span class="it">Termini</span><span class="en">Terms</span></a>
+    </div>
+    <p class="copy">© 2026 HostelFlow</p>
+  </div>
+</footer>
+<!-- Cloudflare Web Analytics: no cookies, no personal data; public pages only, not the app. -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "eaea86c21be746b3954f412ee81e3461"}'></script>
+</body>
+</html>

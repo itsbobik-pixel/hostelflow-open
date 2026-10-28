@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rm:c59 idstruttura="COD1" data="2013-08-13" xmlns:rm="http://www.regione.liguria.it/turismo/rimovcli" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<mensile numcameredisp="1" numlettidisp="2" softwaregestionale="Soft Abc"/>
+	<giornaliero numcamereoccupate="5">
+		<rigac59 nazione="i" residenza="015" presenti="3" partiti="1" arrivati="2"/>
+		<rigac59 nazione="e" residenza="004" presenti="4" partiti="0" arrivati="4" diurni="1"/>
+		<rigac59 nazione="i" residenza="059" presenti="5" partiti="0" arrivati="0"/>
+		<rigac59 nazione="e" residenza="075" presenti="4" partiti="0" arrivati="4" diurni="0"/>
+		<rigac59 nazione="i" residenza="002" presenti="0" partiti="4" arrivati="0"/>
+	</giornaliero>
+</rm:c59>

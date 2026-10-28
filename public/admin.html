@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Admin centrum — HostelFlow</title>
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/admin.css">
+</head>
+<body>
+<!-- The admin centre (src/admin.js) on admin.hostelflow.it: own accounts, own cookie. No guest data. -->
+
+<!-- Sign in -->
+<section id="login" class="login" hidden>
+  <form id="login-form" class="login-card">
+    <div class="brand big"><span class="mark">h</span><span>hostel<b>flow</b></span></div>
+    <p class="login-sub">Admin centrum</p>
+    <label>E-mail<input id="li-email" type="email" autocomplete="username" required></label>
+    <label>Heslo<input id="li-pass" type="password" autocomplete="current-password" required></label>
+    <button type="submit" class="primary">Přihlásit se</button>
+    <p class="err" id="li-err"></p>
+  </form>
+</section>
+
+<!-- Signed in -->
+<div id="app" class="app" hidden>
+  <aside class="side">
+    <div class="brand"><span class="mark">h</span><span>hostel<b>flow</b></span><em>admin</em></div>
+    <nav id="nav">
+      <button data-view="today" class="on"><span data-i="today"></span>Denní přehled</button>
+      <button data-view="props"><span data-i="building"></span>Provozovny</button>
+      <button data-view="vouchers"><span data-i="ticket"></span>Vouchery</button>
+      <button data-view="costs"><span data-i="coins"></span>Náklady a AI</button>
+      <button data-view="inbox"><span data-i="inbox"></span>Podpora a chyby<b class="pill" id="inbox-count" hidden></b></button>
+      <button data-view="archive"><span data-i="archive"></span>Archiv</button>
+      <button data-view="audit"><span data-i="history"></span>Záznam změn</button>
+    </nav>
+    <div class="who"><span class="avatar" id="who-av"></span><span class="who-txt"><b id="who-name"></b><small id="who"></small></span><button id="logout" class="icon-btn" title="Odhlásit" aria-label="Odhlásit"><span data-i="logout"></span></button></div>
+  </aside>
+
+  <main>
+    <!-- Denní přehled -->
+    <section class="view" id="v-today">
+      <header class="vh"><div><h1 id="hello">Dobrý den</h1><p class="muted" id="today-date"></p></div><button class="ghost" id="refresh"><span data-i="refresh"></span>Obnovit</button></header>
+      <div class="top">
+      <div class="money purple">
+        <div class="money-head"><span class="mh"><span data-i="building"></span>Nové provozovny</span><div class="chips hero-chips" id="su-period"></div></div>
+        <div class="money-sum"><b id="su-n">0</b><small><span id="su-label"></span> · <span id="su-cmp"></span></small></div>
+        <div class="hero-trial" id="trials"></div>
+      </div>
+      <div class="money green" data-admin>
+        <div class="money-head"><span class="mh"><span data-i="card"></span>Předplatné</span><div class="chips hero-chips" id="money-period"></div></div>
+        <div class="money-sum"><b id="subs-n">—</b><small id="subs-total"></small></div>
+        <div id="plans" class="plans"></div>
+        <small id="subs-sub" class="money-foot"></small>
+      </div>
+      <div class="money orange" data-admin>
+        <div class="money-head"><span class="mh"><span data-i="wallet"></span>Celkový výdělek</span><div class="chips hero-chips" id="earn-period"></div></div>
+        <div class="money-sum"><b id="earn-n">—</b><small id="earn-sub"></small></div>
+      </div>
+      </div>
+      <div class="panel">
+        <div class="ph"><h2>Vyžaduje pozornost</h2><button type="button" class="primary small-btn" id="todo-add"><span data-i="plus"></span>Přidat úkol</button></div>
+        <form id="todo-form" class="todo-form" hidden>
+          <input id="todo-text" maxlength="300" placeholder="Co je potřeba udělat…" required>
+          <select id="todo-level" aria-label="Důležitost"><option value="danger">Důležité</option><option value="warn">Pozor</option><option value="info" selected>Info</option></select>
+          <select id="todo-prop" aria-label="Provozovna"><option value="">— bez provozovny —</option></select>
+          <button type="submit" class="primary">Uložit</button><button type="button" class="ghost" id="todo-cancel">Zrušit</button>
+        </form>
+        <div id="attention"></div>
+        <div id="dismissed"></div>
+      </div>
+      <div class="panel">
+        <div class="ph"><h2>Provozovny podle aktivity</h2><div class="chips" id="act-period"></div></div>
+        <div id="activity"></div>
+      </div>
+      <div class="panel"><h2>Měsíc v číslech</h2><div class="kpis small" id="month"></div></div>
+      <div class="panel">
+        <div class="ph"><h2>Demo</h2><div class="chips" id="demo-period"></div></div>
+        <div class="kpis small" id="demo"></div>
+        <p class="muted small">Jen čísla: demo je anonymní a po 24 h se smaže. „Něco zkusili“ = sken nebo odeslání hostů.</p>
+      </div>
+    </section>
+
+    <!-- Provozovny -->
+    <section class="view" id="v-props" hidden>
+      <header class="vh"><h1>Provozovny</h1></header>
+      <div class="filters"><input id="q" type="search" placeholder="Hledat název nebo e-mail…" aria-label="Hledat"><div class="chips" id="status-filter"></div></div>
+      <div id="props"></div>
+    </section>
+
+    <!-- Vouchery -->
+    <section class="view" id="v-vouchers" hidden>
+      <header class="vh"><h1>Vouchery</h1></header>
+      <div class="two">
+      <div class="panel"><h2>Vouchery</h2><div class="tbl"><table id="vouchers"></table></div></div>
+      <form id="voucher-form" class="panel form" data-admin>
+        <h2>Nový voucher</h2>
+        <div class="grid">
+          <label>Kód<input id="v-code" required maxlength="32" placeholder="např. GENOVA2027"></label>
+          <label>Zdarma do<input id="v-free" type="date" required></label>
+          <label>Uplatnit do<input id="v-by" type="date" required></label>
+          <label>Max. použití<input id="v-max" type="number" min="1" max="10000" value="20" required></label>
+          <label class="wide">Poznámka<input id="v-note" maxlength="200" placeholder="pro koho / odkud"></label>
+        </div>
+        <button type="submit" class="primary">Vytvořit voucher</button>
+        <span class="err" id="v-err"></span>
+      </form>
+      </div>
+    </section>
+
+    <!-- Náklady a AI -->
+    <section class="view" id="v-costs" hidden>
+      <header class="vh"><h1>Náklady a AI</h1></header>
+      <div class="panel" id="credit-panel">
+        <div class="ph"><h2>Kredit Claude <span id="credit-src"></span></h2><a class="small" href="https://console.anthropic.com/settings/billing" target="_blank" rel="noopener">Přesný zůstatek: Claude Console → Billing ↗</a></div>
+        <div class="kpis small" id="credit"></div>
+        <p class="muted small" id="credit-note"></p>
+        <div class="two">
+          <div><h2>Dobití</h2><div class="tbl"><table id="topups"></table></div></div>
+          <form id="topup-form" class="form" data-admin>
+            <h2>Zapsat dobití</h2>
+            <div class="grid">
+              <label>Částka (USD)<input id="t-amount" type="number" min="0.01" max="100000" step="0.01" required placeholder="např. 50"></label>
+              <label>Den<input id="t-day" type="date" required></label>
+              <label class="wide">Poznámka<input id="t-note" maxlength="200" placeholder="např. zůstatek z Console"></label>
+            </div>
+            <button type="submit" class="primary">Uložit dobití</button>
+            <span class="err" id="t-err"></span>
+            <p class="muted small">Začínáš? Zapiš jako dobití dnešní zůstatek z Console s dnešním datem — odhad pak počítá od něj.</p>
+          </form>
+        </div>
+      </div>
+      <div class="two">
+      <div class="panel"><h2>Měsíce</h2><div class="tbl"><table id="costs"></table></div><p class="muted small">AI skeny podle tokenů (Haiku 5.5 + Sonnet 5 jako kontrola), Flowy (Haiku 5.5). V USD.</p></div>
+      <div class="panel"><h2>Haiku vs Sonnet (30 dní)</h2><div class="tbl"><table id="ocr"></table></div></div>
+      </div>
+    </section>
+
+    <!-- Podpora a chyby -->
+    <section class="view" id="v-inbox" hidden>
+      <header class="vh"><h1>Podpora a chyby</h1></header>
+      <div class="two">
+      <div class="panel"><h2>Zprávy z Help &amp; support</h2><div id="support"></div></div>
+      <div class="panel"><h2>Upozornění na chyby</h2><div id="alerts"></div></div>
+      </div>
+    </section>
+
+    <!-- Archiv -->
+    <section class="view" id="v-archive" hidden>
+      <header class="vh"><div><h1>Archiv</h1><p class="muted">Všechno odkliknuté ve „Vyžaduje pozornost“. Obnovit = zpátky na seznam.</p></div></header>
+      <div class="panel"><h2>Hotové úkoly</h2><div id="arch-todos" class="arch"></div></div>
+      <div class="panel"><h2>Odkliknuté upozornění</h2><div id="arch-dismissed" class="arch"></div></div>
+    </section>
+
+    <!-- Záznam změn -->
+    <section class="view" id="v-audit" hidden>
+      <header class="vh"><h1>Záznam změn</h1></header>
+      <div class="panel"><div class="tbl"><table id="audit"></table></div></div>
+    </section>
+  </main>
+</div>
+<div id="toast" class="toast" hidden></div>
+<script src="/admin.js"></script>
+</body>
+</html>

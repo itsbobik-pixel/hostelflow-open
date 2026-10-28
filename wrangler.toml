@@ -1,0 +1,57 @@
+name = "hostelflow"
+main = "src/worker.js"
+compatibility_date = "2026-09-01"
+
+# Your own domain (a zone on Cloudflare), e.g.:
+# routes = [
+#   { pattern = "example.com", custom_domain = true },
+#   { pattern = "admin.example.com", custom_domain = true },
+# ]
+workers_dev = true
+
+# The app (public/) and the API (/api) share one origin. The worker runs
+# first for everything; it hands static files to ASSETS.
+[assets]
+directory = "public"
+binding = "ASSETS"
+run_worker_first = true
+
+# wrangler d1 create hostelflow → paste its database_id here.
+[[d1_databases]]
+binding = "DB"
+database_name = "hostelflow"
+database_id = "<your-database-id>"
+migrations_dir = "migrations"
+
+# The Vault's files (src/vault.js): wrangler r2 bucket create hostelflow-vault
+[[r2_buckets]]
+binding = "VAULT"
+bucket_name = "hostelflow-vault"
+
+# Hourly: deletes document photos and stale drafts, sends usage, reminders.
+[triggers]
+crons = ["0 * * * *"]
+
+[vars]
+MAIL_FROM = "HostelFlow <noreply@example.com>"
+# Settings → Help & support sends messages here.
+SUPPORT_EMAIL = "support@example.com"
+# Document scans: Claude Haiku reads first; when it leaves a needed field
+# empty, the main model reads again and fills the gaps (src/guests.js).
+# OCR_SHADOW_RATE: the share of scans the main model also reads, to compare
+# ("0" = only for the gaps). Properties on their own Claude key never pay for it.
+OCR_PRIMARY_MODEL = "claude-haiku-5-5"
+OCR_SHADOW_RATE = "0"
+# Who may use the scan bench /ocr-compare (comma-separated e-mails).
+OCR_BENCH_USERS = ""
+# The admin centre's own address (scripts/admin-user.mjs makes its accounts).
+ADMIN_HOST = "admin.example.com"
+# Subscriptions (src/billing.js) — off while STRIPE_SECRET_KEY is not set:
+# STRIPE_PRICE_GUESTS = "price_…"   # metered price, guests sent a month
+# STRIPE_PRICE_TEAM = "price_…"     # the Flow add-on
+# STRIPE_METER_EVENT = "hostelflow_guests"
+
+# Secrets (wrangler secret put NAME; never in the repo): CREDENTIALS_KEY
+# (required: encrypts police logins and API keys — 32 random bytes, base64).
+# Optional: ANTHROPIC_API_KEY, RESEND_API_KEY, STRIPE_SECRET_KEY +
+# STRIPE_WEBHOOK_SECRET, ANTHROPIC_ADMIN_KEY — see README.md.
