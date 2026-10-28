@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connect your Claude account — HostelFlow</title>
+<meta name="description" content="How to get a Claude API key for document scans in HostelFlow: sign up, buy credit, turn on auto-reload, create the key and paste it in Settings → Check-in scan.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#1f2433">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<!-- Settings → Check-in scan links here (the "i" next to "Claude API key").
+     Screenshots of platform.claude.com taken 28. 10. 2026 (amounts blurred);
+     when Anthropic changes those pages, take new ones. English only. -->
+<style>
+  :root { --ink: #1c1c1c; --soft: #5f5f5f; --line: #e4e1da; --page: #f6f5f2; --card: #fff; --accent: #ff7a1a; --warn: #fff4e5; }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink: #ecebe8; --soft: #a9a7a2; --line: #34353b; --page: #17181c; --card: #212228; --warn: #3a2c1a; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--ink); font: 17px/1.55 "Segoe UI", system-ui, -apple-system, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 30px; line-height: 1.2; margin: 0 0 8px; }
+  .lead { color: var(--soft); margin: 0 0 32px; }
+  ol.steps { list-style: none; counter-reset: step; padding: 0; margin: 0; }
+  ol.steps > li { counter-increment: step; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px 22px 24px; margin: 0 0 18px; }
+  ol.steps h2 { font-size: 20px; margin: 0 0 6px; display: flex; gap: 12px; align-items: center; }
+  ol.steps h2::before { content: counter(step); flex: none; width: 32px; height: 32px; border-radius: 50%; background: var(--ink); color: var(--card); font-size: 16px; display: grid; place-items: center; }
+  ol.steps p { margin: 6px 0 0; }
+  img { display: block; max-width: 100%; height: auto; margin: 16px auto 0; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+  a { color: inherit; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  b.btn { white-space: nowrap; }
+  .note { background: var(--warn); border-radius: 10px; padding: 10px 14px; margin-top: 12px; }
+  .back { display: inline-block; margin: 8px 0 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Connect your Claude account</h1>
+  <p class="lead">HostelFlow reads guests' documents with Claude. With your own Claude account you pay Anthropic directly — about a cent a scan — and there is no scan limit. It takes about 5 minutes.</p>
+
+  <ol class="steps">
+    <li>
+      <h2>Sign up</h2>
+      <p>Go to <a href="https://platform.claude.com/" target="_blank" rel="noopener">platform.claude.com</a> and sign up with Google or your e-mail.</p>
+      <img src="/guide/claude-1-signup.png" width="660" height="660" alt="The sign-up page of platform.claude.com: Continue with Google, or enter your e-mail and Continue with email.">
+    </li>
+    <li>
+      <h2>Buy credit</h2>
+      <p>Open <a href="https://platform.claude.com/settings/billing" target="_blank" rel="noopener">Billing</a> and press <b class="btn">Buy credits</b>. Add your card and buy $5 — enough for several hundred scans.</p>
+      <img src="/guide/claude-2-credit.png" width="760" height="245" alt="The Billing page: credit balance with the buttons Set up auto-reload and Buy credits.">
+    </li>
+    <li>
+      <h2>Turn on auto-reload</h2>
+      <p>On the same page press <b class="btn">Set up auto-reload</b>, choose the amounts (for example: when it reaches $5, bring it back up to $15) and turn it on. Then the credit never runs out in the middle of a check-in.</p>
+      <img src="/guide/claude-3-reload.png" width="426" height="425" alt="The Turn on auto-reload window: when credit balance reaches $5, bring it back up to $15.">
+    </li>
+    <li>
+      <h2>Create a key</h2>
+      <p>Open <a href="https://platform.claude.com/settings/keys" target="_blank" rel="noopener">API keys</a> and press <b class="btn">Create key</b>. A window about “identity federation” comes first: press <b class="btn">Continue with an API key</b>.</p>
+      <img src="/guide/claude-4-continue.png" width="426" height="335" alt="A window about identity federation, with the link Continue with an API key at the bottom.">
+    </li>
+    <li>
+      <h2>Name it and set it to never expire</h2>
+      <p>Name: <b>HostelFlow</b>. Expires: <b>Never</b>. Then press <b class="btn">Create key</b> and copy the key that appears (it starts with <code>sk-ant-</code>).</p>
+      <p class="note"><b>Important:</b> choose <b>Never</b>. Otherwise the key stops after 30 days and scans stop working. The key is shown only once — copy it straight away and don't share it.</p>
+      <img src="/guide/claude-5-never.png" width="426" height="396" alt="The Create API key window: the Name field, the Expires list open with Never at the bottom, and the Create key button.">
+    </li>
+    <li>
+      <h2>Paste it in HostelFlow</h2>
+      <p>In HostelFlow open <b>Settings → Check-in scan</b>, paste the key and press <b class="btn">Connect</b>. Done — scans now use your own Claude credit.</p>
+      <img src="/guide/claude-6-hostelflow.png" width="760" height="279" alt="HostelFlow Settings, Check-in scan: the Claude API key field and the Connect button.">
+    </li>
+  </ol>
+
+  <p>Credit and auto-reload can be changed any time in <a href="https://platform.claude.com/settings/billing" target="_blank" rel="noopener">Billing</a>. Questions? Ask Flowy in HostelFlow, Settings → Help &amp; support.</p>
+  <a class="back" href="/app#settings">← Back to HostelFlow</a>
+</main>
+</body>
+</html>

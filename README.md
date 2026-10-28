@@ -59,7 +59,7 @@ the first account owns the first property.
 
 **Claude (document scans and Flowy).** Each property connects its own
 Claude account in *Settings → Check-in scan*: an API key from
-[console.anthropic.com](https://console.anthropic.com/), where it also buys
+[platform.claude.com](https://platform.claude.com/), where it also buys
 credit (turn on auto-reload so it never runs out). Scans then cost the
 property directly at Anthropic, roughly a cent each. If you'd rather pay for
 everyone, set a server-wide key instead: `npx wrangler secret put ANTHROPIC_API_KEY`.

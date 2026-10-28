@@ -1,5 +1,5 @@
 // Settings → Check-in scan: a property can paste its own Anthropic API
-// key (console.anthropic.com → API keys). Document scans and Flowy then run on
+// key (platform.claude.com → API keys). Document scans and Flowy then run on
 // its own Claude credit, which it tops up itself at Anthropic — HostelFlow pays
 // nothing for that property and doesn't limit its scans.
 //
@@ -16,7 +16,7 @@ const aad = propertyId => `claude:${propertyId}`;
 
 // What the owner reads in Settings when Claude turned the key down.
 export const KEY_REFUSED = 'Claude did not accept this API key';
-export const CREDIT_EMPTY = 'Your Claude credit has run out. Top it up at console.anthropic.com';
+export const CREDIT_EMPTY = 'Your Claude credit has run out. Top it up at platform.claude.com';
 
 // Does Anthropic take this key? Listing the models costs nothing.
 async function checkKey(env, apiKey) {
@@ -64,7 +64,7 @@ export async function saveClaudeKey(env, request, propertyId) {
   await ownerContext(env, request, propertyId);
   const body = await readJson(request);
   const apiKey = String(body.apiKey || '').trim();
-  if (!/^sk-ant-[\w-]{20,300}$/.test(apiKey)) throw new HttpError(400, 'Paste the API key from console.anthropic.com (it starts with sk-ant-)');
+  if (!/^sk-ant-[\w-]{20,300}$/.test(apiKey)) throw new HttpError(400, 'Paste the API key from platform.claude.com (it starts with sk-ant-)');
   await checkKey(env, apiKey);
   const sealed = await encryptCredentials(env, aad(propertyId), { apiKey });
   await env.DB.prepare('UPDATE properties SET claude_credentials = ?, claude_last_error = NULL WHERE id = ?').bind(sealed, propertyId).run();

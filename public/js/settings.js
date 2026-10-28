@@ -481,7 +481,7 @@ async function loadCloudbeds() {
 
 // The property's own Anthropic API key (src/claudekey.js): scans and Flowy run
 // on its own Claude credit, which it tops up at Anthropic (auto-reload).
-const CL_CONSOLE = 'https://console.anthropic.com/';
+const CL_CONSOLE = 'https://platform.claude.com/';
 function clLink(words) {
   const a = document.createElement('a');
   a.href = CL_CONSOLE;
@@ -502,16 +502,24 @@ async function loadClaude() {
     // Where the key is made: the "i" next to the label, as for Cloudbeds.
     const steps = document.createElement('ol');
     steps.append(document.createElement('li'));
-    steps.firstChild.append(clLink('Sign up at console.anthropic.com.'));
-    for (const step of ['Billing: add a card, buy credit and turn on auto-reload, so it never runs out.', 'API keys: create a key and copy it.', 'Paste it here.']) {
+    steps.firstChild.append(clLink('Sign up at platform.claude.com.'));
+    for (const step of ['Billing: add a card, buy credit and turn on auto-reload, so it never runs out.', 'API keys: create a key that never expires and copy it.', 'Paste it here.']) {
       steps.append(text('li', step));
     }
+    // The same steps with screenshots of the real pages (public/claude-key.html, English).
+    const guide = document.createElement('a');
+    guide.href = '/claude-key';
+    guide.target = '_blank';
+    guide.rel = 'noopener';
+    guide.textContent = t('See the steps with pictures');
+    const help = document.createElement('div');
+    help.append(steps, guide);
     const form = document.createElement('form');
     const label = text('label', 'Claude API key');
     label.htmlFor = 'cl-key';
     const head = document.createElement('div');
     head.className = 'field-head';
-    addFieldHelp(head, label, 'cl-key-help', steps);
+    addFieldHelp(head, label, 'cl-key-help', help);
     const input = document.createElement('input');
     input.id = 'cl-key';
     input.type = 'password';
@@ -537,7 +545,7 @@ async function loadClaude() {
   if (s.lastError) box.append(text('p', tx(s.lastError), 'err'));
   const more = document.createElement('p');
   more.className = 'muted';
-  more.append(clLink('Credit and auto-reload: console.anthropic.com'));
+  more.append(clLink('Credit and auto-reload: platform.claude.com'));
   box.append(more);
   const off = text('button', 'Disconnect', 'small');
   off.type = 'button';
