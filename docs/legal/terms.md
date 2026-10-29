@@ -28,8 +28,8 @@ di accesso non autorizzato.
 ### 3. Gratuità e scansioni dei documenti
 - HostelFlow è **gratuito**: nessun abbonamento e nessun pagamento a HostelFlow.
 - La lettura automatica dei documenti usa Claude di Anthropic e ha un costo. Un certo numero di scansioni è
-  incluso e pagato da HostelFlow (attualmente 200 per struttura; 500 per le strutture registrate prima del
-  28 ottobre 2026), salvo accordi diversi. HostelFlow può cambiare questo numero avvisando con almeno 30 giorni
+  incluso e pagato da HostelFlow (attualmente 20 per struttura; 200 per le strutture registrate il 28 o il
+  29 ottobre 2026 e 500 per quelle registrate prima del 28 ottobre 2026), salvo accordi diversi. HostelFlow può cambiare questo numero avvisando con almeno 30 giorni
   di anticipo.
 - Il Cliente può collegare il proprio account Claude (Impostazioni → Scansione al check-in). Le scansioni e
   l'assistente Flowy di quella struttura usano allora il credito del Cliente presso Anthropic, senza limiti da
@@ -141,7 +141,7 @@ unauthorised access.
 ### 3. Free of charge; document scans
 - HostelFlow is **free**: no subscription and nothing to pay HostelFlow.
 - Automatic document reading uses Anthropic's Claude and has a cost. A number of scans is included and paid by
-  HostelFlow (currently 200 per property; 500 for properties that signed up before 28 October 2026), unless
+  HostelFlow (currently 20 per property; 200 for properties that signed up on 28 or 29 October 2026 and 500 for those that signed up before 28 October 2026), unless
   agreed otherwise. HostelFlow may change this number with at least 30 days' notice.
 - The Customer may connect its own Claude account (Settings → Check-in scan). That property's scans and the
   Flowy assistant then use the Customer's own credit at Anthropic, with no limit from HostelFlow. Payments,

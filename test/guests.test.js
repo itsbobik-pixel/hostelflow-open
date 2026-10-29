@@ -93,7 +93,7 @@ test('scanning a document creates a ready guest with today as arrival', async ()
 
   const usage = await call('GET', `/api/properties/${pid}/usage`);
   assert.equal(usage.data.months[0].scans, 1);
-  assert.equal(usage.data.limit, (Date.now() < Date.parse('2026-10-28T00:00:00+01:00') ? 500 : 200)); // the free trial's cap (500 before 28. 10. 2026)
+  assert.equal(usage.data.limit, 20); // the free trial's cap for a property signing up now (src/guests.js scanLimit)
   await env.DB.prepare("UPDATE properties SET billing_status = 'active' WHERE id = ?").bind(pid).run();
   assert.equal((await call('GET', `/api/properties/${pid}/usage`)).data.limit, 10000); // paying: the usual one
   assert.deepEqual(Object.keys(usage.data.months[0]).sort(), ['month', 'scans'], 'what scans cost is not shown to hostels');
@@ -125,18 +125,21 @@ test('a wrongly set up API key is reported as a setup problem, not a bad photo',
   assert.match(r.data.ocr.error, /document reading isn't working/);
 });
 
-test('the free trial\'s 200 scans are for the whole trial, not per month', async () => {
+test('the free trial\'s 20 scans are for the whole trial, not per month', async () => {
   const { call, pid, base } = await setup();
-  // Signed up after the 200 came in (28. 10. 2026); 199 used in an earlier month: one more, then no more.
+  // Signed up after the 20 came in (29. 10. 2026); 19 used in an earlier month: one more, then no more.
   await env.DB.prepare('UPDATE properties SET created_at = ?').bind(Date.parse('2026-11-02T10:00:00Z')).run();
-  await env.DB.prepare("INSERT INTO usage_monthly (property_id, month, scans) VALUES (?, '2026-01', 199)").bind(pid).run();
+  await env.DB.prepare("INSERT INTO usage_monthly (property_id, month, scans) VALUES (?, '2026-01', 19)").bind(pid).run();
   await call('POST', base, { image: PHOTO });
   const over = (await call('POST', base, { image: PHOTO })).data;
   assert.equal(ocrCalls, 1);
-  assert.match(over.ocr.error, /200 free document scans are used up/);
+  assert.match(over.ocr.error, /20 free document scans are used up/);
   const usage = (await call('GET', `/api/properties/${pid}/usage`)).data;
   assert.equal(usage.trial, true);
-  assert.equal(usage.used, 200);
+  assert.equal(usage.used, 20);
+  // Signed up on 28. 10. (between the 200 and the 20): keeps 200.
+  await env.DB.prepare('UPDATE properties SET created_at = ?').bind(Date.parse('2026-10-28T12:00:00Z')).run();
+  assert.equal((await call('GET', `/api/properties/${pid}/usage`)).data.limit, 200);
   // Signed up before it: 500 for the trial (to 31. 12.).
   await env.DB.prepare('UPDATE properties SET created_at = ?').bind(Date.parse('2026-10-20T10:00:00Z')).run();
   await call('POST', base, { image: PHOTO });

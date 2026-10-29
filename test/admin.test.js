@@ -75,7 +75,7 @@ test('admin centre: only listed accounts; support reads and extends trials, the 
   const evep = all.data.properties.find(p => p.name === 'Eve hostel');
   assert.equal(evep.ownerEmail, 'eve@example.com');
   assert.equal(evep.status, 'trial');
-  assert.equal(evep.scanCap, (Date.now() < Date.parse('2026-10-28T00:00:00+01:00') ? 500 : 200)); // a trial's scans (500 for those signed up before 28. 10. 2026)
+  assert.equal(evep.scanCap, 20); // a new trial's scans (src/guests.js scanLimit)
   // No guest data in the overview, ever: only counts.
   assert.ok(!JSON.stringify(all.data).includes('fields'));
 

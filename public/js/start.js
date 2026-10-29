@@ -146,7 +146,7 @@ $('sp-open').onclick = openSupport;
 $('au-soon-write').onclick = openSupport; // Report: a country we don't have yet
 // Donations: the header's "Support this project" and Help & support open a
 // small window with the links. Empty = not set up yet, and nothing shows.
-const DONATE = { kofi: '', github: '' };
+const DONATE = { kofi: 'https://ko-fi.com/hostelflow', github: '' };
 if (DONATE.kofi || DONATE.github) {
   $('donate-open').hidden = $('donate-open-help').hidden = false;
   if (DONATE.kofi) { $('donate-kofi').href = DONATE.kofi; $('donate-kofi').hidden = false; }

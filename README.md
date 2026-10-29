@@ -29,6 +29,9 @@ HostelFlow started as a small business and is now free and open source, so
 that anyone can use it, run it or take parts of it. The hosted version at
 hostelflow.it is looked after; a copy you run yourself comes as is.
 
+If it saves you time at the reception, you can support it at
+[ko-fi.com/hostelflow](https://ko-fi.com/hostelflow) ☕
+
 ## What you may find useful even without the whole app
 
 - `src/registration/it/` — **Alloggiati Web** (Polizia di Stato) over its

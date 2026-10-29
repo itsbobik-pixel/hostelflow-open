@@ -826,17 +826,22 @@ export async function cleanup(db, now = Date.now()) {
 // busy beta tester) wins, also during the trial. Paid by guests since 24. 10.:
 // more scans mean more guests paid for, so the cap only stops a runaway.
 export const DEFAULT_SCAN_LIMIT = 10000;
-export const TRIAL_SCAN_LIMIT = 200;
-// Properties that signed up before the 200 (Bob, 27. 10.): 500 for their trial,
-// which ends on 31. 12. 2026 like everyone's early access.
+// On HostelFlow's Claude key a new property has 20 scans for good — enough to see
+// it work; after that its own Claude account (Bob, 29. 10.). Those that signed up
+// earlier keep what they were given: 200, or 500 before 28. 10.
+export const TRIAL_SCAN_LIMIT = 20;
+export const MID_TRIAL_SCAN_LIMIT = 200;
 export const EARLY_TRIAL_SCAN_LIMIT = 500;
 const TRIAL_200_FROM = Date.parse('2026-10-28T00:00:00+01:00');
+const TRIAL_20_FROM = Date.parse('2026-10-29T15:40:00Z'); // no property signed up between 13. 10. and then
 export function scanLimit(env, property) {
   if (property.billing_status === 'comp') return null;
   if (property.scan_limit) return property.scan_limit;
   const limit = Number(env.SCAN_LIMIT) || DEFAULT_SCAN_LIMIT;
   if (property.billing_status !== 'trial') return limit;
-  return Math.min(limit, property.created_at && property.created_at < TRIAL_200_FROM ? EARLY_TRIAL_SCAN_LIMIT : TRIAL_SCAN_LIMIT);
+  const created = property.created_at || Infinity;
+  const trial = created < TRIAL_200_FROM ? EARLY_TRIAL_SCAN_LIMIT : created < TRIAL_20_FROM ? MID_TRIAL_SCAN_LIMIT : TRIAL_SCAN_LIMIT;
+  return Math.min(limit, trial);
 }
 
 // The free trial's scans are for the whole trial, not a month (Bob, 27. 10.);
