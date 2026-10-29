@@ -136,7 +136,7 @@ function openMember(pid, m) {
   $('mb-nick').value = m.nickname || '';
   mbShow = !!m.showNickname;
   renderMemberShow();
-  // People with an e-mail pick their own colour (Your account); a profile's is picked here.
+  // The colour is picked here: a profile's by the owner, your own in your own window.
   mbColor = m.color || null;
   $('mb-color-wrap').hidden = !(m.profile || self);
   renderMemberColors();
@@ -1011,8 +1011,32 @@ function renderRimovcliHelp() {
   addFieldHelp(head, label, 'rm-help-c59', text('p', t('The code the Region gives the property when it activates the service.')));
 }
 
+// The manual edit's title with its "i", as next to the fields. The bubble sits in
+// the <summary>, so a tap in it mustn't fold the box.
+function renderRmStartHelp() {
+  const head = $('rm-start-head');
+  head.replaceChildren(t('Manual edit for the first entry'));
+  const bubble = document.createElement('div');
+  bubble.className = 'help-bubble';
+  bubble.id = 'rm-start-help';
+  bubble.hidden = true;
+  bubble.setAttribute('role', 'note');
+  bubble.append(text('strong', t('What is this?')), text('p', "Use manual edit if your portal already has XML files from before and the numbers don't match. Easiest: on the portal, select the whole \"Ultimo giorno caricato\" box, copy it and paste it below, or upload screenshots of it."));
+  // The same steps with a picture of the portal (public/rimovcli-first.html, English), as for Claude.
+  const guide = document.createElement('a');
+  guide.href = '/rimovcli-first';
+  guide.target = '_blank';
+  guide.rel = 'noopener';
+  guide.textContent = t('See the steps with pictures');
+  bubble.append(guide);
+  // A tap in the bubble mustn't fold the box — but the link must still open.
+  bubble.onclick = e => { if (!e.target.closest('a')) e.preventDefault(); };
+  head.append(helpButton(bubble, t('What is this?')), bubble);
+}
+
 function renderRoss() {
   renderRimovcliHelp();
+  renderRmStartHelp();
   const r = stSlot().ross || {};
   if (!$('ro-region').options.length) {
     $('ro-region').replaceChildren(new Option(t('Choose…'), ''), ...Object.entries(ROSS_REGIONS).map(([k, n]) => new Option(n, k)));
@@ -1081,17 +1105,82 @@ async function saveRmStart(start) {
   try {
     renderSettings(await api('PUT', `/api/properties/${state.ownerPropertyId}/settings`, { ...stBody(), ross: { start } }));
     $('rm-start-err').className = 'ok';
-    $('rm-start-err').textContent = t('Saved.');
+    $('rm-start-err').textContent = ''; // Create XML file says what comes next (below); Remove needs no word
+    $('rm-start-dl').hidden = true;
     if (start) {
-      // The files start the day after it.
+      // The new file: from the day after the portal's last one up to yesterday
+      // (the dates of the download above follow, for the days after).
       const d = new Date(`${start.date}T12:00:00`);
       d.setDate(d.getDate() + 1);
-      $('rm-from').value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      const from = isoOfDate(d);
+      const to = isoOfDate(new Date(Date.now() - 864e5));
+      $('rm-from').value = from;
+      if (from > to) {
+        $('rm-start-err').textContent = t('The portal already has every day up to yesterday — the next file is tomorrow.');
+      } else {
+        $('rm-to').value = to;
+        $('rm-start-err').textContent = t('Ready: the file follows on from the portal. Download it and upload it to the portal.');
+        $('rm-start-dl').hidden = false;
+      }
     }
   } catch (err) { $('rm-start-err').textContent = tx(err.message); }
 }
-$('rm-start-save').onclick = () => saveRmStart({ date: $('rm-start-date').value, text: $('rm-start-text').value });
+// The file made from the manual edit (the dates saveRmStart set above).
+$('rm-start-dl').onclick = async () => {
+  try {
+    if (await rmCheck()) {
+      $('rm-start-err').className = 'err';
+      $('rm-start-err').textContent = $('rm-err').textContent;
+      return;
+    }
+    location.href = `/api/properties/${state.ownerPropertyId}/rimovcli?${rmQuery()}`;
+  } catch (err) { $('rm-start-err').className = 'err'; $('rm-start-err').textContent = tx(err.message); }
+};
+// The day comes with the box copied from the portal ("Ultimo giorno caricato: 27/10/2026")
+// or from the screenshots; there is no date field to fill in.
+const portalDayIn = text => {
+  const m = String(text || '').match(/Ultimo giorno caricato:?\s*(\d{2})\/(\d{2})\/(\d{4})/i);
+  return m ? `${m[3]}-${m[2]}-${m[1]}` : '';
+};
+$('rm-start-save').onclick = () => {
+  const date = portalDayIn($('rm-start-text').value) || $('rm-start-date').value;
+  if (!date) {
+    $('rm-start-err').className = 'err';
+    $('rm-start-err').textContent = t('Copy the whole box from the portal, with the line "Ultimo giorno caricato".');
+    return;
+  }
+  saveRmStart({ date, text: $('rm-start-text').value });
+};
 $('rm-start-clear').onclick = () => saveRmStart(null);
+// The portal's "Ultimo giorno caricato" box pasted whole: its date goes in the date
+// field; the table itself the server reads as it is (rimovcli.js parseStart).
+$('rm-start-text').addEventListener('paste', e => {
+  const day = portalDayIn(e.clipboardData.getData('text'));
+  if (day) $('rm-start-date').value = day;
+});
+// A screenshot of the portal's day (src/stats/portalread.js): Claude fills in the
+// form, staff check it and press Save — nothing is saved before that.
+$('rm-shot').onclick = () => $('rm-shot-file').click();
+$('rm-shot-file').onchange = async () => {
+  const files = [...$('rm-shot-file').files];
+  $('rm-shot-file').value = '';
+  if (!files.length) return;
+  if (files.length > 4) { $('rm-shot-err').className = 'err'; $('rm-shot-err').textContent = t('choose 1 to 4 screenshots'); return; }
+  $('rm-shot-err').className = 'muted';
+  $('rm-shot-err').textContent = t('Reading the screenshot…');
+  $('rm-shot').disabled = true;
+  try {
+    const r = await api('POST', `/api/properties/${state.ownerPropertyId}/rimovcli/read`, { images: await Promise.all(files.map(f => resizePhoto(f, 1800))) });
+    if (r.date) $('rm-start-date').value = r.date;
+    $('rm-start-text').value = r.text;
+    $('rm-shot-err').className = r.unread.length || r.missing ? 'err' : 'ok';
+    $('rm-shot-err').textContent = [
+      r.unread.length ? t('Check these lines, they were not understood: {lines}', { lines: r.unread.join(', ') }) : '',
+      r.missing ? t('The total says {n} more guests than the rows — a row is probably cut off the screenshot. Add it by hand.', { n: r.missing }) : '',
+    ].filter(Boolean).join(' ') || t('Filled in. Check the date and the numbers, then press Save.');
+  } catch (err) { $('rm-shot-err').className = 'err'; $('rm-shot-err').textContent = tx(err.message); }
+  finally { $('rm-shot').disabled = false; }
+};
 $('rm-save').onclick = async () => {
   $('rm-err').textContent = '';
   try {

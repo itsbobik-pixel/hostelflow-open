@@ -288,6 +288,7 @@ const BLOCKED = [
   [/^invites$/, 'POST'],
   [/^staff$/, 'POST'],
   [/^vault\/files$/, 'POST'],
+  [/^rimovcli\/read$/, 'POST'],
 ];
 // Signed-in routes outside a property.
 const BLOCKED_USER = [

@@ -180,17 +180,22 @@ function placeKey(name) {
 }
 
 // "Austria 2" per line (as copied from the portal's "Presenti" column) ->
-// { present: { e038: 2, … }, bad: [lines it couldn't read] }.
+// { present: { e038: 2, … }, bad: [lines it couldn't read] }. The portal's
+// "Ultimo giorno caricato" table pasted whole works too: "Canada 0 0 0 1" is the
+// country and its numbers, the last of them "Presenti"; the heading, the column
+// names, the TOTALE row and the rooms line are left out — copied from the portal
+// they come one per line, and the TOTALE numbers too (Bob, 29. 10. 2026).
+const NOT_A_PLACE = /^(ultimo giorno|camere|residenza|nazione|provincia|arrivati|partiti|diurni|presenti|totale|totali)\b|^\d+$/i;
 export function parseStart(text) {
   const present = {};
   const bad = [];
   for (const raw of String(text || '').split('\n')) {
     const line = raw.trim();
-    if (!line) continue;
-    const m = line.match(/^(.*?)[\s:=]+(\d{1,4})$/);
+    if (!line || NOT_A_PLACE.test(line)) continue;
+    const m = line.match(/^(.*?)(?:[\s:=]+\d{1,4})*[\s:=]+(\d{1,4})$/);
     const k = m && placeKey(m[1]);
     if (!k) { bad.push(line); continue; }
-    present[k] = (present[k] || 0) + Number(m[2]);
+    if (Number(m[2])) present[k] = (present[k] || 0) + Number(m[2]); // "Regno Unito 0": left that day
   }
   return { present, bad };
 }

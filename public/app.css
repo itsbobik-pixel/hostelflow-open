@@ -564,6 +564,9 @@ html[data-switching] #veil{opacity:1;pointer-events:auto;transition:opacity .18s
 .bed-tile small{font-size:10px;opacity:.75;line-height:1}
 .bed-tile .dots{display:flex;gap:3px;margin-top:3px}
 .bed-tile .dots i{width:7px;height:7px;border-radius:50%;box-shadow:0 0 0 1.5px rgba(255,255,255,.7)}
+/* Dark mode: a light ring melts into the grey dot, so the ring is dark there. */
+@media (prefers-color-scheme:dark){:root:not([data-mode=light]) .bed-tile .dots i{box-shadow:0 0 0 1.5px rgba(0,0,0,.55)}}
+:root[data-mode=dark] .bed-tile .dots i{box-shadow:0 0 0 1.5px rgba(0,0,0,.55)}
 .bed-tile.st-ok{--tile:var(--bed-ok);--tile-ink:var(--bed-ok-ink)}
 .bed-tile.st-due{--tile:var(--bed-due);--tile-ink:var(--bed-due-ink)}
 .bed-tile.st-dirty{--tile:var(--bed-dirty);--tile-ink:var(--bed-dirty-ink)}
@@ -925,6 +928,19 @@ html.mode-fade body,html.mode-fade .card,html.mode-fade .sect,html.mode-fade .no
 .sp-open small{display:block;color:var(--muted);font-size:12.5px}
 .sp-open-ico{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#4cc4c0,#3a7bd5);box-shadow:0 3px 10px rgba(58,123,213,.3);flex:none}
 .sp-open-ico svg{width:18px;height:18px}
+/* Donations: a small pill at the header's bottom right, and its window. */
+.donate-pill{position:absolute;right:20px;bottom:12px;z-index:2;display:inline-flex;align-items:center;gap:6px;width:auto;margin:0;padding:5px 12px 5px 10px;border-radius:999px;border:1px solid rgba(0,0,0,.06);background:rgba(255,255,255,.92);color:#181816;box-shadow:0 2px 8px rgba(0,0,0,.18);font-size:12.5px;font-weight:600}
+.donate-pill svg{width:13px;height:13px;color:#e0446a}
+.donate-pill:hover{background:#fff}
+.donate-pill:active{transform:none!important}
+@media (max-width:640px){.donate-pill{display:none}}
+.donate-ico{background:linear-gradient(135deg,#ff8aa1,#e0446a);box-shadow:0 3px 10px rgba(224,68,106,.3)}
+.donate-text{margin:0 0 14px;font-size:14px;line-height:1.5}
+.donate-links{display:grid;gap:10px}
+.donate-link{display:block;padding:12px 14px;border:1px solid var(--border);border-radius:12px;color:var(--text);text-decoration:none}
+.donate-link:hover{border-color:var(--accent)}
+.donate-link b{display:block;font-size:14.5px}
+.donate-link small{display:block;color:var(--muted);font-size:12.5px}
 .flowy-head small{display:block;color:var(--muted);font-size:12.5px}
 .flowy-ico{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#ff8a3d,#e8457c);box-shadow:0 3px 10px rgba(232,69,124,.3);flex:none}
 .flowy-log{display:flex;flex-direction:column;gap:8px;max-height:340px;overflow-y:auto;margin-bottom:10px}
@@ -1080,6 +1096,7 @@ div.row.member{padding:10px 6px;font-size:15px}
 .sh-label{display:none}
 .sh-top .grow{text-align:center}
 .au-soon{font-size:12.5px;margin:16px 0 0}
+.au-soon .link{font-size:inherit;text-align:left}
 .au-part{margin-top:14px}
 .reg-sub{color:var(--muted);font-weight:400}
 .au-ross{margin-top:12px;border:1px solid var(--border);border-radius:12px;padding:0 14px}
@@ -1318,6 +1335,8 @@ body{background-image:radial-gradient(color-mix(in srgb,#9d85f2 16%,transparent)
 .date-field{position:relative;display:block}
 .date-btn{width:100%;text-align:left;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);font:inherit;font-size:16px;margin:0}
 .date-btn:disabled{opacity:.6}
+/* No shrink-on-press: on a wide field it wobbles (as the country picker did). */
+.date-btn:active{transform:none!important}
 .date-cal{position:absolute;top:calc(100% + 4px);left:0;z-index:30;width:264px;padding:8px;border:1px solid var(--border);border-radius:12px;background:var(--surface);box-shadow:0 8px 24px rgba(0,0,0,.15)}
 .date-cal.left{left:auto;right:0}
 .date-cal-h{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:6px}
@@ -1374,9 +1393,14 @@ body{background-image:radial-gradient(color-mix(in srgb,#9d85f2 16%,transparent)
 .rm-miss .err{flex-basis:100%;min-height:0;margin:0}
 /* RiMovCli: the starting point (the portal's last day), a small box of its own. */
 .rm-start{margin-top:14px;padding:10px 12px;border:1px solid var(--border);border-radius:10px}
-.rm-start summary{cursor:pointer;font-weight:600;font-size:14px}
+.rm-start summary{cursor:pointer;font-weight:600;font-size:14px;position:relative}
+.rm-start summary .help-bubble{font-weight:400;cursor:default}
 .rm-start p{font-size:13px;margin:8px 0}
-.rm-start textarea{width:100%;font:inherit;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text)}
+.rm-start textarea{width:100%;font:inherit;resize:none;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text)}
+/* The manual edit's buttons: one under another, all the same; an empty message takes no room. */
+.rm-start-acts{display:grid;grid-template-columns:minmax(0,260px);justify-content:center;gap:8px;margin-top:10px}
+.rm-start-acts button{width:100%;margin:0}
+.rm-start .err:empty{margin:0}
 
 /* Phones zoom into any field with text under 16px when it's tapped (the reply
    under a note was 13px): on touch screens every field gets 16px. */
@@ -1384,3 +1408,7 @@ body{background-image:radial-gradient(color-mix(in srgb,#9d85f2 16%,transparent)
 
 /* Settings → Check-in scan: how many scans (and what they cost on the own account). */
 #cl-body .cl-usage { font-weight: 600; margin: 10px 0 2px; }
+/* The key field right under the line: the label's own top margin made a big gap. */
+#cl-body > form:first-child .field-head:first-child label { margin-top: 0; }
+/* Under Connect: no empty room for an error that isn't there. */
+#cl-body .err:empty { min-height: 0; margin: 0; }

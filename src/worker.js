@@ -151,7 +151,8 @@ async function route(request, env) {
     if (url.pathname.startsWith('/api/')) {
       return await handleApi(request, env);
     }
-    if (SITE_HIDDEN && (url.pathname === '/sitemap.xml' || isMarketingPage(url.pathname))) {
+    // Staging shows them (never indexed there), so the new copy can be looked at first.
+    if (SITE_HIDDEN && env.STAGING !== '1' && (url.pathname === '/sitemap.xml' || isMarketingPage(url.pathname))) {
       return url.pathname === '/sitemap.xml' ? new Response('Not found', { status: 404 })
         : Response.redirect(new URL('/', url).toString(), 302);
     }

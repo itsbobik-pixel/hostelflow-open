@@ -143,6 +143,20 @@ function openSupport() {
 }
 function closeSupport() { $('sp-modal').hidden = true; }
 $('sp-open').onclick = openSupport;
+$('au-soon-write').onclick = openSupport; // Report: a country we don't have yet
+// Donations: the header's "Support this project" and Help & support open a
+// small window with the links. Empty = not set up yet, and nothing shows.
+const DONATE = { kofi: '', github: '' };
+if (DONATE.kofi || DONATE.github) {
+  $('donate-open').hidden = $('donate-open-help').hidden = false;
+  if (DONATE.kofi) { $('donate-kofi').href = DONATE.kofi; $('donate-kofi').hidden = false; }
+  if (DONATE.github) { $('donate-github').href = DONATE.github; $('donate-github').hidden = false; }
+}
+function closeDonate() { $('donate-modal').hidden = true; }
+$('donate-open').onclick = $('donate-open-help').onclick = () => { $('donate-modal').hidden = false; };
+$('donate-close').onclick = closeDonate;
+$('donate-modal').addEventListener('click', e => { if (e.target === $('donate-modal')) closeDonate(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('donate-modal').hidden) closeDonate(); });
 // Flowy in a pop-up, opened from Help & support.
 function closeFlowy() { $('fl-modal').hidden = true; }
 $('fl-open').onclick = () => { $('fl-modal').hidden = false; $('fl-text').focus(); };

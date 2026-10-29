@@ -1,18 +1,33 @@
 # HostelFlow
 
-Guest check-in and police registration for small accommodation — hostels,
-B&Bs, holiday flats — built for Italy and used daily at a hostel reception.
+**Guest check-in and police registration for small accommodation — hostels,
+B&Bs, holiday flats. Free and open source. Built for Italy and used every day
+at a hostel reception in La Spezia.**
 
-Take a photo of the guest's ID → Claude reads it → staff check the fields →
-one tap sends the guests to the police (**Alloggiati Web**). Around it: a
-team Dashboard (notes, routines), Housekeeping (beds and linen), Shifts, a
-Calendar (beta), **ISTAT** statistics (Ross1000, RiMovCli C/59 for Liguria),
-team members with permissions, and an assistant (Flowy) that answers
-questions about the app. Interface in English, Italian, Spanish and French.
+Take a photo of the guest's ID → AI reads it → staff check the fields → one
+tap sends the guests to the police (**Alloggiati Web**). From the same data:
+**ISTAT** statistics (Ross1000, RiMovCli C/59 for Liguria). Around it: a team
+Dashboard, Housekeeping (beds and linen), Shifts, a Calendar (beta), team
+members with permissions and an assistant (Flowy). Interface in English,
+Italian, Spanish and French.
 
-HostelFlow started as a small business and is now published as open source,
-so that anyone can use it, run it or take parts of it. **It comes as is,
-without support.**
+👉 **Use it for free at [hostelflow.it](https://hostelflow.it)** — nothing to
+install, it runs in the browser on phone and computer. Or run your own copy
+(below).
+
+> 🇮🇹 **In italiano:** fotografi il documento dell'ospite, HostelFlow legge i
+> dati e li invia ad Alloggiati Web con un clic — anche gruppi e famiglie. Con
+> ISTAT, Ross1000 e RiMovCli dagli stessi dati. Gratis, su
+> [hostelflow.it](https://hostelflow.it).
+
+<p>
+  <img src="public/shots/checkin-phone.jpg" width="230" alt="Check-in on a phone: the details read from the ID, ready for Alloggiati Web">
+  <img src="public/shots/dashboard-desktop.jpg" width="560" alt="The team Dashboard on a computer">
+</p>
+
+HostelFlow started as a small business and is now free and open source, so
+that anyone can use it, run it or take parts of it. The hosted version at
+hostelflow.it is looked after; a copy you run yourself comes as is.
 
 ## What you may find useful even without the whole app
 
@@ -79,8 +94,8 @@ account with `node scripts/admin-user.mjs`.
 
 **Your own domain and name.** The code says `hostelflow.it` in a few places
 (e-mail sender, support address, public pages, canonical links). Search for
-it and put in yours. The public pages (`/welcome`, SEO pages) are hidden by
-`SITE_HIDDEN` in `src/site.js`.
+it and put in yours. The public pages (`/welcome`, SEO pages) can be hidden
+with `SITE_HIDDEN` in `src/site.js`.
 
 **Legal texts.** `docs/legal/` holds the privacy policy and terms HostelFlow
 used, as templates. Whoever runs a copy is the provider: fill in your details,

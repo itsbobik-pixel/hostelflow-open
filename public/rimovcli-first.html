@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The first RiMovCli file — HostelFlow</title>
+<meta name="description" content="How to make the first RiMovCli file follow on from the regional portal: copy the Ultimo giorno caricato box, paste it in HostelFlow, create and upload the XML file.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#1f2433">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<!-- Report → RiMovCli → Manual edit links here (the "i" next to its title).
+     The portal's box is from a Liguria property's screenshot (29. 10. 2026),
+     cut to the box only — no login, no property name. The HostelFlow pictures are
+     from a local demo (headless Chrome, 29. 10.); when the screen changes, take new ones. Same look as claude-key.html. English only. -->
+<style>
+  :root { --ink: #1c1c1c; --soft: #5f5f5f; --line: #e4e1da; --page: #f6f5f2; --card: #fff; --accent: #ff7a1a; --warn: #fff4e5; }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink: #ecebe8; --soft: #a9a7a2; --line: #34353b; --page: #17181c; --card: #212228; --warn: #3a2c1a; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--ink); font: 17px/1.55 "Segoe UI", system-ui, -apple-system, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 30px; line-height: 1.2; margin: 0 0 8px; }
+  .lead { color: var(--soft); margin: 0 0 32px; }
+  ol.steps { list-style: none; counter-reset: step; padding: 0; margin: 0; }
+  ol.steps > li { counter-increment: step; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px 22px 24px; margin: 0 0 18px; }
+  ol.steps h2 { font-size: 20px; margin: 0 0 6px; display: flex; gap: 12px; align-items: center; }
+  ol.steps h2::before { content: counter(step); flex: none; width: 32px; height: 32px; border-radius: 50%; background: var(--ink); color: var(--card); font-size: 16px; display: grid; place-items: center; }
+  ol.steps p { margin: 6px 0 0; }
+  img { display: block; max-width: 100%; height: auto; margin: 16px auto 0; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+  a { color: inherit; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  b.btn { white-space: nowrap; }
+  .note { background: var(--warn); border-radius: 10px; padding: 10px 14px; margin-top: 12px; }
+  .back { display: inline-block; margin: 8px 0 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>The first RiMovCli file</h1>
+  <p class="lead">The portal only takes a day that follows on from the last one it has. If your property already sent days before HostelFlow, the first file has to start from those numbers. You do this once — it takes about 2 minutes.</p>
+
+  <ol class="steps">
+    <li>
+      <h2>Open the portal</h2>
+      <p>Sign in to the RiMovCli portal of the Region Liguria. On the home page you see the box <b>Ultimo giorno caricato</b> with the date and a table of countries.</p>
+      <img src="/guide/rimovcli-1-box.jpg" width="760" height="342" alt="The portal's box Ultimo giorno caricato: the date, the table Residenza, Arrivati, Partiti, Diurni, Presenti and the TOTALE row.">
+    </li>
+    <li>
+      <h2>Copy the whole box</h2>
+      <p>Select everything in the box, from <b>Ultimo giorno caricato</b> down to the <b>TOTALE</b> row, and copy it (<b class="btn">Ctrl + C</b>, on a Mac <b class="btn">⌘ + C</b>).</p>
+      <p class="note">Take the date line too — HostelFlow reads the date from it.</p>
+    </li>
+    <li>
+      <h2>Paste it in HostelFlow</h2>
+      <p>In HostelFlow open <b>Settings → Reports → RiMovCli</b>. At the bottom, open <b>Manual edit for the first entry</b>.</p>
+      <img src="/guide/rimovcli-2-where.png" width="760" height="406" alt="HostelFlow Settings, RiMovCli: the regional property code, the From and To dates, Download XML files, and below them Manual edit for the first entry.">
+      <p>Paste it into the big box. HostelFlow keeps only what it needs: the date and the <b>Presenti</b> number of each country.</p>
+      <img src="/guide/rimovcli-3-paste.png" width="760" height="347" alt="Manual edit for the first entry: the portal's box pasted into the big box, with the buttons Fill in from screenshots and Create XML file below.">
+      <p>Can't copy it (on a phone, for example)? Press <b class="btn">Fill in from screenshots</b> and choose screenshots of the box — up to 4, if the table scrolls. Check what was filled in.</p>
+    </li>
+    <li>
+      <h2>Create the file</h2>
+      <p>Press <b class="btn">Create XML file</b>, then <b class="btn">Download XML</b>. The file covers the days from the one after the portal's last day up to yesterday.</p>
+      <img src="/guide/rimovcli-4-create.png" width="760" height="452" alt="After Create XML file: the buttons Download XML and Remove, and the message that the file follows on from the portal.">
+    </li>
+    <li>
+      <h2>Upload it to the portal</h2>
+      <p>Upload the file on the portal as you upload the daily files. From then on just download the next days in Settings → Reports → RiMovCli — each file follows on from the one before.</p>
+    </li>
+  </ol>
+
+  <p>Questions? Ask Flowy in HostelFlow, Settings → Help &amp; support.</p>
+  <a class="back" href="/app#settings">← Back to HostelFlow</a>
+</main>
+</body>
+</html>

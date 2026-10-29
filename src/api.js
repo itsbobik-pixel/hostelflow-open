@@ -27,6 +27,7 @@ import {
 } from './guests.js';
 import { REGISTRATION_MODULES, getRegistrationModule } from './registration/index.js';
 import { REGIONS as ROSS_REGIONS } from './stats/ross1000.js';
+import { readPortalDay } from './stats/portalread.js';
 import { looksLikeCitr, CITR_NOT_C59, parseStart } from './stats/rimovcli.js';
 import { benchScan, benchList, benchJudge, benchDelete, benchAllowed } from './ocrbench.js';
 import { provenAddress } from './admin.js';
@@ -1040,6 +1041,8 @@ export async function handleApi(request, env) {
     if (m && method === 'POST') return await rossSend(env, request, m[1]);
     m = pathname.match(/^\/api\/properties\/([\w-]+)\/rimovcli$/);
     if (m && method === 'GET') return await rimovcliFile(env, request, m[1]);
+    m = pathname.match(/^\/api\/properties\/([\w-]+)\/rimovcli\/read$/);
+    if (m && method === 'POST') return await readPortalDay(env, request, m[1]);
     m = pathname.match(/^\/api\/properties\/([\w-]+)\/fiches$/);
     if (m && method === 'GET') return await fichesReport(env, request, m[1]);
     m = pathname.match(/^\/api\/properties\/([\w-]+)\/guests\/([\w-]+)\/stay$/);

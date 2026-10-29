@@ -140,6 +140,24 @@ test('Settings: regional code saved, one day downloads as XML, several as a zip'
   assert.match((await call('GET', `/api/properties/${pid}/rimovcli?from=2026-10-15&to=2026-10-15`)).data, /nazione="i" residenza="011" arrivati="1"/);
 });
 
+test('starting point: the portal\'s "Ultimo giorno caricato" table pasted whole', () => {
+  const pasted = 'Ultimo giorno caricato: 27/10/2026\nCamere (unità abitative) occupate: 0\nResidenza\tArrivati\tPartiti\tDiurni\tPresenti\n'
+    + 'Belgio\t0\t1\t0\t1\nRegno Unito\t0\t1\t0\t0\nIndia\t1\t0\t0\t1\nTOTALE\t1\t2\t0\t2';
+  assert.deepEqual(parseStart(pasted), { present: { e017: 1, e664: 1 }, bad: [] });
+});
+
+// Exactly as "copy all" on the portal gave it (Bob, 29. 10. 2026).
+test('starting point: the portal box as copied, column names and TOTALE one per line', () => {
+  const pasted = 'Ultimo giorno caricato: 27/10/2026\nCamere (unità abitative) occupate: 0\n'
+    + 'Residenza\nArrivati\nPartiti\nDiurni\nPresenti\nResidenza\nArrivati\nPartiti\nDiurni\nPresenti\n'
+    + 'Belgio\t0\t1\t0\t1\nCanada\t0\t0\t0\t1\nFrancia\t0\t0\t0\t1\nIndia\t1\t0\t0\t1\nPortogallo\t0\t0\t0\t1\nRegno Unito\t0\t1\t0\t1\n'
+    + 'TOTALE\n1\n2\n0\n6';
+  const { present, bad } = parseStart(pasted);
+  assert.deepEqual(bad, []);
+  assert.equal(Object.keys(present).length, 6);
+  assert.equal(Object.values(present).reduce((a, b) => a + b, 0), 6);
+});
+
 test("starting point: the first file follows from the portal's last day, the rest from HostelFlow", async () => {
   const { present, bad } = parseStart('Austria 2\nCina 1\nGermania 2\nLa Spezia 1\nSP 1\n\nAtlantide 3');
   assert.deepEqual(present, { e038: 2, e720: 1, e004: 2, i011: 2 });

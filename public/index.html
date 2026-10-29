@@ -47,8 +47,7 @@
     <p class="muted">No account yet? <button class="link" data-show="view-register">Create one</button></p>
     <p class="muted"><button class="link" data-show="view-forgot">Forgot your password?</button></p>
     </div>
-    <!-- "About HostelFlow" (/welcome) is back once the marketing pages are (SITE_HIDDEN in src/worker.js). -->
-    <p class="muted legal-links"><a href="/privacy" target="_blank" rel="noopener">Privacy</a> · <a href="/terms" target="_blank" rel="noopener">Terms</a></p>
+    <p class="muted legal-links"><a href="/welcome">About HostelFlow</a> · <a href="/privacy" target="_blank" rel="noopener">Privacy</a> · <a href="/terms" target="_blank" rel="noopener">Terms</a></p>
   </section>
 
   <section id="view-confirm" hidden>
@@ -153,6 +152,8 @@
         <button type="button" id="mode-toggle" aria-label="Light or dark" title="Light or dark"><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
         <button type="button" data-tab="settings" aria-label="Settings" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
       </div>
+      <!-- Donations (start.js DONATE): shown once a link is filled in. -->
+      <button type="button" class="donate-pill" id="donate-open" hidden><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 20.6s-7.6-4.6-9.4-9.3C1.4 8 3.4 4.6 6.9 4.6c2 0 3.5 1.1 5.1 3 1.6-1.9 3.1-3 5.1-3 3.5 0 5.5 3.4 4.3 6.7-1.8 4.7-9.4 9.3-9.4 9.3z"/></svg><span>Support this project</span></button>
       <div class="user-menu" id="user-menu" role="menu" hidden>
         <div class="um-actions">
           <button type="button" role="menuitem" id="um-account">Account Settings</button>
@@ -209,6 +210,7 @@
       <div class="add" id="ci-add">
         <label class="big" for="ci-files">📷 Add guests</label>
         <input id="ci-files" type="file" accept="image/*" multiple hidden>
+        <button type="button" id="ci-manual">Add manually</button>
       </div>
 
       <div id="ci-list"></div>
@@ -497,23 +499,25 @@
                 <div class="err" id="rm-err" style="min-height:0"></div>
                 <div class="rm-missing" id="rm-missing" hidden></div>
                 <details class="rm-start" id="rm-start">
-                  <summary>Starting point (only for the first files)</summary>
-                  <p class="muted">The portal only accepts the day after the last one uploaded. Copy that last day here ("Ultimo giorno caricato"): the date and, from the "Presenti" column, one country per line, e.g. "Austria 2". Guests HostelFlow doesn't know are counted as leaving that day.</p>
-                  <label for="rm-start-date">Last day already on the portal</label>
-                  <input id="rm-start-date" type="date">
-                  <label for="rm-start-text">Present that night</label>
-                  <textarea id="rm-start-text" rows="6" placeholder="Austria 2&#10;Germania 2&#10;La Spezia 1"></textarea>
-                  <div class="au-acts">
-                    <button type="button" class="small primary" id="rm-start-save">Save starting point</button>
+                  <summary id="rm-start-head"></summary>
+                  <input id="rm-start-date" type="hidden">
+                  <label for="rm-start-text">Copy your entire current statistics table, starting with &quot;Ultimo giorno caricato&quot; and including all the numbers, and paste it here:</label>
+                  <textarea id="rm-start-text" rows="6"></textarea>
+                  <div class="rm-start-acts">
+                    <button type="button" class="small" id="rm-shot">Fill in from screenshots</button>
+                    <input type="file" id="rm-shot-file" accept="image/*" multiple hidden>
+                    <button type="button" class="small" id="rm-start-save">Create XML file</button>
+                    <button type="button" class="small" id="rm-start-dl" hidden>Download XML</button>
                     <button type="button" class="small" id="rm-start-clear">Remove</button>
                   </div>
+                  <div class="err" id="rm-shot-err" style="min-height:0"></div>
                   <div class="err" id="rm-start-err" style="min-height:0"></div>
                 </details>
               </details>
             </div>
           </div>
           </div>
-          <p class="muted au-soon">Don’t see your country? Contact us.</p>
+          <p class="muted au-soon"><button type="button" class="link" id="au-soon-write">Want to see your country here? Write us an email</button></p>
         </div>
       </details>
       <details class="sect" id="sec-property" data-owner hidden>
@@ -661,6 +665,7 @@
         <div class="sect-body">
           <button type="button" class="sp-open" id="sp-open"><span class="sp-open-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 3.5L10.5 13.5"/><path d="M21.5 3.5l-6.8 17-4.2-7-7-4.2z" fill="rgba(255,255,255,.25)"/></svg></span><span class="grow"><b>Write to us</b><small>A question, a problem or an idea — we answer by e-mail</small></span><span aria-hidden="true">›</span></button>
           <button type="button" class="sp-open" id="fl-open"><span class="flowy-ico" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22"><path d="M16 5c6.4 0 11 4.1 11 9.6 0 5.5-4.6 9.6-11 9.6-1.3 0-2.5-.2-3.6-.5L7 26.5l1.4-4.6C6.3 20.1 5 17.5 5 14.6 5 9.1 9.6 5 16 5z" fill="#fff"/><circle cx="12.2" cy="14" r="1.7" fill="#2b2b2b"/><circle cx="19.8" cy="14" r="1.7" fill="#2b2b2b"/><path d="M12.6 18.2c1.9 1.6 4.9 1.6 6.8 0" fill="none" stroke="#2b2b2b" stroke-width="1.6" stroke-linecap="round"/><path d="M25.6 3.2l.7 1.7 1.7.7-1.7.7-.7 1.7-.7-1.7-1.7-.7 1.7-.7z" fill="#fff"/></svg></span><span class="grow"><b>Ask Flowy anything</b><small>Your helper for setting up and using HostelFlow</small></span><span aria-hidden="true">›</span></button>
+          <button type="button" class="sp-open" id="donate-open-help" hidden><span class="sp-open-ico donate-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 20.6s-7.6-4.6-9.4-9.3C1.4 8 3.4 4.6 6.9 4.6c2 0 3.5 1.1 5.1 3 1.6-1.9 3.1-3 5.1-3 3.5 0 5.5 3.4 4.3 6.7-1.8 4.7-9.4 9.3-9.4 9.3z"/></svg></span><span class="grow"><b>Support this project by donating</b><small>HostelFlow is free — a small donation keeps it going</small></span><span aria-hidden="true">›</span></button>
           <h3 class="faq-title">Common questions</h3>
           <div class="faq">
             <details><summary>How do I register a guest?</summary><p>Go to Check-in and add a photo of the passport or ID. HostelFlow reads it. Check the details, press Test (nothing is sent yet), then Send. The guest leaves the list once the Questura has them.</p></details>
@@ -674,12 +679,9 @@
         </div>
       </details>
       <details class="sect" id="sec-account">
-        <summary><span class="sect-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span class="grow"><span class="sect-title">Your account</span><span class="sect-sub">Colour, properties, password</span></span><span class="sect-chev" aria-hidden="true">›</span></summary>
+        <summary><span class="sect-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span class="grow"><span class="sect-title">Your account</span><span class="sect-sub">Properties, password</span></span><span class="sect-chev" aria-hidden="true">›</span></summary>
         <div class="sect-body">
-          <h2 style="font-size:15px">Your colour</h2>
-          <p class="muted" style="margin:0 0 8px;font-size:13px">On your name tag, your notes and the rota.</p>
-          <div class="um-colors" id="ac-colors"></div>
-          <h2 style="font-size:15px;margin-top:18px">Your properties</h2>
+          <h2 style="font-size:15px">Your properties</h2>
           <div id="properties"></div>
           <button type="button" class="link" id="prop-add-open">+ Add a property</button>
           <form id="form-prop-add" hidden>
@@ -1053,6 +1055,21 @@
   </div>
 </div>
 
+<div class="modal-back" id="donate-modal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="donate-title">
+    <div class="modal-head">
+      <h2 id="donate-title">Support HostelFlow</h2>
+      <button type="button" id="donate-close" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body">
+      <p class="donate-text">HostelFlow is free and open source. If it saves you time at the reception, a small donation helps keep it going. Thank you!</p>
+      <div class="donate-links">
+        <a class="donate-link kofi" id="donate-kofi" target="_blank" rel="noopener" hidden><b>Buy us a coffee</b><small>Any amount, by card or PayPal (Ko-fi)</small></a>
+        <a class="donate-link gh" id="donate-github" target="_blank" rel="noopener" hidden><b>Sponsor on GitHub</b><small>Once or every month (GitHub Sponsors)</small></a>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="modal-back" id="sp-modal" hidden>
   <form class="modal" id="form-support" role="dialog" aria-modal="true" aria-labelledby="sp-title">
     <div class="modal-head">
@@ -1065,7 +1082,7 @@
       <label for="sp-email">E-mail for our answer</label>
       <input id="sp-email" type="email" maxlength="254" autocomplete="email" required>
       <label for="sp-text">Message</label>
-      <textarea id="sp-text" rows="5" maxlength="3000" placeholder="What happened, or what would help you?" required></textarea>
+      <textarea id="sp-text" rows="5" maxlength="3000" required></textarea>
       <div class="err" id="sp-err" style="min-height:0"></div>
       <div class="modal-foot">
         <button type="button" id="sp-cancel">Cancel</button>

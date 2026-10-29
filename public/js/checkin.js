@@ -24,10 +24,10 @@ function dayIn(offset = 0) {
   const two = n => String(n).padStart(2, '0');
   return `${two(d.getUTCDate())}.${two(d.getUTCMonth() + 1)}.${d.getUTCFullYear()}`;
 }
-// Accepts DD.MM.YYYY, D/M/YYYY, YYYY-MM-DD -> DD.MM.YYYY (or the input unchanged).
+// Accepts DD.MM.YYYY, D/M/YYYY, DDMMYYYY, YYYY-MM-DD -> DD.MM.YYYY (or the input unchanged).
 function normDate(v) {
   const s = String(v || '').trim();
-  let m = s.match(/^(\d{1,2})[./-](\d{1,2})[./-](\d{4})$/);
+  let m = s.match(/^(\d{1,2})[./-](\d{1,2})[./-](\d{4})$/) || s.match(/^(\d{2})(\d{2})(\d{4})$/);
   if (m) return `${m[1].padStart(2, '0')}.${m[2].padStart(2, '0')}.${m[3]}`;
   m = s.match(/^(\d{4})-(\d{2})-(\d{2})$/);
   return m ? `${m[3]}.${m[2]}.${m[1]}` : s;
@@ -480,6 +480,9 @@ function guestEditor(g) {
     grid.addEventListener('input', e => {
       const key = e.target.dataset.key;
       if (!key) return;
+      // The iPhone number pad has no dot: put it in after the day and the
+      // month, so 01051990 comes out as 01.05.1990 (deleting leaves it alone).
+      if ((key === 'dob' || key === 'arrival') && /^insert/.test(e.inputType || '') && /^(\d{2}|\d{2}\.\d{2})$/.test(e.target.value)) e.target.value += '.';
       g.fields[key] = e.target.value;
       scheduleSave(g, e.target.tagName === 'SELECT' ? 0 : 700);
     });
@@ -739,6 +742,23 @@ async function photoDay(file) {
   const get = k => parts.find(x => x.type === k).value;
   return `${get('day')}.${get('month')}.${get('year')}`;
 }
+
+// Add manually: an empty guest, opened to be typed in (for a guest who'd rather
+// not have their document photographed). Nothing is read, so no scan is used.
+async function addGuestByHand() {
+  $('ci-manual').disabled = true;
+  try {
+    const where = ciStructures().length ? { structure: lastStructure() } : {};
+    const g = await api('POST', base(), { fields: {}, ...where });
+    state.guests = [g, ...state.guests.filter(o => o.id !== g.id)];
+    state.open = g.id;
+    renderGuests();
+    const card = document.querySelector('#ci-list .open input, #ci-list .open select');
+    if (card) card.focus();
+  } catch (err) { toast(tx(err.message)); }
+  finally { $('ci-manual').disabled = false; }
+}
+$('ci-manual').onclick = addGuestByHand;
 
 $('ci-files').addEventListener('change', async e => {
   const files = [...e.target.files];

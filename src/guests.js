@@ -128,7 +128,7 @@ export async function listGuests(env, request, propertyId) {
   return json(results.map(r => view(module, r)));
 }
 
-function parseImage(dataUrl) {
+export function parseImage(dataUrl) {
   const m = typeof dataUrl === 'string' && dataUrl.match(/^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/=]+)$/);
   if (!m) throw new HttpError(400, 'the photo must be a JPEG, PNG or WebP');
   if (m[2].length > MAX_PHOTO_BASE64) throw new HttpError(413, 'photo is too large');
@@ -768,7 +768,7 @@ export async function rimovcliFile(env, request, propertyId) {
   const to = parseDay(q.get('to'));
   const guests = await statsGuests(env, propertyId, structure, from, to);
   const start = settings.start && parseDay(settings.start.date);
-  if (start && from <= start) throw new HttpError(400, 'the portal already has these days — start the day after the starting point');
+  if (start && from <= start) throw new HttpError(400, 'the portal already has these days — start the day after the last day already on the portal');
   const out = rimovcli.files(guests, from, to, { idstruttura: settings.c59, rooms: settings.rooms, beds: settings.beds, start: settings.start });
   if (q.get('check')) {
     // Who is left out, by name, so the owner can fill in where they live (updateStay).

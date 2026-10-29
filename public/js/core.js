@@ -675,29 +675,6 @@ function renderUserButton() {
   $('um-account').hidden = !!u.profile;
   $('form-password').hidden = !!u.profile; // a profile's own password: the user menu (um-mypass)
   $('um-mypass').hidden = !u.profile;
-  // The colour is chosen in Settings → Your account (a profile's by the owner, in Team).
-  $('ac-colors').replaceChildren(...PERSON_COLORS.map(c => {
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'um-color' + (c === color ? ' on' : '');
-    b.style.background = c;
-    b.setAttribute('aria-label', c);
-    b.onclick = async () => {
-      // Shown at once, saved behind; put back if saving fails.
-      const before = state.me.user.color;
-      state.me.user.color = c;
-      renderUserButton();
-      try {
-        await api('PUT', '/api/me', { color: c });
-        if (!$('tab-board').hidden) loadBoard(); // notes show the new colour
-      } catch (err) {
-        state.me.user.color = before;
-        renderUserButton();
-        toast(tx(err.message));
-      }
-    };
-    return b;
-  }));
   renderWhoChips();
 }
 

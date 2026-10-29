@@ -52,7 +52,11 @@ When the Questura counts part of the property as a separate structure (e.g. a ro
 4. ISTAT report, Ross1000 and RiMovCli files count each structure separately: pick the structure chip first, then download or send.
 - A second structure can be removed only while no guest has been checked in to it; after that use "Disconnect".
 
+# RiMovCli (Liguria): the first file
+If the regional portal already has days from before HostelFlow (another program, typed by hand), the first file must follow on from the last day there, or the numbers don't match. Report → RiMovCli → "Manual edit for the first entry": the easiest is to select the whole "Ultimo giorno caricato" box on the portal, copy it and paste it into the box (the date comes with it); or press "Fill in from screenshots" and upload up to 4 screenshots of the portal's home page with "Ultimo giorno caricato" (the whole table, down to TOTALE); Claude fills in the date and the countries. Check them and press "Create XML file", then "Download XML" and upload that file to the portal. Without the property's own Claude key a screenshot can be read 5 times per property. The same steps with a picture: "See the steps with pictures" behind the "i" next to "Manual edit for the first entry" (hostelflow.it/rimovcli-first). Then download the files from the next day on.
+
 # Check-in (registering guests with the Questura)
+A guest who would rather not have their document photographed: "Add manually" next to "Add guests" in the Check-in tab opens an empty guest card to type in; it uses no scan.
 1. Check-in tab → add a photo of the passport or ID card (camera or gallery; several guests at once is fine; iPhone photos work too).
 2. HostelFlow's AI reads the document and fills in the fields. Always check them — any field can be corrected by hand. Problems are marked on the guest.
 3. Press "Test": it checks everything with Alloggiati Web but registers nothing yet.
