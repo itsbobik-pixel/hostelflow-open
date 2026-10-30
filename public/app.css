@@ -108,12 +108,16 @@ nav.tabs button.on{background:var(--tab-on);color:var(--tab-on-ink)}
 .banner.danger{background:var(--danger-bg);color:var(--danger)}
 .banner.info{background:var(--surface);border:1px solid var(--border);color:var(--muted)}
 /* The demo (src/demo.js): the button under the sign-in, the line on top of the app. */
+/* Sign in with Google: Google's own look (white, the four-colour G). */
+.google-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:10px;padding:10px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-weight:600;text-decoration:none}
+.google-btn[hidden]{display:none}
+.google-btn:hover{border-color:var(--text)}
 button.demo-try{width:100%;margin:4px 0 14px;padding:12px;font-weight:600;border-style:dashed}
 /* Right under the header, the full width, as one piece with it. */
 .demo-bar{margin:-20px 0 16px;border-radius:0;border-width:0 0 1px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;justify-content:center;padding:9px 14px}
 .demo-bar .link{font-weight:600}
 
-.add{display:flex;gap:10px;margin-bottom:16px}
+.add{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
 .add label.big{flex:1;margin:0;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:var(--on-accent);border-radius:12px;padding:16px;font-size:17px;font-weight:600;cursor:pointer}
 .add button{border-radius:12px;font-size:14px}
 .section{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:20px 0 8px}
@@ -953,19 +957,27 @@ html.mode-fade body,html.mode-fade .card,html.mode-fade .sect,html.mode-fade .no
 .flowy-form input{flex:1;min-width:0;width:auto}
 .flowy-form button{flex:none;width:auto;margin:0;padding-left:18px;padding-right:18px}
 
-/* The welcome tour (tour.js): a dimmed page, one highlighted part, a card */
-.tour-block{position:fixed;inset:0;z-index:1000}
-.tour-spot{position:fixed;z-index:1001;border-radius:12px;pointer-events:none;box-shadow:0 0 0 3px var(--accent),0 0 0 9999px rgba(10,10,15,.58);transition:left .25s,top .25s,width .25s,height .25s}
-.tour-spot[hidden]{display:none}
-.tour-card{position:fixed;z-index:1002;width:min(340px,calc(100vw - 24px));background:var(--surface);color:var(--text);border-radius:14px;padding:16px 16px 12px;box-shadow:0 18px 50px rgba(0,0,0,.35);transition:left .25s,top .25s}
-.tour-card.centered{box-shadow:0 0 0 9999px rgba(10,10,15,.58),0 18px 50px rgba(0,0,0,.35)}
-.tour-card h3{margin:2px 0 6px;font-size:17px}
-.tour-card p{margin:0 0 12px;font-size:14.5px;line-height:1.5;color:var(--text)}
-.tour-count{font-size:12px;color:var(--muted);font-weight:600}
-.tour-nav{display:flex;align-items:center;gap:8px}
+/* The welcome tour (tour.js): "What are you interested in?", then Flowy
+   points at one spot at a time — a ring and a speech bubble, nothing dimmed. */
+.tour-pick .modal-head .flowy-ico{width:34px;height:34px}
+.tp-opt{display:block;width:100%;text-align:left;margin-top:10px;padding:12px 14px;border-radius:12px}
+.tp-opt b{display:block;font-size:15.5px}
+.tp-opt small{display:block;color:var(--muted);font-size:13.5px;line-height:1.45;margin-top:2px}
+.tp-opt:hover,.tp-opt:focus-visible{border-color:var(--accent)}
+.fp-bubble h3{margin:2px 0 4px;font-size:16px}
+.fp-bubble.centered::before{display:none}
+.fp-ring[hidden]{display:none}
+.tour-nav{display:flex;align-items:center;justify-content:flex-end;gap:8px}
 .tour-nav .link{margin-right:auto;font-size:13.5px;color:var(--muted)}
-.tour-nav button:not(.link){width:auto;margin:0;padding:8px 14px}
-@media (prefers-reduced-motion:reduce){.tour-spot,.tour-card{transition:none}}
+.tour-nav button.primary{width:auto;margin:0}
+.fp-ring{position:fixed;z-index:1001;border-radius:12px;pointer-events:none;box-shadow:0 0 0 3px var(--accent);animation:fp-pulse 1.6s ease-out infinite}
+@keyframes fp-pulse{0%{box-shadow:0 0 0 3px var(--accent),0 0 0 0 color-mix(in srgb,var(--accent) 45%,transparent)}100%{box-shadow:0 0 0 3px var(--accent),0 0 0 16px transparent}}
+.fp-bubble{position:fixed;z-index:1002;display:flex;gap:10px;align-items:flex-start;width:min(320px,calc(100vw - 24px));background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:16px;padding:12px 14px;box-shadow:0 14px 40px rgba(0,0,0,.25)}
+.fp-bubble::before{content:"";position:absolute;left:calc(var(--tail,50%) - 8px);top:-8px;width:14px;height:14px;background:var(--surface);border-left:1px solid var(--border);border-top:1px solid var(--border);transform:rotate(45deg)}
+.fp-bubble.above::before{top:auto;bottom:-8px;transform:rotate(225deg)}
+.fp-bubble .flowy-ico{width:34px;height:34px;flex:none}
+.fp-bubble p{margin:0 0 8px;font-size:14.5px;line-height:1.45}
+@media (prefers-reduced-motion:reduce){.fp-ring{animation:none}}
 
 /* Settings → Team: what each person may do (Access, in the person's window) */
 /* An on/off switch (Settings → Team access, Housekeeping → daily sheets): words on the left, the switch on the right. */
@@ -1351,9 +1363,8 @@ body{background-image:radial-gradient(color-mix(in srgb,#9d85f2 16%,transparent)
 .date-cal .link{margin-top:6px;font-size:13px}
 .bp-edit-row .date-field{flex:none}
 .bp-edit-row .date-btn{width:auto;font-size:14px;padding:6px 10px}
-/* Who is signing in: the people this device remembers, like Google's account chooser. */
+/* Who is signing in: the team on the hostel's device (core.js renderLoginTeam). */
 .who-list{display:flex;flex-direction:column;gap:6px;margin:0 0 12px}
-.who-item{display:flex;align-items:center;gap:4px}
 .who-row{display:flex;align-items:center;gap:12px;flex:1;min-width:0;width:100%;margin:0;padding:8px 10px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font:inherit;font-weight:400;text-align:left;cursor:pointer}
 .who-row:hover{background:var(--bg)}
 .who-row.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
@@ -1361,8 +1372,6 @@ body{background-image:radial-gradient(color-mix(in srgb,#9d85f2 16%,transparent)
 .who-row .grow{min-width:0}
 .who-row b{display:block;font-size:14.5px;font-weight:600}
 .who-row small{display:block;font-size:12.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.who-forget{flex:none;width:32px;height:32px;padding:0;margin:0;border:0;background:none;color:var(--muted);font-size:18px;border-radius:8px}
-.who-forget:hover{background:var(--bg);color:var(--text)}
 .who-modal{max-width:420px}
 /* The hostel's device: names on the sign-in screen (core.js renderLoginTeam). */
 .who-team .who-pass{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 4px}

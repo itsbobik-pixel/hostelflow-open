@@ -111,8 +111,17 @@ bindForm('form-register', 'rg-err', async () => {
   renderApp();
 });
 
+// Signed up with Google: no password yet, so none to type first.
+function renderPasswordForm() {
+  const has = !state.me || state.me.user.hasPassword;
+  $('pw-current-wrap').hidden = !has;
+  $('pw-current').required = has;
+  $('pw-title').textContent = t(has ? 'Change your password' : 'Choose a password');
+}
 bindForm('form-password', 'pw-err', async () => {
   await api('POST', '/api/auth/password', { currentPassword: $('pw-current').value, newPassword: $('pw-new').value });
+  state.me.user.hasPassword = true;
+  renderPasswordForm();
   $('form-password').reset();
   $('pw-err').className = 'ok';
   $('pw-err').textContent = t('Password changed. Other devices were signed out.');
@@ -256,7 +265,54 @@ bindForm('form-invite-accept', 'ia-err', async () => {
   toast(t('Welcome to the team!'));
 });
 
+// ===== Continue with Google (src/google.js) =====
+
+// The button shows only where Google sign-in is set up.
+const googleReady = api('GET', '/api/auth/google').catch(() => ({ on: false }));
+googleReady.then(g => { $('li-google').hidden = $('rg-google').hidden = !g.on; });
+
+// Back from Google with an e-mail that has no account yet: the property's name.
+async function openGoogleSignup() {
+  const g = await googleReady;
+  if (!g.newcomer) return showGoogleError('expired');
+  $('form-google').reset();
+  $('gg-email').textContent = g.newcomer.email;
+  $('gg-name').value = g.newcomer.name;
+  $('gg-err').textContent = '';
+  show('view-google');
+  (g.newcomer.name ? $('gg-property') : $('gg-name')).focus();
+}
+bindForm('form-google', 'gg-err', async () => {
+  state.me = await api('POST', '/api/auth/google/finish', {
+    name: $('gg-name').value, propertyName: $('gg-property').value, acceptTerms: $('gg-terms').checked,
+  });
+  $('form-google').reset();
+  renderApp();
+});
+
+const GOOGLE_ERRORS = {
+  cancelled: 'Signing in with Google was cancelled.',
+  expired: 'That took too long. Try again.',
+  unverified: "Google hasn't confirmed this e-mail address yet.",
+};
+function showGoogleError(code) {
+  show('view-login');
+  $('li-err').className = 'err';
+  $('li-err').textContent = t(GOOGLE_ERRORS[code] || "Signing in with Google didn't work. Try again, or use your e-mail.");
+}
+
 function checkResetLink() {
+  if (location.hash === '#google-signup') {
+    history.replaceState(null, '', location.pathname);
+    openGoogleSignup();
+    return true;
+  }
+  const ge = location.hash.match(/^#google-error=(\w+)$/);
+  if (ge) {
+    history.replaceState(null, '', location.pathname);
+    showGoogleError(ge[1]);
+    return true;
+  }
   // "Try it free" on the public page leads to /app#signup.
   // …or /app#signup=CODE: the voucher code is filled in (links in e-mails).
   const su = location.hash.match(/^#signup(?:=([\w-]+))?$/);

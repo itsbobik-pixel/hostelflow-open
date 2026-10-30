@@ -31,6 +31,7 @@ import { readPortalDay } from './stats/portalread.js';
 import { looksLikeCitr, CITR_NOT_C59, parseStart } from './stats/rimovcli.js';
 import { benchScan, benchList, benchJudge, benchDelete, benchAllowed } from './ocrbench.js';
 import { provenAddress } from './admin.js';
+import { googleEnabled, googleStart, googleIdentity, clearStateCookie, newcomerCookie, readNewcomer, clearNewcomerCookie } from './google.js';
 import { deviceOwner, rememberDevice, forgetDevice, deviceTeam, onDeviceTeam, clearDeviceCookie } from './devices.js';
 import { loginBroken } from './policecheck.js';
 import { startDemo, refuseInDemo, isDemoOwner, isDemo, demoSignup } from './demo.js';
@@ -171,6 +172,23 @@ export const TERMS_VERSION = '2026-10';
 // beta.html) — the box also gets `required` back.
 export const LEGAL_LIVE = true;
 
+// A new account with its own property (sign-up, and Google's sign-up below).
+async function createOwner(db, { email, name, passwordHash, propertyName, now }) {
+  const userId = crypto.randomUUID();
+  const propertyId = crypto.randomUUID();
+  await db.batch([
+    LEGAL_LIVE
+      ? db.prepare('INSERT INTO users (id, email, name, password_hash, created_at, terms_accepted_at, terms_version) VALUES (?, ?, ?, ?, ?, ?, ?)')
+        .bind(userId, email, name, passwordHash, now, now, TERMS_VERSION)
+      : db.prepare('INSERT INTO users (id, email, name, password_hash, created_at) VALUES (?, ?, ?, ?, ?)')
+        .bind(userId, email, name, passwordHash, now),
+    db.prepare('INSERT INTO properties (id, name, created_at, trial_ends_at) VALUES (?, ?, ?, ?)')
+      .bind(propertyId, propertyName, now, trialEnd(now)),
+    db.prepare("INSERT INTO memberships (user_id, property_id, role) VALUES (?, ?, 'owner')").bind(userId, propertyId),
+  ]);
+  return { userId, propertyId };
+}
+
 async function register(env, request) {
   const db = env.DB;
   const body = await readJson(request);
@@ -189,19 +207,7 @@ async function register(env, request) {
   const voucher = typeof body.voucher === 'string' && body.voucher.trim() ? body.voucher : null;
   if (voucher) await checkVoucher(db, voucher);
   const now = Date.now();
-  const userId = crypto.randomUUID();
-  const propertyId = crypto.randomUUID();
-  const passwordHash = await hashPassword(password);
-  await db.batch([
-    LEGAL_LIVE
-      ? db.prepare('INSERT INTO users (id, email, name, password_hash, created_at, terms_accepted_at, terms_version) VALUES (?, ?, ?, ?, ?, ?, ?)')
-        .bind(userId, email, name, passwordHash, now, now, TERMS_VERSION)
-      : db.prepare('INSERT INTO users (id, email, name, password_hash, created_at) VALUES (?, ?, ?, ?, ?)')
-        .bind(userId, email, name, passwordHash, now),
-    db.prepare('INSERT INTO properties (id, name, created_at, trial_ends_at) VALUES (?, ?, ?, ?)')
-      .bind(propertyId, propertyName, now, trialEnd(now)),
-    db.prepare("INSERT INTO memberships (user_id, property_id, role) VALUES (?, ?, 'owner')").bind(userId, propertyId),
-  ]);
+  const { userId, propertyId } = await createOwner(db, { email, name, passwordHash: await hashPassword(password), propertyName, now });
   // First the e-mail is confirmed (the link signs them in), unless e-mail isn't set up.
   // The voucher counts only then (src/verify.js), so made-up addresses can't use it up.
   if (needsConfirmation(env)) {
@@ -269,13 +275,83 @@ async function login(env, request) {
   return res;
 }
 
+// ===== Sign in with Google (src/google.js) =====
+
+// Signed in (or with an account to finish) and back into the app. Problems
+// come back as #google-error=<code>, which the sign-in page puts in words.
+async function googleCallback(env, request) {
+  const db = env.DB;
+  const back = (hash, cookies = []) => {
+    const res = new Response(null, { status: 302, headers: { Location: `/app${hash}`, 'Cache-Control': 'no-store' } });
+    for (const c of [clearStateCookie(), ...cookies]) res.headers.append('Set-Cookie', c);
+    return res;
+  };
+  let who;
+  try {
+    who = await googleIdentity(env, request);
+  } catch (err) {
+    return back(`#google-error=${err instanceof HttpError ? err.message : 'google'}`);
+  }
+  const user = await db.prepare('SELECT id, email, name, email_confirmed_at, profile_property FROM users WHERE email = ?').bind(who.email).first();
+  if (!user) return back('#google-signup', [await newcomerCookie(env, who)]);
+  if (user.profile_property) return back('#google-error=expired'); // never: profiles have made-up addresses
+  if (!user.email_confirmed_at) {
+    // Google proves the inbox. A password set by whoever signed up with this
+    // address before confirming it could be someone else's: it goes.
+    await db.batch([
+      markConfirmed(db, user.id),
+      db.prepare('UPDATE users SET password_hash = NULL WHERE id = ?').bind(user.id),
+      db.prepare('DELETE FROM sessions WHERE user_id = ?').bind(user.id),
+    ]);
+  }
+  const { cookie } = await createSession(db, user.id);
+  await logSignIn(db, user);
+  const extra = [cookie];
+  const device = await rememberDevice(db, request, user.id);
+  if (device) extra.push(device);
+  return back('', extra);
+}
+
+// GET: is the button on, and who is finishing their sign-up (their name, to fill in).
+async function googleInfo(env, request) {
+  const on = googleEnabled(env, request);
+  const who = on && await readNewcomer(env, request);
+  return json({ on, newcomer: who ? { name: who.name, email: who.email } : null });
+}
+
+// POST { name, propertyName, acceptTerms } → the account, signed in. No
+// password: Google signs them in (they can set one in Settings).
+async function googleFinish(env, request) {
+  const db = env.DB;
+  const who = googleEnabled(env, request) && await readNewcomer(env, request);
+  if (!who) throw new HttpError(400, 'this took too long — continue with Google again');
+  const body = await readJson(request);
+  const name = requireString(body, 'name', { max: 100, label: 'name' });
+  const propertyName = requireString(body, 'propertyName', { max: 100, label: 'property name' });
+  if (LEGAL_LIVE && body.acceptTerms !== true) {
+    throw new HttpError(400, 'accept the Terms of Service and the Privacy Policy to create an account');
+  }
+  if (await db.prepare('SELECT 1 FROM users WHERE email = ?').bind(who.email).first()) {
+    throw new HttpError(409, 'an account with this e-mail already exists');
+  }
+  const { userId } = await createOwner(db, { email: who.email, name, passwordHash: null, propertyName, now: Date.now() });
+  await markConfirmed(db, userId).run();
+  const { cookie } = await createSession(db, userId);
+  const res = json(await me(db, { id: userId, email: who.email, name }, env), 201, { 'Set-Cookie': cookie });
+  res.headers.append('Set-Cookie', clearNewcomerCookie());
+  const device = await rememberDevice(db, request, userId);
+  if (device) res.headers.append('Set-Cookie', device);
+  return res;
+}
+
 async function changeOwnPassword(db, request) {
   const user = await requireUser(db, request);
   const body = await readJson(request);
   const row = await db.prepare('SELECT password_hash, profile_property FROM users WHERE id = ?').bind(user.id).first();
   // A profile may have no password (a tap on its name), set one, or drop it again.
+  // No password yet (a profile, or signed up with Google): just set one.
   const newPassword = row.profile_property && body.newPassword === null ? null : requirePassword(body, 'newPassword');
-  if (!row.password_hash ? !row.profile_property : !(await verifyPassword(String(body.currentPassword || ''), row.password_hash))) {
+  if (row.password_hash && !(await verifyPassword(String(body.currentPassword || ''), row.password_hash))) {
     throw new HttpError(401, 'current password is wrong');
   }
   await db.batch([
@@ -961,6 +1037,10 @@ export async function handleApi(request, env) {
     // The demo (src/demo.js): nothing that reaches the outside world or costs money.
     await refuseInDemo(db, request, pathname, method);
     if (pathname === '/api/auth/login' && method === 'POST') return await login(env, request);
+    if (pathname === '/api/auth/google' && method === 'GET') return await googleInfo(env, request);
+    if (pathname === '/api/auth/google/start' && method === 'GET') return await googleStart(env, request);
+    if (pathname === '/api/auth/google/callback' && method === 'GET') return await googleCallback(env, request);
+    if (pathname === '/api/auth/google/finish' && method === 'POST') return await googleFinish(env, request);
     if (pathname === '/api/auth/confirm' && method === 'POST') return await confirmEmail(env, request);
     if (pathname === '/api/auth/confirm/resend' && method === 'POST') return await resendConfirmation(env, request);
     if (pathname === '/api/auth/logout' && method === 'POST') {

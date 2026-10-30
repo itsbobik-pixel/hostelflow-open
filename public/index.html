@@ -33,13 +33,13 @@
     </div>
     <form class="card" id="form-login">
       <h2>Sign in</h2>
-      <div class="who-list" id="li-who" hidden></div>
       <label for="li-email">E-mail</label>
       <input id="li-email" type="email" autocomplete="username" required>
       <label for="li-pass">Password</label>
       <input id="li-pass" type="password" autocomplete="current-password" required>
       <button class="primary" type="submit">Sign in</button>
       <div class="err" id="li-err"></div>
+      <a class="google-btn" id="li-google" href="/api/auth/google/start" hidden><svg viewBox="0 0 48 48" width="18" height="18" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.6 13.2l7.9 6.2C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 2.9-2.2 5.4-4.7 7.1l7.6 5.9c4.4-4.1 6.9-10.1 6.9-17.5z"/><path fill="#FBBC05" d="M10.5 28.6c-.5-1.4-.8-2.9-.8-4.6s.3-3.2.8-4.6l-7.9-6.2C.9 16.5 0 20.1 0 24s.9 7.5 2.6 10.8l7.9-6.2z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.9 2.3-8.3 2.3-6.3 0-11.6-4.1-13.5-9.9l-7.9 6.2C6.6 42.6 14.6 48 24 48z"/></svg><span>Continue with Google</span></a>
     </form>
     <div id="li-links">
     <!-- The demo (src/demo.js): made-up guests, nothing goes to the police. -->
@@ -105,6 +105,23 @@
     </form>
   </section>
 
+  <!-- Signed up with Google (src/google.js): only the property is missing. -->
+  <section id="view-google" hidden>
+    <h1 class="logo"><svg class="logo-mark" viewBox="0 0 512 512" width="30" height="30" aria-hidden="true"><rect width="512" height="512" rx="120"/><path d="M176 112v288M176 290c0-60 36-92 80-92s80 32 80 92v34c0 44 30 70 70 56"/></svg><span>hostel<b>flow</b></span></h1>
+    <form class="card" id="form-google" style="margin-top:24px">
+      <h2>Almost done</h2>
+      <p class="muted" style="margin-top:0" id="gg-email"></p>
+      <label for="gg-name">Your name</label>
+      <input id="gg-name" autocomplete="name" required maxlength="100">
+      <label for="gg-property">Property name</label>
+      <input id="gg-property" placeholder="e.g. Hostel Sunrise" required maxlength="100">
+      <label class="consent" data-legal><input id="gg-terms" type="checkbox" required> <span><span>I accept the</span> <a href="/terms" target="_blank" rel="noopener">Terms of Service</a> <span>and have read the</span> <a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>
+      <button class="primary" type="submit">Create account</button>
+      <div class="err" id="gg-err"></div>
+    </form>
+    <p class="muted"><button class="link" data-show="view-login">Back to sign in</button></p>
+  </section>
+
   <section id="view-register" hidden>
     <h1 class="logo"><svg class="logo-mark" viewBox="0 0 512 512" width="30" height="30" aria-hidden="true"><rect width="512" height="512" rx="120"/><path d="M176 112v288M176 290c0-60 36-92 80-92s80 32 80 92v34c0 44 30 70 70 56"/></svg><span>hostel<b>flow</b></span></h1>
     <p class="sub">Guest check-in and police registration for hostels, B&amp;Bs and apartments.</p>
@@ -123,6 +140,7 @@
       <label class="consent" data-legal><input id="rg-terms" type="checkbox" required> <span><span>I accept the</span> <a href="/terms" target="_blank" rel="noopener">Terms of Service</a> <span>and have read the</span> <a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>
       <button class="primary" type="submit">Create account</button>
       <div class="err" id="rg-err"></div>
+      <a class="google-btn" id="rg-google" href="/api/auth/google/start" hidden><svg viewBox="0 0 48 48" width="18" height="18" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.6 13.2l7.9 6.2C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 2.9-2.2 5.4-4.7 7.1l7.6 5.9c4.4-4.1 6.9-10.1 6.9-17.5z"/><path fill="#FBBC05" d="M10.5 28.6c-.5-1.4-.8-2.9-.8-4.6s.3-3.2.8-4.6l-7.9-6.2C.9 16.5 0 20.1 0 24s.9 7.5 2.6 10.8l7.9-6.2z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.9 2.3-8.3 2.3-6.3 0-11.6-4.1-13.5-9.9l-7.9 6.2C6.6 42.6 14.6 48 24 48z"/></svg><span>Continue with Google</span></a>
     </form>
     <p class="muted">Already have an account? <button class="link" data-show="view-login">Sign in</button></p>
   </section>
@@ -701,9 +719,11 @@
           <div class="err" id="tb-err" style="min-height:0"></div>
           </div>
           <form id="form-password" style="margin-top:18px">
-            <h2 style="font-size:15px">Change your password</h2>
+            <h2 style="font-size:15px" id="pw-title">Change your password</h2>
+            <div id="pw-current-wrap">
             <label for="pw-current">Current password</label>
             <input id="pw-current" type="password" autocomplete="current-password" required>
+            </div>
             <label for="pw-new">New password</label>
             <input id="pw-new" type="password" autocomplete="new-password" minlength="8" required>
             <button class="primary" type="submit">Change password</button>
@@ -771,6 +791,24 @@
     </form>
   </div>
 </div>
+<!-- The welcome tour's first question (tour.js). -->
+<div class="modal-back" id="tour-modal" hidden>
+  <div class="modal tour-pick" role="dialog" aria-modal="true" aria-labelledby="tp-title">
+    <div class="modal-head">
+      <span class="flowy-ico" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22"><path d="M16 5c6.4 0 11 4.1 11 9.6 0 5.5-4.6 9.6-11 9.6-1.3 0-2.5-.2-3.6-.5L7 26.5l1.4-4.6C6.3 20.1 5 17.5 5 14.6 5 9.1 9.6 5 16 5z" fill="#fff"/><circle cx="12.2" cy="14" r="1.7" fill="#2b2b2b"/><circle cx="19.8" cy="14" r="1.7" fill="#2b2b2b"/><path d="M12.6 18.2c1.9 1.6 4.9 1.6 6.8 0" fill="none" stroke="#2b2b2b" stroke-width="1.6" stroke-linecap="round"/><path d="M25.6 3.2l.7 1.7 1.7.7-1.7.7-.7 1.7-.7-1.7-1.7-.7 1.7-.7z" fill="#fff"/></svg></span>
+      <h2 id="tp-title">What are you interested in?</h2>
+      <button type="button" id="tp-close" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body">
+      <p class="muted" style="margin-top:0">Pick one and Flowy will show you around. It takes a minute.</p>
+      <button type="button" class="tp-opt" data-pick="checkin"><b>Check-in</b><small>Take a photo of the passport or ID card, check what it read, and send the guest to the police with one tap.</small></button>
+      <button type="button" class="tp-opt" data-pick="flow"><b>Flow</b><small>Your team's day: notes and handovers on the Dashboard, Housekeeping, Shifts and The Vault.</small></button>
+      <button type="button" class="tp-opt" data-pick="both"><b>Both</b><small>All of it, one after the other.</small></button>
+      <p class="muted" style="text-align:center;margin:14px 0 0"><button type="button" class="link" id="tp-skip">Not now</button></p>
+    </div>
+  </div>
+</div>
+
 <div class="modal-back" id="mp-modal" hidden>
   <div class="modal who-modal" role="dialog" aria-modal="true" aria-labelledby="mp-title">
     <div class="modal-head">

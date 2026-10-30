@@ -8,7 +8,7 @@
 
 ## Italiano
 
-Ultimo aggiornamento: 28 ottobre 2026
+Ultimo aggiornamento: 30 ottobre 2026
 
 ### 1. Chi siamo
 HostelFlow (hostelflow.it) è un software online per strutture ricettive: check-in degli ospiti con lettura
@@ -16,7 +16,7 @@ automatica dei documenti, comunicazione alla Polizia di Stato (Alloggiati Web) e
 ceca (Ubyport) e le schede di polizia francesi; statistiche ISTAT (Ross1000); note e organizzazione del
 personale.
 
-Fornitore del servizio: [PROVIDER NAME], imprenditore individuale, [COMPANY ID], [ADDRESS], Repubblica Ceca. Contatto privacy: support@hostelflow.it.
+Fornitore del servizio: Kytarový Kruh z. s., associazione senza scopo di lucro di diritto ceco (zapsaný spolek), IČO 23219530, [ADDRESS], Repubblica Ceca. HostelFlow è un progetto gratuito e open source, senza scopo di lucro: non si vende nulla. Contatto privacy: support@hostelflow.it.
 
 ### 2. Due ruoli diversi
 - **Dati degli ospiti della struttura** (quelli dei documenti d'identità): il **titolare del trattamento è la
@@ -62,8 +62,10 @@ Nome, e-mail, password (conservata solo come hash PBKDF2, mai in chiaro), ruolo 
 attività nell'app (es. chi ha spuntato un compito, turni); preferenze dell'account (schede mostrate,
 immagine dell'intestazione caricata); messaggi inviati al supporto; credenziali dei portali della struttura
 (polizia, Ross1000: cifrate con AES-GCM, mai mostrate di nuovo); la chiave API di Claude, se la struttura
-collega il proprio account (cifrata, mai mostrata di nuovo). Base giuridica: esecuzione del contratto
-(art. 6.1.b). Conservazione: fino alla chiusura dell'account.
+collega il proprio account (cifrata, mai mostrata di nuovo). Chi accede con **«Continue with Google»**
+riceve da Google solo nome e indirizzo e-mail verificato; HostelFlow non riceve altro dall'account Google e
+non vi accede. Base giuridica: esecuzione del contratto (art. 6.1.b). Conservazione: fino alla chiusura
+dell'account.
 
 ### 5. A chi vengono comunicati i dati (sub-responsabili e destinatari)
 | Chi | Per cosa | Dati |
@@ -84,8 +86,9 @@ Contrattuali Standard della Commissione Europea e/o dell'EU-US Data Privacy Fram
 HostelFlow non vende dati, non fa profilazione e non usa i dati degli ospiti per marketing.
 
 ### 6. Cookie
-HostelFlow usa **un solo cookie tecnico** (`hf_session`) per mantenere l'accesso, e la memoria locale del
-browser per preferenze come lingua e tema. **Nessun cookie di profilazione o
+HostelFlow usa solo **cookie tecnici**: `hf_session` per mantenere l'accesso, `hf_device` per riconoscere il
+dispositivo della struttura (l'accesso del team per nome) e, solo durante l'accesso con Google, `hf_google` e
+`hf_google_new` (pochi minuti); in più la memoria locale del browser per preferenze come lingua e tema. **Nessun cookie di profilazione o
 di statistica**, nessun tracciamento: per questo non serve un banner per il consenso. Sulle pagine pubbliche del
 sito (non nell'app) contiamo le visite con **Cloudflare Web Analytics**, senza cookie e senza dati che
 identifichino il visitatore.
@@ -109,14 +112,14 @@ importanti saranno comunicate agli utenti via e-mail.
 
 ## English
 
-Last updated: 28 October 2026
+Last updated: 30 October 2026
 
 ### 1. Who we are
 HostelFlow (hostelflow.it) is online software for accommodation providers: guest check-in with automatic
 document reading, reporting to the Italian State Police (Alloggiati Web) and, in beta, the Czech police
 (Ubyport) and French police forms; ISTAT statistics (Ross1000); notes and team organisation.
 
-Provider: [PROVIDER NAME], sole trader, Company ID [COMPANY ID], [ADDRESS], Czech Republic. Privacy contact: support@hostelflow.it.
+Provider: Kytarový Kruh z. s., a Czech non-profit association (zapsaný spolek), company ID (IČO) 23219530, [ADDRESS], Czech Republic. HostelFlow is a free, non-profit open-source project: nothing is sold. Privacy contact: support@hostelflow.it.
 
 ### 2. Two different roles
 - **Guests' data** (from identity documents): the **controller is the accommodation provider** using
@@ -154,8 +157,10 @@ The official receipt of each report stays in the provider's police portal accoun
 Name, e-mail, password (stored only as a PBKDF2 hash, never in plain text), role, notes and activity in the
 app (e.g. ticked tasks, shifts); account preferences (tabs shown, uploaded header picture); messages sent to
 support; the provider's portal credentials (police, Ross1000: AES-GCM encrypted, never shown again); the Claude
-API key, if the property connects its own account (encrypted, never shown again). Legal basis: performance of
-the contract (Art. 6(1)(b)). Kept until the account is closed.
+API key, if the property connects its own account (encrypted, never shown again). Whoever signs in with
+**"Continue with Google"** gets only their name and verified e-mail address passed on by Google; HostelFlow
+receives nothing else from the Google account and has no access to it. Legal basis: performance of the
+contract (Art. 6(1)(b)). Kept until the account is closed.
 
 ### 5. Recipients and sub-processors
 | Who | What for | Data |
@@ -177,8 +182,9 @@ EU-US Data Privacy Framework.
 HostelFlow does not sell data, does not profile anyone and does not use guests' data for marketing.
 
 ### 6. Cookies
-HostelFlow uses **one technical cookie** (`hf_session`) to keep you signed in, and the browser's local
-storage for preferences such as language and theme. **No profiling or analytics cookies**,
+HostelFlow uses only **technical cookies**: `hf_session` to keep you signed in, `hf_device` to recognise the
+property's own device (the team signing in by name) and, only while signing in with Google, `hf_google` and
+`hf_google_new` (a few minutes); plus the browser's local storage for preferences such as language and theme. **No profiling or analytics cookies**,
 no tracking — so no consent banner is needed. On the public pages of the site (not in the app) we count
 visits with **Cloudflare Web Analytics**, without cookies and without data that identifies the visitor.
 

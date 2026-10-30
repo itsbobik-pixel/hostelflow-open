@@ -801,7 +801,9 @@ export async function rossSend(env, request, propertyId) {
     throw new HttpError(502, String(err.message || err));
   }
   const refused = answer.results.filter(r => !r.ok);
-  return json({ sent: answer.results.length - refused.length, refused, problems });
+  // A guest's arrival and departure are two answers: count each guest once.
+  const sent = new Set(answer.results.filter(r => r.ok).map(r => r.idswh)).size;
+  return json({ sent, refused, problems });
 }
 
 // Hourly (cron): photos older than 48 h go, and so do unsent guests too old

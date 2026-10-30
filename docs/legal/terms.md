@@ -8,10 +8,10 @@
 
 ## Italiano
 
-Ultimo aggiornamento: 28 ottobre 2026
+Ultimo aggiornamento: 30 ottobre 2026
 
 ### 1. Le parti e il servizio
-Questi termini regolano l'uso di HostelFlow (hostelflow.it), fornito da [PROVIDER NAME], imprenditore individuale ([COMPANY ID], registro delle imprese individuali della Repubblica Ceca), [ADDRESS],
+Questi termini regolano l'uso di HostelFlow (hostelflow.it), fornito gratuitamente da Kytarový Kruh z. s., associazione senza scopo di lucro di diritto ceco (zapsaný spolek), IČO 23219530, [ADDRESS],
 Repubblica Ceca («HostelFlow»), alla struttura ricettiva che crea un account («Cliente»).
 
 HostelFlow offre: check-in degli ospiti con lettura automatica dei documenti tramite intelligenza
@@ -122,10 +122,10 @@ tribunale di [CITY], salvo diverse norme inderogabili.
 
 ## English
 
-Last updated: 28 October 2026
+Last updated: 30 October 2026
 
 ### 1. Parties and service
-These terms govern the use of HostelFlow (hostelflow.it), provided by [PROVIDER NAME], sole trader (Company ID / [COMPANY ID], Czech Trade Licensing Register), [ADDRESS],
+These terms govern the use of HostelFlow (hostelflow.it), provided free of charge by Kytarový Kruh z. s., a Czech non-profit association (zapsaný spolek), company ID (IČO) 23219530, [ADDRESS],
 Czech Republic ("HostelFlow"), to the accommodation provider that creates an account ("Customer").
 
 HostelFlow offers guest check-in with AI document reading, reporting of guests to Alloggiati Web (Italian

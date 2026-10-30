@@ -16,10 +16,10 @@ async function api(method, path, body) {
 }
 
 function show(id) {
-  for (const v of ['view-login', 'view-register', 'view-forgot', 'view-reset', 'view-invite', 'view-confirm', 'view-app']) $(v).hidden = v !== id;
+  for (const v of ['view-login', 'view-register', 'view-google', 'view-forgot', 'view-reset', 'view-invite', 'view-confirm', 'view-app']) $(v).hidden = v !== id;
   document.querySelector('.wrap').classList.toggle('app', id === 'view-app');
   if (id !== 'view-app') $('ci-sendbar').hidden = true;
-  if (id === 'view-login') { renderLoginWho(); renderLoginTeam(); }
+  if (id === 'view-login') renderLoginTeam();
 }
 
 // Runs a form submit with a disabled button and an error line.
@@ -314,6 +314,7 @@ function renderApp() {
   renderPropertyList();
   $('hd-property').textContent = state.property ? state.property.name : '';
   $('demo-bar').hidden = !(state.property && state.property.demo);
+  renderPasswordForm();
   renderPropertySwitch();
   document.documentElement.dataset.role = state.property ? state.property.role : '';
   // What this person sees and changes (Settings → Team), for app.css:
@@ -356,7 +357,6 @@ function renderApp() {
   if (sees('team')) loadStaff();
   if (owned || sees('police') || can('guidelines') || can('shifts')) loadSettings();
   if (owned) loadBilling();
-  rememberMe();
   show('view-app');
   showTab(tabFromHash() || homeTab(), { push: false });
   maybeStartTour(); // the first sign-in: the welcome tour (tour.js)
@@ -711,23 +711,12 @@ $('faq-install').onclick = openInstall;
 $('ig-modal').addEventListener('click', e => { if (e.target === $('ig-modal')) closeInstall(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('ig-modal').hidden) closeInstall(); });
 // ----- Who is using the app: an account chooser, like Google's -----
-// This device remembers who signed in here with an e-mail (name, e-mail and
-// colour — never a password). The sign-in screen lists them: tap yourself and
-// type just the password. Signed in, the team's profiles are name tags beside
-// the menu (renderSideTeam): a tap is enough without a password (the server
-// checks that whoever is signed in now may enter it — mayUseProfiles, api.js).
-const ACCOUNTS_KEY = 'hf-accounts';
-function rememberedAccounts() {
-  try { return JSON.parse(localStorage.getItem(ACCOUNTS_KEY)) || []; } catch { return []; }
-}
-function saveAccounts(list) {
-  try { localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(list.slice(0, 8))); } catch { /* private mode: nothing to come back to */ }
-}
-function rememberMe() {
-  const u = state.me && state.me.user;
-  if (!u || u.profile || !u.email) return;
-  saveAccounts([{ email: u.email, name: u.name || '', color: u.color || null }, ...rememberedAccounts().filter(a => a.email !== u.email)]);
-}
+// Signed in, the team's profiles are name tags beside the menu
+// (renderSideTeam): a tap is enough without a password (the server checks that
+// whoever is signed in now may enter it — mayUseProfiles, api.js).
+// The sign-in screen used to list who signed in here before; it only confused
+// (Bob, 29. 10.), so the old list is cleared from the device.
+try { localStorage.removeItem('hf-accounts'); } catch { /* private mode */ }
 // A row: the person's colour and initials, the name, a line under it.
 // Names are people's own words: set as they are, never translated.
 function whoRow(name, sub, color) {
@@ -751,33 +740,6 @@ function whoRow(name, sub, color) {
   b.append(dot, words);
   return b;
 }
-// The sign-in screen: the people from this device; a tap fills in the e-mail.
-function renderLoginWho() {
-  const box = $('li-who');
-  const list = rememberedAccounts();
-  box.replaceChildren();
-  box.hidden = !list.length;
-  for (const a of list) {
-    const item = document.createElement('div');
-    item.className = 'who-item';
-    const b = whoRow(a.name || a.email, a.name ? a.email : '', a.color);
-    b.dataset.email = a.email;
-    b.onclick = () => pickLoginAccount(a.email);
-    const x = text('button', '×', 'who-forget');
-    x.type = 'button';
-    x.title = t('Forget on this device');
-    x.setAttribute('aria-label', `${t('Forget on this device')}: ${a.name || a.email}`);
-    x.onclick = () => { saveAccounts(rememberedAccounts().filter(o => o.email !== a.email)); renderLoginWho(); };
-    item.append(b, x);
-    box.append(item);
-  }
-}
-function pickLoginAccount(email) {
-  $('li-email').value = email;
-  for (const r of $('li-who').querySelectorAll('.who-row')) r.classList.toggle('on', r.dataset.email === email);
-  $('li-pass').focus();
-}
-
 // Stepping into a profile (someone without e-mail) where they aren't on this device's list.
 async function enterProfile(p) {
   const url = `/api/properties/${state.property.id}/profiles/${p.id}/switch`;
